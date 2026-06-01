@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SiteIntel Phase 3 — Parcel Intelligence</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#e6edf3;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+    /* ── TOP BAR ── */
+    #topbar{display:flex;align-items:center;padding:0 18px;height:52px;background:#161b22;border-bottom:1px solid #30363d;z-index:1000;gap:10px;flex-shrink:0}
+    .logo{font-size:15px;font-weight:800;letter-spacing:1px;color:#fff}
+    .logo span{color:#3fb950}
+    .badge{background:#0d4a1a;color:#3fb950;font-size:10px;padding:2px 9px;border-radius:12px;font-weight:700;letter-spacing:.5px;border:1px solid #1e6b2e}
+    .live-badge{font-size:10px;padding:2px 9px;border-radius:12px;font-weight:700;letter-spacing:.5px;border:1px solid #6b5e1e;color:#f7c542;background:#1a1a0d;animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+    .spacer{flex:1}
+    .stat-pill{background:#21262d;border:1px solid #30363d;border-radius:6px;padding:5px 10px;font-size:11.5px;color:#8b949e;white-space:nowrap}
+    .stat-pill strong{color:#58a6ff;font-weight:700}
+
+    /* ── LAYOUT ── */
+    #main{display:flex;flex:1;overflow:hidden}
+
+    /* ── SIDEBAR ── */
+    #sidebar{width:272px;background:#161b22;border-right:1px solid #30363d;overflow-y:auto;display:flex;flex-direction:column;flex-shrink:0}
+    .sb-sec{padding:14px 16px;border-bottom:1px solid #21262d}
+    .sb-sec h3{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8b949e;margin-bottom:12px}
+
+    /* Data source status */
+    .ds-item{display:flex;align-items:center;gap:9px;padding:5px 0;font-size:12px;color:#8b949e}
+    .ds-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;transition:background .4s}
+    .ds-dot.loading{background:#f7c542;animation:pulse 1s infinite}
+    .ds-dot.live{background:#3fb950}
+    .ds-dot.fallback{background:#ff9a3c}
+    .ds-dot.pending{background:#484f58}
+    .ds-label{flex:1}
+    .ds-status{font-size:10px;font-weight:600}
+
+    /* Layer toggles */
+    .layer-toggle{display:flex;align-items:center;justify-content:space-between;padding:6px 0;cursor:pointer;user-select:none}
+    .layer-label{display:flex;align-items:center;gap:9px;font-size:12.5px;color:#c9d1d9;transition:color .15s}
+    .layer-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+    .toggle-switch{width:34px;height:19px;border-radius:10px;background:#30363d;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+    .toggle-switch.on{background:#238636}
+    .toggle-switch::after{content:'';position:absolute;width:15px;height:15px;background:#fff;border-radius:50%;top:2px;left:2px;transition:transform .2s}
+    .toggle-switch.on::after{transform:translateX(15px)}
+
+    /* Sliders */
+    .weight-row{margin-bottom:10px}
+    .weight-header{display:flex;justify-content:space-between;font-size:12px;color:#8b949e;margin-bottom:4px}
+    .weight-val{color:#58a6ff;font-weight:700}
+    input[type=range]{width:100%;height:4px;accent-color:#58a6ff;cursor:pointer}
+    .thr-row{display:flex;align-items:center;gap:10px;font-size:12px;color:#8b949e;margin-bottom:8px}
+    .thr-row span:first-child{min-width:74px}
+    .thr-val{color:#58a6ff;font-weight:700;min-width:32px;text-align:right}
+    select{background:#21262d;border:1px solid #30363d;color:#c9d1d9;padding:4px 6px;border-radius:4px;font-size:12px;width:100%;margin-top:4px}
+
+    /* Parcel budget */
+    .budget-bar-bg{height:6px;background:#21262d;border-radius:3px;overflow:hidden;margin-top:6px}
+    .budget-bar-fill{height:100%;background:#58a6ff;border-radius:3px;transition:width .6s ease}
+    .budget-label{display:flex;justify-content:space-between;font-size:10.5px;color:#8b949e;margin-top:4px}
+
+    .footnote{font-size:11px;color:#484f58;line-height:1.65;padding:14px 16px;margin-top:auto}
+
+    /* ── MAP ── */
+    #map-wrap{flex:1;position:relative}
+    #map{width:100%;height:100%}
+
+    /* Zoom hint */
+    #zoom-hint{
+      position:absolute;top:12px;left:50%;transform:translateX(-50%);
+      background:rgba(22,27,34,.92);border:1px solid #f7c542;
+      color:#f7c542;font-size:12px;padding:7px 16px;border-radius:6px;
+      z-index:500;pointer-events:none;display:none;
+    }
+
+    /* Legend */
+    #legend{position:absolute;bottom:28px;left:12px;background:rgba(22,27,34,.94);border:1px solid #30363d;border-radius:8px;padding:12px 15px;z-index:500}
+    #legend h4{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#8b949e;margin-bottom:9px}
+    .leg-item{display:flex;align-items:center;gap:8px;font-size:11.5px;color:#c9d1d9;margin-bottom:5px}
+    .leg-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+
+    /* Voltage key */
+    #vkey{position:absolute;bottom:28px;right:12px;background:rgba(22,27,34,.94);border:1px solid #30363d;border-radius:8px;padding:12px 15px;z-index:500}
+    #vkey h4{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#8b949e;margin-bottom:9px}
+    .vk-item{display:flex;align-items:center;gap:8px;font-size:11px;color:#c9d1d9;margin-bottom:5px}
+    .vk-line{height:3px;width:24px;border-radius:2px;flex-shrink:0}
+
+    /* Loading overlay */
+    #loading{position:absolute;inset:0;background:rgba(13,17,23,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:8px}
+    .load-title{font-size:15px;font-weight:700;color:#e6edf3;margin-bottom:8px}
+    .load-step{font-size:12px;color:#8b949e;display:flex;align-items:center;gap:10px}
+    .load-step .dot{width:8px;height:8px;border-radius:50%;background:#30363d;flex-shrink:0}
+    .load-step .dot.active{background:#f7c542;animation:pulse 1s infinite}
+    .load-step .dot.done{background:#3fb950}
+    .load-step .dot.fail{background:#ff6b6b}
+    .spinner{width:32px;height:32px;border:3px solid #30363d;border-top-color:#3fb950;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:6px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ── DETAIL PANEL ── */
+    #detail{width:0;overflow:hidden;background:#161b22;border-left:1px solid #30363d;display:flex;flex-direction:column;transition:width .25s ease;flex-shrink:0}
+    #detail.open{width:320px}
+    #detail-inner{width:320px;overflow-y:auto;display:flex;flex-direction:column;flex:1}
+
+    .det-header{padding:16px 16px 12px;background:#1c2128;border-bottom:1px solid #30363d;position:relative}
+    .det-header h2{font-size:15px;font-weight:700;color:#fff;margin-bottom:3px;line-height:1.3;padding-right:30px}
+    .det-coords{font-size:11px;color:#8b949e;font-family:'Courier New',monospace}
+    .close-btn{position:absolute;top:12px;right:12px;background:#30363d;border:none;color:#8b949e;width:26px;height:26px;border-radius:5px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:background .15s}
+    .close-btn:hover{background:#484f58;color:#fff}
+
+    .score-ring-wrap{text-align:center;padding:16px 16px 6px}
+    .score-ring{display:inline-flex;align-items:center;justify-content:center;width:84px;height:84px;border-radius:50%;border:3px solid;font-size:27px;font-weight:800}
+    .score-tier{font-size:12px;color:#8b949e;margin-top:6px}
+
+    .live-tag{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:700;margin-left:6px}
+    .live-tag.live{background:#0d4a1a;color:#3fb950;border:1px solid #1e6b2e}
+    .live-tag.demo{background:#2a2000;color:#f7c542;border:1px solid #6b5e1e}
+
+    .det-sec{padding:14px 16px;border-bottom:1px solid #21262d}
+    .det-sec h3{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8b949e;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+    .score-item{margin-bottom:10px}
+    .si-head{display:flex;justify-content:space-between;font-size:12px;color:#c9d1d9;margin-bottom:4px}
+    .bar-bg{height:5px;background:#21262d;border-radius:3px;overflow:hidden}
+    .bar-fill{height:100%;border-radius:3px;transition:width .6s ease}
+
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+    .meta-cell{background:#21262d;border-radius:6px;padding:9px 10px}
+    .meta-label{font-size:10px;color:#8b949e;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+    .meta-val{font-size:12.5px;color:#e6edf3;font-weight:600}
+
+    /* Acquisition profile section */
+    .acq-summary{
+      display:flex;gap:8px;margin-bottom:12px;
+    }
+    .acq-stat{
+      flex:1;background:#21262d;border-radius:6px;padding:8px 10px;text-align:center;
+    }
+    .acq-stat-val{font-size:18px;font-weight:800;line-height:1;margin-bottom:3px}
+    .acq-stat-label{font-size:10px;color:#8b949e;text-transform:uppercase;letter-spacing:.4px}
+
+    .difficulty-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+    .difficulty-label{font-size:11px;color:#8b949e;min-width:80px}
+    .difficulty-bar{flex:1;height:6px;background:#21262d;border-radius:3px;overflow:hidden}
+    .difficulty-fill{height:100%;border-radius:3px;transition:width .6s}
+    .difficulty-text{font-size:11px;font-weight:700;min-width:60px;text-align:right}
+
+    /* Owner cards */
+    .owner-card{
+      background:#1c2128;border:1px solid #30363d;border-radius:6px;
+      padding:9px 11px;margin-bottom:6px;display:flex;align-items:flex-start;gap:10px;
+    }
+    .owner-card.absentee{border-color:#f7c542;background:#1a1800}
+    .owner-rank{
+      width:22px;height:22px;border-radius:4px;background:#21262d;
+      font-size:11px;font-weight:700;color:#8b949e;
+      display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    }
+    .owner-info{flex:1;min-width:0}
+    .owner-name{font-size:12px;font-weight:600;color:#e6edf3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+    .owner-meta{font-size:11px;color:#8b949e}
+    .owner-flag{flex-shrink:0;font-size:10px;padding:2px 6px;border-radius:10px;font-weight:700;align-self:center}
+    .owner-flag.absentee{background:#2a2000;color:#f7c542;border:1px solid #6b5e1e}
+    .owner-flag.local{background:#0d2a0d;color:#56d364;border:1px solid #1e6b2e}
+    .owner-flag.unknown{background:#21262d;color:#8b949e;border:1px solid #30363d}
+
+    /* Acquisition alert */
+    .acq-alert{
+      border-radius:6px;padding:10px 12px;margin-bottom:12px;
+      font-size:12px;line-height:1.55;
+    }
+    .acq-alert.high{background:#0d4a1a;border:1px solid #2ea043;color:#56d364}
+    .acq-alert.medium{background:#2a2000;border:1px solid #6b5e1e;color:#f7c542}
+    .acq-alert.hard{background:#2a0d0d;border:1px solid #6b1e1e;color:#ff7b7b}
+
+    /* Parcel loading spinner */
+    .parcel-loading{display:flex;align-items:center;gap:10px;padding:14px 0;color:#8b949e;font-size:12px}
+    .mini-spin{width:16px;height:16px;border:2px solid #30363d;border-top-color:#3fb950;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+
+    /* Action row */
+    .action-row{display:flex;gap:8px;padding:12px 16px 16px}
+    .btn-g{flex:1;padding:8px;background:#1a4731;color:#3fb950;border:1px solid #2ea043;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s}
+    .btn-g:hover{background:#2ea043;color:#fff}
+    .btn-s{flex:1;padding:8px;background:#21262d;color:#c9d1d9;border:1px solid #30363d;border-radius:6px;font-size:12px;cursor:pointer;transition:background .15s}
+    .btn-s:hover{background:#30363d}
+    .btn-zoom{flex:1;padding:8px;background:#0d2a3a;color:#58a6ff;border:1px solid #1e4a6b;border-radius:6px;font-size:12px;cursor:pointer;transition:background .15s}
+    .btn-zoom:hover{background:#1e4a6b;color:#fff}
+
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:#0d1117}
+    ::-webkit-scrollbar-thumb{background:#30363d;border-radius:3px}
+  </style>
+</head>
+<body>
+
+<!-- ══════════ TOP BAR ══════════ -->
+<div id="topbar">
+  <div class="logo">SITE<span>INTEL</span></div>
+  <div class="badge">ERCOT · WEST TX · P3</div>
+  <div class="live-badge" id="live-status">⟳ INITIALIZING…</div>
+  <div class="spacer"></div>
+  <div class="stat-pill">Qualifying Sites: <strong id="s-qual">—</strong></div>
+  <div class="stat-pill">Avg Score: <strong id="s-avg">—</strong></div>
+  <div class="stat-pill">Regrid Records: <strong id="s-regrid">0 / 2,000</strong></div>
+  <div class="stat-pill">Solar: <strong id="s-src">—</strong></div>
+</div>
+
+<div id="main">
+
+  <!-- ══════════ SIDEBAR ══════════ -->
+  <div id="sidebar">
+
+    <!-- DATA SOURCES -->
+    <div class="sb-sec">
+      <h3>Live Data Sources</h3>
+      <div class="ds-item">
+        <div class="ds-dot loading" id="dot-nrel"></div>
+        <span class="ds-label">NREL NSRDB Solar</span>
+        <span class="ds-status" id="lbl-nrel" style="color:#f7c542">Loading…</span>
+      </div>
+      <div class="ds-item">
+        <div class="ds-dot loading" id="dot-hifld"></div>
+        <span class="ds-label">HIFLD Transmission</span>
+        <span class="ds-status" id="lbl-hifld" style="color:#f7c542">Loading…</span>
+      </div>
+      <div class="ds-item">
+        <div class="ds-dot loading" id="dot-regrid"></div>
+        <span class="ds-label">Regrid Parcel API</span>
+        <span class="ds-status" id="lbl-regrid" style="color:#f7c542">Loading…</span>
+      </div>
+      <div class="ds-item">
+        <div class="ds-dot loading" id="dot-tiles"></div>
+        <span class="ds-label">Regrid Tileserver</span>
+        <span class="ds-status" id="lbl-tiles" style="color:#f7c542">Loading…</span>
+      </div>
+      <div class="ds-item">
+        <div class="ds-dot fallback"></div>
+        <span class="ds-label">FEMA NFHL Flood</span>
+        <span class="ds-status" style="color:#ff9a3c">Phase 4</span>
+      </div>
+
+      <!-- Regrid budget tracker -->
+      <div style="margin-top:10px">
+        <div class="budget-bar-bg">
+          <div class="budget-bar-fill" id="budget-bar" style="width:0%"></div>
+        </div>
+        <div class="budget-label">
+          <span>Sandbox budget</span>
+          <span id="budget-pct">0%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAP LAYERS -->
+    <div class="sb-sec">
+      <h3>Map Layers</h3>
+      <div class="layer-toggle" onclick="toggleLayer('parcels')">
+        <div class="layer-label"><div class="layer-dot" style="background:#a78bfa"></div>Regrid Parcels (Tileserver)</div>
+        <div class="toggle-switch on" id="tog-parcels"></div>
+      </div>
+      <div class="layer-toggle" onclick="toggleLayer('transmission')">
+        <div class="layer-label"><div class="layer-dot" style="background:#ff9a3c"></div>Transmission (HIFLD)</div>
+        <div class="toggle-switch on" id="tog-transmission"></div>
+      </div>
+      <div class="layer-toggle" onclick="toggleLayer('fiber')">
+        <div class="layer-label"><div class="layer-dot" style="background:#58a6ff"></div>Long-Haul Fiber</div>
+        <div class="toggle-switch on" id="tog-fiber"></div>
+      </div>
+      <div class="layer-toggle" onclick="toggleLayer('flood')">
+        <div class="layer-label"><div class="layer-dot" style="background:#ff6b6b"></div>FEMA Flood Zones</div>
+        <div class="toggle-switch on" id="tog-flood"></div>
+      </div>
+      <div class="layer-toggle" onclick="toggleLayer('solar')">
+        <div class="layer-label"><div class="layer-dot" style="background:#ff9a3c"></div>High GHI Zones</div>
+        <div class="toggle-switch on" id="tog-solar"></div>
+      </div>
+      <div class="layer-toggle" onclick="toggleLayer('sites')">
+        <div class="layer-label"><div class="layer-dot" style="background:#3fb950"></div>Candidate Sites</div>
+        <div class="toggle-switch on" id="tog-sites"></div>
+      </div>
+    </div>
+
+    <!-- SCORING WEIGHTS -->
+    <div class="sb-sec">
+      <h3>Scoring Weights</h3>
+      <div class="weight-row">
+        <div class="weight-header"><span>Solar Irradiance</span><span class="weight-val" id="wv-solar">25</span></div>
+        <input type="range" min="0" max="30" value="25" oninput="reweight('solar',this.value)">
+      </div>
+      <div class="weight-row">
+        <div class="weight-header"><span>Transmission</span><span class="weight-val" id="wv-tx">20</span></div>
+        <input type="range" min="0" max="30" value="20" oninput="reweight('tx',this.value)">
+      </div>
+      <div class="weight-row">
+        <div class="weight-header"><span>Fiber Proximity</span><span class="weight-val" id="wv-fiber">20</span></div>
+        <input type="range" min="0" max="30" value="20" oninput="reweight('fiber',this.value)">
+      </div>
+      <div class="weight-row">
+        <div class="weight-header"><span>Flood Safety</span><span class="weight-val" id="wv-flood">15</span></div>
+        <input type="range" min="0" max="30" value="15" oninput="reweight('flood',this.value)">
+      </div>
+      <div class="weight-row">
+        <div class="weight-header"><span>Parcel Aggregability</span><span class="weight-val" id="wv-parcel">10</span></div>
+        <input type="range" min="0" max="30" value="10" oninput="reweight('parcel',this.value)">
+      </div>
+      <div class="weight-row">
+        <div class="weight-header"><span>Tax Incentives</span><span class="weight-val" id="wv-tax">10</span></div>
+        <input type="range" min="0" max="30" value="10" oninput="reweight('tax',this.value)">
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="sb-sec">
+      <h3>Filters</h3>
+      <div class="thr-row">
+        <span>Min Score:</span>
+        <input type="range" min="50" max="95" value="70" style="flex:1" oninput="setThreshold(this.value)">
+        <span class="thr-val" id="thr-val">70</span>
+      </div>
+      <div class="thr-row">
+        <span>Min Acres:</span>
+        <input type="range" min="100" max="5000" value="500" step="100" style="flex:1" oninput="setAcres(this.value)">
+        <span class="thr-val" id="ac-val">500</span>
+      </div>
+      <div style="margin-bottom:8px">
+        <div style="font-size:12px;color:#8b949e;margin-bottom:4px">Max Curtailment:</div>
+        <select id="curt-filter" onchange="redraw()">
+          <option value="all">Any Level</option>
+          <option value="low" selected>Low Only</option>
+          <option value="medium">Low + Medium</option>
+        </select>
+      </div>
+      <div>
+        <div style="font-size:12px;color:#8b949e;margin-bottom:4px">Max Unique Landowners:</div>
+        <select id="owner-filter" onchange="redraw()">
+          <option value="999">Any</option>
+          <option value="3" selected>≤ 3 owners</option>
+          <option value="5">≤ 5 owners</option>
+          <option value="10">≤ 10 owners</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="footnote">
+      🟢 <strong style="color:#8b949e">Live:</strong> NREL · HIFLD · Regrid<br>
+      🟡 <strong style="color:#8b949e">Phase 4:</strong> FEMA NFHL · ERCOT nodal<br>
+      🟡 <strong style="color:#8b949e">Phase 5:</strong> GHL export · multi-state<br><br>
+      ⚠️ Move API keys to server proxy<br>before any public deployment.
+    </div>
+  </div>
+
+  <!-- ══════════ MAP ══════════ -->
+  <div id="map-wrap">
+    <div id="map"></div>
+
+    <div id="zoom-hint">🔍 Zoom in to level 14+ to see parcel boundaries</div>
+
+    <div id="legend">
+      <h4>Composite Score</h4>
+      <div class="leg-item"><div class="leg-dot" style="background:#3fb950"></div>90–100 · Tier 1 Premium</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#58a6ff"></div>80–89 · Tier 2 Strong</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#f7c542"></div>70–79 · Tier 3 Viable</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#484f58"></div>&lt;70 Below Threshold</div>
+    </div>
+
+    <div id="vkey">
+      <h4>Layers</h4>
+      <div class="vk-item"><div class="vk-line" style="background:#ff4500"></div>500kV+ Backbone</div>
+      <div class="vk-item"><div class="vk-line" style="background:#ff9a3c"></div>345kV</div>
+      <div class="vk-item"><div class="vk-line" style="background:#f7c542"></div>230kV</div>
+      <div class="vk-item"><div class="vk-line" style="background:#c9d1d9;opacity:.6"></div>115kV</div>
+      <div class="vk-item" style="margin-top:5px"><div class="vk-line" style="background:repeating-linear-gradient(90deg,#58a6ff 0 5px,transparent 5px 9px)"></div>Fiber</div>
+      <div class="vk-item"><div class="vk-line" style="height:2px;background:#a78bfa;opacity:.7"></div>Regrid Parcels</div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loading">
+      <div class="spinner"></div>
+      <div class="load-title">SiteIntel Phase 3 — Parcel Intelligence</div>
+      <div class="load-step"><div class="dot done"></div>Map tiles loaded</div>
+      <div class="load-step"><div class="dot active" id="ld-hifld"></div><span id="ld-hifld-txt">Fetching HIFLD transmission lines…</span></div>
+      <div class="load-step"><div class="dot" id="ld-nrel"></div><span id="ld-nrel-txt">NREL solar data (8 sites)…</span></div>
+      <div class="load-step"><div class="dot" id="ld-regrid"></div><span id="ld-regrid-txt">Regrid parcel intelligence…</span></div>
+      <div class="load-step"><div class="dot" id="ld-render"></div>Rendering scored candidates</div>
+    </div>
+  </div>
+
+  <!-- ══════════ DETAIL PANEL ══════════ -->
+  <div id="detail">
+    <div id="detail-inner">
+      <div class="det-header">
+        <h2 id="d-name">—</h2>
+        <div class="det-coords" id="d-coords">—</div>
+        <button class="close-btn" onclick="closeDetail()">✕</button>
+      </div>
+      <div class="score-ring-wrap">
+        <div class="score-ring" id="d-ring"><span id="d-score">—</span></div>
+        <div class="score-tier" id="d-tier">—</div>
+      </div>
+      <div class="det-sec">
+        <h3>Score Breakdown</h3>
+        <div id="d-bars"></div>
+      </div>
+      <!-- PARCEL INTELLIGENCE SECTION -->
+      <div class="det-sec" id="d-parcel-sec">
+        <h3>🏡 Parcel Intelligence <span id="d-parcel-src"></span></h3>
+        <div id="d-parcel-content">
+          <div class="parcel-loading"><div class="mini-spin"></div>Loading ownership data…</div>
+        </div>
+      </div>
+      <div class="det-sec">
+        <h3>Site Details</h3>
+        <div class="meta-grid" id="d-meta"></div>
+      </div>
+      <div class="action-row">
+        <button class="btn-g" onclick="exportSite()">📋 Export Lead</button>
+        <button class="btn-zoom" onclick="zoomToParcels()">🔍 Parcels</button>
+        <button class="btn-s" onclick="openGovSearch()">📂 CAD</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ╔══════════════════════════════════════════════════════╗
+// ║  CONFIG                                              ║
+// ║  NREL key below is visible to anyone who views this ║
+// ║  page's source on a public host. It's free + rate-  ║
+// ║  limited; regenerate at developer.nrel.gov anytime. ║
+// ║                                                      ║
+// ║  REGRID_TOKEN is intentionally BLANK. Regrid's API  ║
+// ║  needs a backend (won't work from static hosting),  ║
+// ║  and a token in public source can be abused. We add ║
+// ║  Regrid back via a serverless proxy in the next step.║
+// ╚══════════════════════════════════════════════════════╝
+const NREL_KEY    = 'MaruN9IQMhPR0GdpRAHUDbZdaNFNBEIb4KNx3mLm';
+const REGRID_TOKEN = '';
+
+// ══════════════════════════════════════════════════════
+// SCORING CAPS & LABELS
+// ══════════════════════════════════════════════════════
+const SCORE_CAPS = {solar:25,tx:20,fiber:20,flood:15,parcel:10,tax:10};
+const SCORE_LABELS = {
+  solar:'Solar Irradiance (NREL)',
+  tx:'Transmission Access',
+  fiber:'Fiber Proximity',
+  flood:'Flood Safety',
+  parcel:'Parcel Aggregability',
+  tax:'Tax Incentives'
+};
+
+// ══════════════════════════════════════════════════════
+// SITE DATA — parcel & solar scores overwritten by live
+// ══════════════════════════════════════════════════════
+const SITES = [
+  {id:1,name:"Big Spring Solar Corridor",county:"Howard Co.",state:"TX",lat:32.215,lng:-101.420,acres:1840,curtailment:"Low",
+   scores:{solar:22,tx:19,fiber:17,flood:15,parcel:9,tax:9},solarSrc:'demo',parcelData:null,
+   meta:{"Nearest Sub":"1.2 mi","Fiber Dist.":"0.8 mi","Flood Zone":"X – None","Zoning":"Agricultural","ERCOT Node":"BIGSPRING_1","Curtailment":"Low"}},
+  {id:2,name:"Midland Basin East Flats",county:"Midland Co.",state:"TX",lat:31.968,lng:-101.850,acres:2200,curtailment:"Low",
+   scores:{solar:21,tx:20,fiber:18,flood:15,parcel:8,tax:8},solarSrc:'demo',parcelData:null,
+   meta:{"Nearest Sub":"0.9 mi","Fiber Dist.":"1.1 mi","Flood Zone":"X – None","Zoning":"Industrial/Ag","ERCOT Node":"MIDLND2","Curtailment":"Low"}},
+  {id:3,name:"Sweetwater Wind-Solar Hub",county:"Nolan Co.",state:"TX",lat:32.470,lng:-100.410,acres:3100,curtailment:"Medium",
+   scores:{solar:20,tx:20,fiber:16,flood:15,parcel:10,tax:10},solarSrc:'demo',parcelData:null,
+   meta:{"Nearest Sub":"0.4 mi","Fiber Dist.":"2.1 mi","Flood Zone":"X – None","Zoning":"Agricultural","ERCOT Node":"SWEETWTR","Curtailment":"Medium"}},
+  {id:4,name:"Colorado City Flats",county:"Mitchell Co.",state:"TX",lat:32.390,lng:-100.870,acres:920,curtailment:"Medium",
+   scores:{solar:20,tx:17,fiber:14,flood:12,parcel:7,tax:8},solarSrc:'demo',parcelData:null,
+   meta:{"Nearest Sub":"2.8 mi","Fiber Dist.":"3.2 mi","Flood Zone":"AE – Moderate","Zoning":"Agricultural","ERCOT Node":"COLCITY","Curtailment":"Medium"}},
+  {id:5,name:"Pecos Valley Gateway",county:"Reeves Co.",state:"TX",lat:31.420,lng:-103.490,acres:4500,curtailment:"High",
+   scores:{solar:23,tx:16,fiber:13,flood:15,parcel:9,tax:10},solarSrc:'demo',parcelData:null,
+   meta:{"Nearest Sub":"3.5 mi","Fiber Dist.":"5.0 mi","Flood Zone":"X – None","Zoning":"Agricultural","ERCOT Node":"PECOS_W","Curtailment":"High ⚠️"}},
+  {id:6,name:"Abilene East Industrial",county:"Taylor Co.",state:"TX",lat:32.440,lng:-99.680,acres:680,curtailment:"Low",
+   scores:{solar:18,tx:18,fiber:19,flood:13,parcel:6,tax:7},solarSrc:'demo',parcelData:null,
+   meta:{"Nearest Sub":"1.6 mi","Fiber Dist.":"0.5 mi","Flood Zone":"A – Low-Mod","Zoning":"Industrial","ERCOT Node":"ABILENE","Curtailment":"Low"}},
+  {id:7,name:"San Angelo Solar Reserve",county:"Tom Green Co.",state:"TX",lat:31.550,lng:-100.380,acres:1250,curtailment:"Medium",
+   scores:{solar:20,tx:15,fiber:16,flood:15,parcel:8,tax:8},solarSrc:'demo',parcelData:null,
+   meta:{"Nearest Sub":"4.1 mi","Fiber Dist.":"2.3 mi","Flood Zone":"X – None","Zoning":"Agricultural","ERCOT Node":"SANANGL","Curtailment":"Medium"}},
+  {id:8,name:"Stanton West Acquisition Zone",county:"Martin Co.",state:"TX",lat:32.128,lng:-101.785,acres:2750,curtailment:"Low",
+   scores:{solar:22,tx:18,fiber:15,flood:15,parcel:9,tax:9},solarSrc:'demo',parcelData:null,
+   meta:{"Nearest Sub":"2.0 mi","Fiber Dist.":"2.8 mi","Flood Zone":"X – None","Zoning":"Agricultural","ERCOT Node":"STANTON","Curtailment":"Low"}}
+];
+
+// Static fiber & flood fallback
+const FIBER_ROUTES=[
+  [[32.44,-99.72],[32.30,-100.12],[32.20,-100.52],[32.15,-101.00],[31.97,-101.82]],
+  [[31.97,-101.82],[31.85,-102.10],[31.50,-103.00],[31.42,-103.48]]
+];
+const FLOOD_ZONES=[
+  [[32.455,-99.61],[32.435,-99.63],[32.420,-99.60],[32.438,-99.57]],
+  [[32.400,-100.895],[32.415,-100.910],[32.395,-100.905],[32.382,-100.880]]
+];
+
+// ══════════════════════════════════════════════════════
+// MAP INIT
+// ══════════════════════════════════════════════════════
+const map = L.map('map',{center:[32.05,-101.20],zoom:7});
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+  attribution:'© OpenStreetMap contributors © CARTO',maxZoom:20,subdomains:'abcd'
+}).addTo(map);
+
+// Tooltip CSS injection
+const sty=document.createElement('style');
+sty.textContent=`.tip{background:#21262d!important;border:1px solid #30363d!important;color:#e6edf3!important;font-size:12px!important;box-shadow:0 4px 14px rgba(0,0,0,.6)!important;padding:7px 10px!important;border-radius:6px!important}.tip::before,.tip::after{display:none!important}`;
+document.head.appendChild(sty);
+
+const LG={
+  parcels:      L.layerGroup().addTo(map),
+  transmission: L.layerGroup().addTo(map),
+  fiber:        L.layerGroup().addTo(map),
+  flood:        L.layerGroup().addTo(map),
+  solar:        L.layerGroup().addTo(map),
+  sites:        L.layerGroup().addTo(map)
+};
+const LG_ON={parcels:true,transmission:true,fiber:true,flood:true,solar:true,sites:true};
+
+// Regrid tileserver layer
+let regridTileLayer = null;
+
+// Zoom hint
+map.on('zoomend',()=>{
+  const hint = document.getElementById('zoom-hint');
+  if(LG_ON.parcels && map.getZoom()<14) hint.style.display='block';
+  else hint.style.display='none';
+});
+
+// ══════════════════════════════════════════════════════
+// HELPER: bounding box from site lat/lng + acreage
+// ══════════════════════════════════════════════════════
+function siteBbox(site){
+  const radiusMiles = Math.min(Math.sqrt(site.acres/640)*0.75, 1.6);
+  const dLat = radiusMiles/69;
+  const dLng = radiusMiles/(69*Math.cos(site.lat*Math.PI/180));
+  return [
+    +(site.lng-dLng).toFixed(6),
+    +(site.lat-dLat).toFixed(6),
+    +(site.lng+dLng).toFixed(6),
+    +(site.lat+dLat).toFixed(6)
+  ];
+}
+
+// ══════════════════════════════════════════════════════
+// PARCEL ANALYSIS HELPERS
+// ══════════════════════════════════════════════════════
+function normalizeOwner(name){
+  return (name||'')
+    .toUpperCase()
+    .replace(/\bLLC\b|\bINC\b|\bCORP\b|\bLTD\b|\bTRUST\b|\bTRUSTEE\b|\bET\s*AL\b|\bETAL\b|\bHEIRS\b/g,'')
+    .replace(/[^A-Z0-9 &]/g,'')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+
+// Flag absentee: out-of-state, or major TX metro mailing address
+const ABSENTEE_METROS = ['DALLAS','FORT WORTH','HOUSTON','AUSTIN','SAN ANTONIO','PLANO','FRISCO','MCKINNEY','ALLEN','IRVING','ARLINGTON','DENTON','GARLAND','LUBBOCK','AMARILLO'];
+
+function isAbsentee(fields){
+  const mailState = (fields.mail_state2||fields.mail_state||'').toUpperCase().trim();
+  if(mailState && mailState!=='TX') return {yes:true,reason:`Out-of-state (${mailState})`};
+  const mailCity = (fields.mail_city||'').toUpperCase().trim();
+  if(ABSENTEE_METROS.includes(mailCity)) return {yes:true,reason:`Metro absentee (${mailCity})`};
+  return {yes:false,reason:'Local'};
+}
+
+function calcParcelScore(uniqueOwners,absenteePct){
+  let base;
+  if     (uniqueOwners<=1)  base=8;
+  else if(uniqueOwners<=2)  base=7;
+  else if(uniqueOwners<=3)  base=6;
+  else if(uniqueOwners<=5)  base=5;
+  else if(uniqueOwners<=8)  base=4;
+  else if(uniqueOwners<=15) base=2;
+  else                      base=1;
+  const bonus = absenteePct>=60?2 : absenteePct>=30?1 : 0;
+  return Math.min(base+bonus, SCORE_CAPS.parcel);
+}
+
+function analyzeOwnership(features){
+  const ownerMap={};
+  let totalAcres=0, absenteeCount=0;
+
+  features.forEach(f=>{
+    const fields=f.properties?.fields||f.properties||{};
+    const rawName=(fields.owner||fields.owner2||'UNKNOWN').toString().trim();
+    const norm=normalizeOwner(rawName)||'UNKNOWN';
+    const acres=parseFloat(fields.ll_gisacre||fields.gisacre||fields.shape_area||0);
+    const ab=isAbsentee(fields);
+    const mailState=(fields.mail_state2||fields.mail_state||'??').toUpperCase();
+    const mailCity=(fields.mail_city||'').toUpperCase();
+    const usedesc=(fields.usedesc||fields.usecode||'').toString().toUpperCase();
+
+    if(!ownerMap[norm]) ownerMap[norm]={name:rawName,parcels:0,acres:0,absentee:ab.yes,reason:ab.reason,mailState,mailCity,usedesc};
+    ownerMap[norm].parcels++;
+    ownerMap[norm].acres+=acres;
+    totalAcres+=acres;
+    if(ab.yes) absenteeCount++;
+  });
+
+  const owners=Object.values(ownerMap).sort((a,b)=>b.acres-a.acres);
+  const uniqueOwners=owners.length;
+  const absenteePct=features.length>0?(absenteeCount/features.length)*100:0;
+  const score=calcParcelScore(uniqueOwners,absenteePct);
+
+  return {
+    totalParcels:features.length,
+    uniqueOwners,
+    owners:owners.slice(0,8),
+    absenteeCount,
+    absenteePct:Math.round(absenteePct),
+    totalAcres:Math.round(totalAcres),
+    avgParcelSize:features.length>0?Math.round(totalAcres/features.length):0,
+    score,
+    live:true
+  };
+}
+
+// ══════════════════════════════════════════════════════
+// FETCH HELPER — no AbortSignal (can't clone in iframe)
+// Uses Promise.race timeout instead
+// ══════════════════════════════════════════════════════
+function fetchWithTimeout(url, options={}, ms=12000){
+  const timeout = new Promise((_,reject)=>setTimeout(()=>reject(new Error('Timeout')),ms));
+  return Promise.race([fetch(url,options), timeout]);
+}
+
+// ══════════════════════════════════════════════════════
+// FETCH: REGRID PARCEL API
+// ══════════════════════════════════════════════════════
+let regridRecordsUsed=0;
+
+async function fetchRegridParcels(site){
+  if(!REGRID_TOKEN){ return null; } // No token configured — handled by serverless proxy in next phase
+  try{
+    const [w,s,e,n]=siteBbox(site);
+    const params=new URLSearchParams({
+      token:REGRID_TOKEN,
+      bbox:`${w},${s},${e},${n}`,
+      return_geometry:'true',
+      limit:'100',
+      fields:'owner,owner2,mailadd,mail_city,mail_state2,mail_zip,ll_gisacre,gisacre,usedesc,usecode,parcelnumb,siteadd'
+    });
+    const url=`https://app.regrid.com/api/v2/parcels?${params}`;
+    const r=await fetchWithTimeout(url,{
+      headers:{'Authorization':`Bearer ${REGRID_TOKEN}`,'Accept':'application/json'}
+    },12000);
+    if(!r.ok) throw new Error(`HTTP ${r.status}`);
+    const data=await r.json();
+
+    // Handle both v1 and v2 response envelope
+    const features=data?.parcels?.features||data?.results?.features||data?.features||[];
+    if(!features.length) throw new Error('No parcels returned');
+
+    regridRecordsUsed+=features.length;
+    updateBudget();
+
+    const analysis=analyzeOwnership(features);
+    return analysis;
+  }catch(e){
+    console.warn(`Regrid failed for ${site.name}:`,e.message);
+    return null;
+  }
+}
+
+function updateBudget(){
+  const pct=Math.min((regridRecordsUsed/2000)*100,100);
+  document.getElementById('budget-bar').style.width=pct+'%';
+  document.getElementById('budget-pct').textContent=Math.round(pct)+'%';
+  document.getElementById('s-regrid').textContent=`${regridRecordsUsed.toLocaleString()} / 2,000`;
+  const fill=document.getElementById('budget-bar');
+  fill.style.background=pct>80?'#ff6b6b':pct>50?'#f7c542':'#58a6ff';
+}
+
+// ══════════════════════════════════════════════════════
+// FETCH: NREL SOLAR
+// ══════════════════════════════════════════════════════
+function ghiToScore(ghi,max=25){
+  return Math.round(Math.min(Math.max((ghi-4.2)/(6.4-4.2),0),1)*max);
+}
+function estimateGHI(lat,lng){
+  return 4.8+Math.max(0,(-101-lng)*0.18)-Math.max(0,(lat-33)*0.1);
+}
+async function fetchNREL(site){
+  try{
+    const url=`https://developer.nrel.gov/api/solar/solar_resource/v1.json?api_key=${NREL_KEY}&lat=${site.lat}&lon=${site.lng}`;
+    const r=await fetchWithTimeout(url,{},8000);
+    if(!r.ok) throw new Error(`HTTP ${r.status}`);
+    const d=await r.json();
+    const ghi=d.outputs?.avg_ghi?.annual;
+    if(!ghi) throw new Error('No GHI');
+    site.scores.solar=ghiToScore(ghi,SCORE_CAPS.solar);
+    site.meta['GHI kWh/m²/d']=ghi.toFixed(2)+' ✦live';
+    site.solarSrc='live';
+    return true;
+  }catch(e){
+    const est=estimateGHI(site.lat,site.lng);
+    site.meta['GHI kWh/m²/d']='~'+est.toFixed(1)+' (est)';
+    return false;
+  }
+}
+
+// ══════════════════════════════════════════════════════
+// FETCH: HIFLD TRANSMISSION
+// ══════════════════════════════════════════════════════
+function voltageStyle(v){
+  if(v>=500) return{color:'#ff4500',weight:3,opacity:.9};
+  if(v>=345) return{color:'#ff9a3c',weight:2.5,opacity:.85};
+  if(v>=230) return{color:'#f7c542',weight:2,opacity:.75};
+  return{color:'#c9d1d9',weight:1.5,opacity:.5};
+}
+async function fetchHIFLD(){
+  try{
+    const params=new URLSearchParams({
+      where:"voltage >= 115",
+      outFields:'voltage,owner',
+      geometry:'-106,29,-98,35',
+      geometryType:'esriGeometryEnvelope',
+      spatialRel:'esriSpatialRelIntersects',
+      inSR:'4326',outSR:'4326',f:'geojson',
+      resultRecordCount:'2000'
+    });
+    const r=await fetchWithTimeout(
+      `https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Electric_Power_Transmission_Lines/FeatureServer/0/query?${params}`,
+      {},12000);
+    if(!r.ok) throw new Error(`HTTP ${r.status}`);
+    const geo=await r.json();
+    if(!geo.features?.length) throw new Error('Empty');
+    return geo;
+  }catch(e){
+    console.warn('HIFLD:',e.message);
+    return null;
+  }
+}
+function drawHIFLD(geo){
+  L.geoJSON(geo,{
+    style:f=>{
+      const v=parseFloat(f.properties?.voltage)||115;
+      return voltageStyle(v);
+    },
+    onEachFeature:(f,layer)=>{
+      const v=f.properties?.voltage||'?';
+      layer.bindTooltip(`${v}kV · ${f.properties?.owner||'Unknown'}`,{className:'tip',sticky:true});
+    }
+  }).addTo(LG.transmission);
+}
+function drawStaticTransmission(){
+  [{c:[[32.44,-99.73],[32.35,-100.10],[32.25,-100.52],[32.18,-100.90],[32.10,-101.30],[31.96,-101.85],[31.80,-102.30]],v:345},
+   {c:[[32.50,-100.42],[32.40,-100.50],[32.20,-100.72],[32.10,-101.05]],v:230},
+   {c:[[31.55,-100.38],[31.70,-100.88],[31.90,-101.45],[32.10,-101.78]],v:345},
+   {c:[[31.96,-101.85],[31.82,-103.05],[31.42,-103.49]],v:115}
+  ].forEach(l=>L.polyline(l.c,voltageStyle(l.v)).addTo(LG.transmission).bindTooltip(`~${l.v}kV (estimated)`,{className:'tip'}));
+}
+
+// ══════════════════════════════════════════════════════
+// DRAW STATIC LAYERS
+// ══════════════════════════════════════════════════════
+function drawStaticLayers(){
+  FIBER_ROUTES.forEach(pts=>L.polyline(pts,{color:'#58a6ff',weight:2.2,opacity:.7,dashArray:'7,5'}).addTo(LG.fiber).bindTooltip('Long-Haul Fiber Route',{className:'tip'}));
+  FLOOD_ZONES.forEach(pts=>L.polygon(pts,{color:'#ff6b6b',fillColor:'#ff6b6b',fillOpacity:.2,weight:1.5}).addTo(LG.flood).bindTooltip('FEMA Flood Zone (Phase 4 = live)',{className:'tip'}));
+  [{lat:31.42,lng:-103.49,r:55000},{lat:31.97,lng:-101.85,r:48000},{lat:32.20,lng:-101.42,r:42000}]
+    .forEach(z=>L.circle([z.lat,z.lng],{radius:z.r,color:'#ff9a3c',fillColor:'#ff9a3c',fillOpacity:.06,weight:.8}).addTo(LG.solar).bindTooltip('High GHI Zone (NREL)',{className:'tip'}));
+}
+
+// Regrid tileserver
+function initRegridTiles(){
+  try{
+    regridTileLayer=L.tileLayer(
+      `https://tiles.regrid.com/api/v1/parcels/{z}/{x}/{y}.png?token=${REGRID_TOKEN}`,
+      {attribution:'© Regrid',opacity:0.55,maxZoom:20,minZoom:10}
+    );
+    regridTileLayer.addTo(LG.parcels);
+    setDotStatus('tiles','live','Active','#3fb950');
+    // show zoom hint if needed
+    if(map.getZoom()<14) document.getElementById('zoom-hint').style.display='block';
+    return true;
+  }catch(e){
+    setDotStatus('tiles','fallback','Failed','#ff9a3c');
+    return false;
+  }
+}
+
+// ══════════════════════════════════════════════════════
+// SCORING & RENDERING
+// ══════════════════════════════════════════════════════
+let threshold=70,minAcres=500,curtMax='low',maxOwners=3;
+let activeSite=null;
+
+function totalScore(site){return Object.values(site.scores).reduce((a,b)=>a+b,0)}
+function scoreColor(s){return s>=90?'#3fb950':s>=80?'#58a6ff':s>=70?'#f7c542':'#484f58'}
+function scoreTier(s){
+  return s>=90?'⚡ Tier 1 — Premium Co-Location Site':
+         s>=80?'✅ Tier 2 — Strong Candidate':
+         s>=70?'📋 Tier 3 — Viable with Mitigation':
+               '⚠️ Below Minimum Threshold';
+}
+function curtPass(site){
+  if(curtMax==='all') return true;
+  if(curtMax==='low') return site.curtailment==='Low';
+  return site.curtailment==='Low'||site.curtailment==='Medium';
+}
+function ownerPass(site){
+  if(maxOwners>=999) return true;
+  if(site.parcelData?.live) return site.parcelData.uniqueOwners<=maxOwners;
+  return true; // don't filter if no live data yet
+}
+
+function redraw(){
+  curtMax=document.getElementById('curt-filter').value;
+  maxOwners=parseInt(document.getElementById('owner-filter').value)||999;
+  LG.sites.clearLayers();
+  let qual=0,tot=0;
+  SITES.forEach(site=>{
+    const s=totalScore(site);
+    const show=s>=threshold&&site.acres>=minAcres&&curtPass(site)&&ownerPass(site);
+    if(show){qual++;tot+=s}
+    const c=show?scoreColor(s):'#30363d';
+    const liveDot=site.solarSrc==='live'?`<span style="position:absolute;top:-2px;right:-2px;width:9px;height:9px;background:#3fb950;border-radius:50%;border:1.5px solid #0d1117"></span>`:'';
+    const parcelDot=site.parcelData?.live?`<span style="position:absolute;bottom:-2px;right:-2px;width:9px;height:9px;background:#a78bfa;border-radius:50%;border:1.5px solid #0d1117"></span>`:'';
+    const icon=L.divIcon({
+      className:'',
+      html:`<div style="position:relative;width:38px;height:38px;background:${c};border:2.5px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#0d1117;box-shadow:0 0 14px ${c}90;cursor:pointer;opacity:${show?1:.22}">${s}${liveDot}${parcelDot}</div>`,
+      iconSize:[38,38],iconAnchor:[19,19]
+    });
+    const m=L.marker([site.lat,site.lng],{icon}).addTo(LG.sites);
+    const owners=site.parcelData?.live?` · ${site.parcelData.uniqueOwners} owner${site.parcelData.uniqueOwners!==1?'s':''}`:' · owners loading…';
+    m.bindTooltip(`<strong>${site.name}</strong><br>${site.county} · Score: <strong>${s}</strong> · ${site.acres.toLocaleString()} ac${owners}`,{className:'tip'});
+    m.on('click',()=>openDetail(site));
+  });
+  document.getElementById('s-qual').textContent=qual;
+  document.getElementById('s-avg').textContent=qual>0?Math.round(tot/qual):'—';
+}
+
+// ══════════════════════════════════════════════════════
+// LAYER TOGGLES
+// ══════════════════════════════════════════════════════
+function toggleLayer(name){
+  LG_ON[name]=!LG_ON[name];
+  document.getElementById(`tog-${name}`).classList.toggle('on');
+  if(LG_ON[name]) LG[name].addTo(map);
+  else map.removeLayer(LG[name]);
+  if(name==='parcels'){
+    const hint=document.getElementById('zoom-hint');
+    hint.style.display=(LG_ON[name]&&map.getZoom()<14)?'block':'none';
+  }
+}
+function reweight(k,v){document.getElementById(`wv-${k}`).textContent=v;redraw()}
+function setThreshold(v){threshold=+v;document.getElementById('thr-val').textContent=v;redraw()}
+function setAcres(v){minAcres=+v;document.getElementById('ac-val').textContent=v;redraw()}
+
+// ══════════════════════════════════════════════════════
+// DETAIL PANEL
+// ══════════════════════════════════════════════════════
+function openDetail(site){
+  activeSite=site;
+  const score=totalScore(site);
+  document.getElementById('d-name').textContent=site.name;
+  document.getElementById('d-coords').textContent=`${site.lat.toFixed(4)}°N  ${Math.abs(site.lng).toFixed(4)}°W  ·  ${site.county}`;
+  const c=scoreColor(score);
+  const ring=document.getElementById('d-ring');
+  ring.style.borderColor=c;ring.style.color=c;
+  document.getElementById('d-score').textContent=score;
+  document.getElementById('d-tier').textContent=scoreTier(score);
+
+  // Score bars
+  let bars='';
+  Object.entries(site.scores).forEach(([k,v])=>{
+    const max=SCORE_CAPS[k];
+    const pct=(v/max)*100;
+    const bc=pct>=85?'#3fb950':pct>=65?'#58a6ff':'#f7c542';
+    const tag=k==='solar'&&site.solarSrc==='live'?`<span class="live-tag live">NREL</span>`:
+               k==='parcel'&&site.parcelData?.live?`<span class="live-tag live">REGRID</span>`:``;
+    bars+=`<div class="score-item">
+      <div class="si-head"><span>${SCORE_LABELS[k]}${tag}</span><span style="color:${bc}">${v}/${max}</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:${pct}%;background:${bc}"></div></div>
+    </div>`;
+  });
+  document.getElementById('d-bars').innerHTML=bars;
+
+  // Meta grid
+  let meta='';
+  Object.entries(site.meta).forEach(([k,v])=>{
+    meta+=`<div class="meta-cell"><div class="meta-label">${k}</div><div class="meta-val">${v}</div></div>`;
+  });
+  document.getElementById('d-meta').innerHTML=meta;
+
+  // Parcel section
+  renderParcelSection(site);
+
+  document.getElementById('detail').classList.add('open');
+  map.panTo([site.lat,site.lng],{animate:true,duration:.5});
+}
+
+function renderParcelSection(site){
+  const srcEl=document.getElementById('d-parcel-src');
+  const content=document.getElementById('d-parcel-content');
+
+  if(!site.parcelData){
+    srcEl.innerHTML='';
+    content.innerHTML=`<div class="parcel-loading"><div class="mini-spin"></div>Loading ownership data…</div>`;
+    return;
+  }
+  if(!site.parcelData.live){
+    srcEl.innerHTML='<span class="live-tag demo">DEMO</span>';
+    content.innerHTML=`<div style="font-size:12px;color:#8b949e;padding:4px 0">Parcel data unavailable — showing estimated values. Verify sandbox token.</div>`;
+    return;
+  }
+
+  srcEl.innerHTML='<span class="live-tag live">REGRID LIVE</span>';
+  const pd=site.parcelData;
+
+  // Acquisition difficulty logic
+  let diffLevel, diffPct, diffColor, alertClass, alertMsg;
+  if(pd.uniqueOwners<=2&&pd.absenteePct>=40){
+    diffLevel='HIGH PRIORITY';diffPct=90;diffColor='#3fb950';alertClass='high';
+    alertMsg=`🎯 ${pd.uniqueOwners} landowner${pd.uniqueOwners>1?'s':''} · ${pd.absenteePct}% absentee. This is an ideal acquisition target — few decision-makers, remote ownership suggests motivated sellers.`;
+  } else if(pd.uniqueOwners<=4){
+    diffLevel='FAVORABLE';diffPct=65;diffColor='#58a6ff';alertClass='medium';
+    alertMsg=`✅ ${pd.uniqueOwners} unique owners across ${pd.totalParcels} parcels. Manageable assembly — prioritize absentee owners for first contact.`;
+  } else {
+    diffLevel='COMPLEX';diffPct=30;diffColor='#ff9a3c';alertClass='hard';
+    alertMsg=`⚠️ ${pd.uniqueOwners} landowners across ${pd.totalParcels} parcels. Complex assembly — recommend staged approach starting with largest contiguous blocks.`;
+  }
+
+  let html=`
+    <div class="acq-summary">
+      <div class="acq-stat"><div class="acq-stat-val" style="color:#e6edf3">${pd.totalParcels}</div><div class="acq-stat-label">Parcels</div></div>
+      <div class="acq-stat"><div class="acq-stat-val" style="color:${pd.uniqueOwners<=3?'#3fb950':pd.uniqueOwners<=6?'#f7c542':'#ff6b6b'}">${pd.uniqueOwners}</div><div class="acq-stat-label">Owners</div></div>
+      <div class="acq-stat"><div class="acq-stat-val" style="color:${pd.absenteePct>=50?'#3fb950':'#f7c542'}">${pd.absenteePct}%</div><div class="acq-stat-label">Absentee</div></div>
+      <div class="acq-stat"><div class="acq-stat-val" style="color:#c9d1d9">${pd.avgParcelSize}</div><div class="acq-stat-label">Avg Acres</div></div>
+    </div>
+    <div class="acq-alert ${alertClass}">${alertMsg}</div>
+    <div class="difficulty-row">
+      <span class="difficulty-label">Acq. Ease:</span>
+      <div class="difficulty-bar"><div class="difficulty-fill" style="width:${diffPct}%;background:${diffColor}"></div></div>
+      <span class="difficulty-text" style="color:${diffColor}">${diffLevel}</span>
+    </div>
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8b949e;margin-bottom:8px">Owner Breakdown</div>
+  `;
+
+  pd.owners.forEach((o,i)=>{
+    const flagClass=o.absentee?'absentee':'local';
+    const flagText=o.absentee?`${o.reason}`:'Local TX';
+    const flagDisplay=o.mailState==='?'||!o.mailState?'unknown':flagClass;
+    html+=`<div class="owner-card ${o.absentee?'absentee':''}">
+      <div class="owner-rank">${i+1}</div>
+      <div class="owner-info">
+        <div class="owner-name">${o.name||'Unknown'}</div>
+        <div class="owner-meta">${o.parcels} parcel${o.parcels!==1?'s':''} · ${o.acres>0?o.acres.toFixed(0)+' ac':'—'}</div>
+      </div>
+      <div class="owner-flag ${flagDisplay==='unknown'?'unknown':flagClass}">${flagDisplay==='unknown'?'?':flagText}</div>
+    </div>`;
+  });
+
+  content.innerHTML=html;
+}
+
+function closeDetail(){
+  document.getElementById('detail').classList.remove('open');
+  activeSite=null;
+}
+
+function zoomToParcels(){
+  if(!activeSite) return;
+  map.flyTo([activeSite.lat,activeSite.lng],15,{duration:1.2});
+}
+
+function openGovSearch(){
+  if(!activeSite) return;
+  const county=activeSite.county.replace(' Co.','').toLowerCase().replace(' ','');
+  window.open(`https://propaccess.trueautomation.com/clientdb/?cid=1&State=TX&County=${county}%20County`,'_blank');
+}
+
+function exportSite(){
+  if(!activeSite) return;
+  const s=totalScore(activeSite);
+  const pd=activeSite.parcelData;
+  const lines=[
+    `SITEINTEL LEAD EXPORT — ${new Date().toLocaleDateString()}`,
+    `════════════════════════════════`,
+    `Site: ${activeSite.name}`,
+    `County: ${activeSite.county}`,
+    `Coordinates: ${activeSite.lat}, ${activeSite.lng}`,
+    `Acreage: ${activeSite.acres.toLocaleString()} ac`,
+    `Composite Score: ${s}/100`,
+    `Tier: ${scoreTier(s)}`,
+    `Solar Source: ${activeSite.solarSrc==='live'?'NREL NSRDB (live)':'Estimated'}`,
+    ``,`SCORE BREAKDOWN:`
+  ];
+  Object.entries(activeSite.scores).forEach(([k,v])=>lines.push(`  ${SCORE_LABELS[k]}: ${v}/${SCORE_CAPS[k]}`));
+  if(pd?.live){
+    lines.push(``,`PARCEL INTELLIGENCE (Regrid Live):`,
+      `  Total Parcels: ${pd.totalParcels}`,
+      `  Unique Owners: ${pd.uniqueOwners}`,
+      `  Absentee %: ${pd.absenteePct}%`,
+      `  Avg Parcel Size: ${pd.avgParcelSize} ac`,
+      ``,`  OWNER LIST:`);
+    pd.owners.forEach((o,i)=>lines.push(`  ${i+1}. ${o.name} — ${o.parcels} parcels, ${o.acres>0?o.acres.toFixed(0)+' ac':'? ac'} [${o.absentee?'ABSENTEE: '+o.reason:'LOCAL'}]`));
+  }
+  lines.push(``,`SITE DETAILS:`);
+  Object.entries(activeSite.meta).forEach(([k,v])=>lines.push(`  ${k}: ${v}`));
+  const blob=new Blob([lines.join('\n')],{type:'text/plain'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`SiteIntel_${activeSite.name.replace(/\s+/g,'_')}.txt`;
+  a.click();
+}
+
+// ══════════════════════════════════════════════════════
+// STATUS HELPERS
+// ══════════════════════════════════════════════════════
+function setDotStatus(id,cls,label,color){
+  const d=document.getElementById('dot-'+id);
+  const l=document.getElementById('lbl-'+id);
+  if(d) d.className='ds-dot '+cls;
+  if(l){l.textContent=label;l.style.color=color}
+}
+function setLoadDot(id,state){const d=document.getElementById('ld-'+id);if(d)d.className='dot '+state}
+function setLoadTxt(id,txt){const el=document.getElementById('ld-'+id+'-txt');if(el)el.textContent=txt}
+
+// ══════════════════════════════════════════════════════
+// MAIN INIT
+// ══════════════════════════════════════════════════════
+async function init(){
+  drawStaticLayers();
+  initRegridTiles();
+
+  // ── HIFLD ──
+  setLoadDot('hifld','active');
+  const hifldGeo=await fetchHIFLD();
+  if(hifldGeo){
+    drawHIFLD(hifldGeo);
+    setLoadDot('hifld','done');
+    setLoadTxt('hifld',`HIFLD: ${hifldGeo.features.length} TX transmission lines`);
+    setDotStatus('hifld','live',`${hifldGeo.features.length} lines`,'#3fb950');
+  }else{
+    drawStaticTransmission();
+    setLoadDot('hifld','fail');
+    setLoadTxt('hifld','HIFLD unavailable — using estimated routes');
+    setDotStatus('hifld','fallback','Estimated','#ff9a3c');
+  }
+
+  // ── NREL (parallel) ──
+  setLoadDot('nrel','active');
+  setLoadTxt('nrel','Fetching NREL solar for 8 sites…');
+  const nrelResults=await Promise.all(SITES.map(fetchNREL));
+  const nrelLive=nrelResults.filter(Boolean).length;
+  if(nrelLive>0){
+    setLoadDot('nrel','done');
+    setLoadTxt('nrel',`NREL: ${nrelLive}/8 sites live`);
+    setDotStatus('nrel','live',`${nrelLive}/8 live`,'#3fb950');
+    document.getElementById('s-src').textContent=`${nrelLive}/8 Live`;
+  }else{
+    setLoadDot('nrel','fail');
+    setLoadTxt('nrel','NREL unavailable — estimated GHI');
+    setDotStatus('nrel','fallback','Estimated','#ff9a3c');
+    document.getElementById('s-src').textContent='Estimated';
+  }
+
+  // ── REGRID PARCELS (sequential to control budget) ──
+  setLoadDot('regrid','active');
+  let regridLive=0;
+  if(!REGRID_TOKEN){
+    // No token in public build — comes back via serverless proxy next phase
+    setLoadDot('regrid','done');
+    setLoadTxt('regrid','Regrid: deferred (needs backend proxy)');
+    setDotStatus('regrid','fallback','Next phase','#ff9a3c');
+  }else{
+    setLoadTxt('regrid','Regrid: fetching parcel ownership…');
+    for(let i=0;i<SITES.length;i++){
+      setLoadTxt('regrid',`Regrid: site ${i+1}/${SITES.length} — ${SITES[i].name.split(' ').slice(0,2).join(' ')}…`);
+      const pd=await fetchRegridParcels(SITES[i]);
+      if(pd){
+        SITES[i].parcelData=pd;
+        SITES[i].scores.parcel=pd.score;
+        SITES[i].meta['Landowners']=pd.uniqueOwners.toString();
+        SITES[i].meta['Absentee %']=pd.absenteePct+'%';
+        regridLive++;
+      }
+    }
+    if(regridLive>0){
+      setLoadDot('regrid','done');
+      setLoadTxt('regrid',`Regrid: ${regridLive}/8 sites live · ${regridRecordsUsed} records`);
+      setDotStatus('regrid','live',`${regridLive}/8 live`,'#3fb950');
+    }else{
+      setLoadDot('regrid','fail');
+      setLoadTxt('regrid','Regrid unavailable — check token');
+      setDotStatus('regrid','fallback','Check token','#ff9a3c');
+    }
+  }
+
+  // ── RENDER ──
+  setLoadDot('render','active');
+  redraw();
+
+  await new Promise(r=>setTimeout(r,350));
+  setLoadDot('render','done');
+  document.getElementById('loading').style.display='none';
+
+  // Update top bar badge
+  const allLive=nrelLive>0||regridLive>0;
+  const badge=document.getElementById('live-status');
+  badge.textContent=`✦ NREL ${nrelLive}/8 · REGRID ${regridLive}/8 · HIFLD ${hifldGeo?'LIVE':'EST'}`;
+  badge.style.animation='none';
+  badge.style.color=allLive?'#3fb950':'#ff9a3c';
+  badge.style.borderColor=allLive?'#2ea043':'#6b3a00';
+  badge.style.background=allLive?'#0d4a1a':'#2a1a00';
+}
+
+init();
+</script>
+</body>
+</html>
