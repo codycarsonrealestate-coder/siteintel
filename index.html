@@ -429,7 +429,7 @@
 // ║  CONFIG                                              ║
 // ║  NREL key below is visible to anyone who views this ║
 // ║  page's source on a public host. It's free + rate-  ║
-// ║  limited; regenerate at developer.nrel.gov anytime. ║
+// ║  limited; regenerate at developer.nlr.gov anytime.  ║
 // ║                                                      ║
 // ║  REGRID_TOKEN is intentionally BLANK. Regrid's API  ║
 // ║  needs a backend (won't work from static hosting),  ║
@@ -682,7 +682,7 @@ function estimateGHI(lat,lng){
 }
 async function fetchNREL(site){
   try{
-    const url=`https://developer.nrel.gov/api/solar/solar_resource/v1.json?api_key=${NREL_KEY}&lat=${site.lat}&lon=${site.lng}`;
+    const url=`https://developer.nlr.gov/api/solar/solar_resource/v1.json?api_key=${NREL_KEY}&lat=${site.lat}&lon=${site.lng}`;
     const r=await fetchWithTimeout(url,{},8000);
     if(!r.ok) throw new Error(`HTTP ${r.status}`);
     const d=await r.json();
