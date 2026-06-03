@@ -427,14 +427,19 @@
 <script>
 // ╔══════════════════════════════════════════════════════╗
 // ║  CONFIG                                              ║
-// ║  NREL key below is visible to anyone who views this ║
-// ║  page's source on a public host. It's free + rate-  ║
-// ║  limited; regenerate at developer.nlr.gov anytime.  ║
+// ║  NREL/NLR key below is visible to anyone viewing    ║
+// ║  this page's source on a public host. It's free +   ║
+// ║  rate-limited; fine for testing, but the clean home ║
+// ║  for it is the serverless proxy (next phase).       ║
 // ║                                                      ║
-// ║  REGRID_TOKEN is intentionally BLANK. Regrid's API  ║
-// ║  needs a backend (won't work from static hosting),  ║
-// ║  and a token in public source can be abused. We add ║
-// ║  Regrid back via a serverless proxy in the next step.║
+// ║  DOMAIN NOTE: NREL was renamed "National Laboratory ║
+// ║  of the Rockies" (NLR) by DOE, effective Dec 1 2025.║
+// ║  Old developer.nrel.gov DNS died May 29 2026.       ║
+// ║  Correct live domain is developer.nlr.gov.          ║
+// ║                                                      ║
+// ║  REGRID_TOKEN still BLANK: Regrid's API needs a     ║
+// ║  backend (CORS-blocked from static hosting). Added  ║
+// ║  back via the serverless proxy next step.           ║
 // ╚══════════════════════════════════════════════════════╝
 const NREL_KEY    = 'FeIpz0eke3ZFiIuzbVUzB2V9fVmSazM4sChNJMMi';
 const REGRID_TOKEN = '';
@@ -681,6 +686,10 @@ function estimateGHI(lat,lng){
   return 4.8+Math.max(0,(-101-lng)*0.18)-Math.max(0,(lat-33)*0.1);
 }
 async function fetchNREL(site){
+  if(!NREL_KEY){  // No key in static build — moves behind proxy next phase
+    site.meta['GHI kWh/m²/d']='~'+estimateGHI(site.lat,site.lng).toFixed(1)+' (est)';
+    return false;
+  }
   try{
     const url=`https://developer.nlr.gov/api/solar/solar_resource/v1.json?api_key=${NREL_KEY}&lat=${site.lat}&lon=${site.lng}`;
     const r=await fetchWithTimeout(url,{},8000);
