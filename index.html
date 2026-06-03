@@ -436,7 +436,7 @@
 // ║  and a token in public source can be abused. We add ║
 // ║  Regrid back via a serverless proxy in the next step.║
 // ╚══════════════════════════════════════════════════════╝
-const NREL_KEY    = 'MaruN9IQMhPR0GdpRAHUDbZdaNFNBEIb4KNx3mLm';
+const NREL_KEY    = 'FeIpz0eke3ZFiIuzbVUzB2V9fVmSazM4sChNJMMi';
 const REGRID_TOKEN = '';
 
 // ══════════════════════════════════════════════════════
@@ -734,12 +734,15 @@ async function fetchHIFLD(){
 function drawHIFLD(geo){
   L.geoJSON(geo,{
     style:f=>{
-      const v=parseFloat(f.properties?.voltage)||115;
+      // HIFLD returns voltage field — try both casings across different service versions
+      const v=parseFloat(f.properties?.voltage||f.properties?.VOLTAGE||f.properties?.volt_class||0)||115;
       return voltageStyle(v);
     },
     onEachFeature:(f,layer)=>{
-      const v=f.properties?.voltage||'?';
-      layer.bindTooltip(`${v}kV · ${f.properties?.owner||'Unknown'}`,{className:'tip',sticky:true});
+      const p=f.properties||{};
+      const v=p.voltage||p.VOLTAGE||p.volt_class||'?';
+      const owner=p.owner||p.OWNER||p.owner1||'Unknown';
+      layer.bindTooltip(`${v}kV · ${owner}`,{className:'tip',sticky:true});
     }
   }).addTo(LG.transmission);
 }
