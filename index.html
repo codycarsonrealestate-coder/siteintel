@@ -204,7 +204,7 @@
   <button id="basemap-btn" onclick="toggleBasemap()" style="background:#21262d;border:1px solid #30363d;color:#c9d1d9;padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;transition:background .15s">🛰 Satellite</button>
   <div class="stat-pill">Qualifying Sites: <strong id="s-qual">—</strong></div>
   <div class="stat-pill">Avg Score: <strong id="s-avg">—</strong></div>
-  <div class="stat-pill">Regrid Records: <strong id="s-regrid">0 / 2,000</strong></div>
+  <div class="stat-pill">TxGIO Parcels: <strong id="s-regrid">—</strong></div>
   <div class="stat-pill">Solar: <strong id="s-src">—</strong></div>
 </div>
 
@@ -232,35 +232,15 @@
         <span class="ds-status" id="lbl-regrid" style="color:#f7c542">Loading…</span>
       </div>
       <div class="ds-item">
-        <div class="ds-dot loading" id="dot-tiles"></div>
-        <span class="ds-label">Regrid Tileserver</span>
-        <span class="ds-status" id="lbl-tiles" style="color:#f7c542">Loading…</span>
-      </div>
-      <div class="ds-item">
         <div class="ds-dot pending" id="dot-fema"></div>
         <span class="ds-label">FEMA NFHL Flood</span>
         <span class="ds-status" id="lbl-fema" style="color:#f7c542">Loading…</span>
-      </div>
-
-      <!-- Regrid budget tracker -->
-      <div style="margin-top:10px">
-        <div class="budget-bar-bg">
-          <div class="budget-bar-fill" id="budget-bar" style="width:0%"></div>
-        </div>
-        <div class="budget-label">
-          <span>Sandbox budget</span>
-          <span id="budget-pct">0%</span>
-        </div>
       </div>
     </div>
 
     <!-- MAP LAYERS -->
     <div class="sb-sec">
       <h3>Map Layers</h3>
-      <div class="layer-toggle" onclick="toggleLayer('parcels')">
-        <div class="layer-label"><div class="layer-dot" style="background:#a78bfa"></div>Regrid Parcels (Tileserver)</div>
-        <div class="toggle-switch on" id="tog-parcels"></div>
-      </div>
       <div class="layer-toggle" onclick="toggleLayer('transmission')">
         <div class="layer-label"><div class="layer-dot" style="background:#ff9a3c"></div>Transmission (HIFLD)</div>
         <div class="toggle-switch on" id="tog-transmission"></div>
@@ -336,8 +316,8 @@
       <div>
         <div style="font-size:12px;color:#8b949e;margin-bottom:4px">Max Unique Landowners:</div>
         <select id="owner-filter" onchange="redraw()">
-          <option value="999">Any</option>
-          <option value="3" selected>≤ 3 owners</option>
+          <option value="999" selected>Any</option>
+          <option value="3">≤ 3 owners</option>
           <option value="5">≤ 5 owners</option>
           <option value="10">≤ 10 owners</option>
         </select>
@@ -373,7 +353,6 @@
       <div class="vk-item"><div class="vk-line" style="background:#f7c542"></div>230kV</div>
       <div class="vk-item"><div class="vk-line" style="background:#c9d1d9;opacity:.6"></div>115kV</div>
       <div class="vk-item" style="margin-top:5px"><div class="vk-line" style="background:repeating-linear-gradient(90deg,#58a6ff 0 5px,transparent 5px 9px)"></div>Fiber</div>
-      <div class="vk-item"><div class="vk-line" style="height:2px;background:#a78bfa;opacity:.7"></div>Regrid Parcels</div>
     </div>
 
     <!-- Loading overlay -->
@@ -383,7 +362,7 @@
       <div class="load-step"><div class="dot done"></div>Map tiles loaded</div>
       <div class="load-step"><div class="dot active" id="ld-hifld"></div><span id="ld-hifld-txt">Fetching HIFLD transmission lines…</span></div>
       <div class="load-step"><div class="dot" id="ld-nrel"></div><span id="ld-nrel-txt">NREL solar data (8 sites)…</span></div>
-      <div class="load-step"><div class="dot" id="ld-regrid"></div><span id="ld-regrid-txt">Regrid parcel intelligence…</span></div>
+      <div class="load-step"><div class="dot" id="ld-regrid"></div><span id="ld-regrid-txt">TxGIO parcel intelligence…</span></div>
       <div class="load-step"><div class="dot" id="ld-render"></div>Rendering scored candidates</div>
     </div>
   </div>
@@ -535,19 +514,15 @@ sty.textContent=`.tip{background:#21262d!important;border:1px solid #30363d!impo
 document.head.appendChild(sty);
 
 const LG={
-  parcels:      L.layerGroup().addTo(map),
   transmission: L.layerGroup().addTo(map),
   fiber:        L.layerGroup().addTo(map),
   flood:        L.layerGroup().addTo(map),
   solar:        L.layerGroup().addTo(map),
   sites:        L.layerGroup().addTo(map)
 };
-const LG_ON={parcels:true,transmission:true,fiber:true,flood:true,solar:true,sites:true};
+const LG_ON={transmission:true,fiber:true,flood:true,solar:true,sites:true};
 
-// Regrid tileserver layer
-let regridTileLayer = null;
-
-// Zoom hint
+// Zoom hint (for FEMA tiles)
 map.on('zoomend',()=>{
   const hint = document.getElementById('zoom-hint');
   if(LG_ON.parcels && map.getZoom()<14) hint.style.display='block';
@@ -699,12 +674,7 @@ async function fetchRegridParcels(site){
 }
 
 function updateBudget(){
-  const pct=Math.min((regridRecordsUsed/2000)*100,100);
-  document.getElementById('budget-bar').style.width=pct+'%';
-  document.getElementById('budget-pct').textContent=Math.round(pct)+'%';
-  document.getElementById('s-regrid').textContent=`${regridRecordsUsed.toLocaleString()} / 2,000`;
-  const fill=document.getElementById('budget-bar');
-  fill.style.background=pct>80?'#ff6b6b':pct>50?'#f7c542':'#58a6ff';
+  document.getElementById('s-regrid').textContent=`${regridRecordsUsed.toLocaleString()} fetched`;
 }
 
 // ══════════════════════════════════════════════════════
@@ -802,23 +772,6 @@ function drawStaticLayers(){
   // LG.flood intentionally empty here — populated by initFEMALayer() with live NFHL tiles
   [{lat:31.42,lng:-103.49,r:55000},{lat:31.97,lng:-101.85,r:48000},{lat:32.20,lng:-101.42,r:42000}]
     .forEach(z=>L.circle([z.lat,z.lng],{radius:z.r,color:'#ff9a3c',fillColor:'#ff9a3c',fillOpacity:.06,weight:.8}).addTo(LG.solar).bindTooltip('High GHI Zone (NREL)',{className:'tip'}));
-}
-
-// Regrid tileserver
-function initRegridTiles(){
-  try{
-    regridTileLayer=L.tileLayer(
-      `https://tiles.regrid.com/api/v1/parcels/{z}/{x}/{y}.png?token=${REGRID_TOKEN}`,
-      {attribution:'© Regrid',opacity:0.55,maxZoom:20,minZoom:10}
-    );
-    regridTileLayer.addTo(LG.parcels);
-    setDotStatus('tiles','live','Active','#3fb950');
-    if(map.getZoom()<14) document.getElementById('zoom-hint').style.display='block';
-    return true;
-  }catch(e){
-    setDotStatus('tiles','fallback','Failed','#ff9a3c');
-    return false;
-  }
 }
 
 // ══════════════════════════════════════════════════════
@@ -985,7 +938,7 @@ function renderParcelSection(site){
     return;
   }
 
-  srcEl.innerHTML='<span class="live-tag live">REGRID LIVE</span>';
+  srcEl.innerHTML='<span class="live-tag live">TxGIO LIVE</span>';
   const pd=site.parcelData;
 
   // Acquisition difficulty logic
@@ -1102,7 +1055,6 @@ function setLoadTxt(id,txt){const el=document.getElementById('ld-'+id+'-txt');if
 // ══════════════════════════════════════════════════════
 async function init(){
   drawStaticLayers();
-  initRegridTiles();
 
   // ── FEMA NFHL live tiles ──
   const femaOk = initFEMALayer();
