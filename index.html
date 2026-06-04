@@ -444,8 +444,7 @@
 // ╚══════════════════════════════════════════════════════╝
 const NREL_KEY     = 'FeIpz0eke3ZFiIuzbVUzB2V9fVmSazM4sChNJMMi';
 const REGRID_TOKEN = '';   // Kept blank — token lives in Cloudflare Worker environment
-const PROXY_URL    = '';   // ← Paste your Worker URL here after deploying
-                           //   e.g. 'https://siteintel-regrid.YOUR-NAME.workers.dev'
+const PROXY_URL    = 'https://siteintel-regrid.codycarsonrealestate.workers.dev';
 
 // ══════════════════════════════════════════════════════
 // SCORING CAPS & LABELS
@@ -586,8 +585,8 @@ function normalizeOwner(name){
 const ABSENTEE_METROS = ['DALLAS','FORT WORTH','HOUSTON','AUSTIN','SAN ANTONIO','PLANO','FRISCO','MCKINNEY','ALLEN','IRVING','ARLINGTON','DENTON','GARLAND','LUBBOCK','AMARILLO'];
 
 function isAbsentee(fields){
-  // TxGIO fields: mail_state | Regrid fields: mail_state2
-  const mailState = (fields.mail_state||fields.mail_state2||'').toUpperCase().trim();
+  // TxGIO: mail_stat | Regrid: mail_state / mail_state2
+  const mailState = (fields.mail_stat||fields.mail_state||fields.mail_state2||'').toUpperCase().trim();
   if(mailState && mailState!=='TX') return {yes:true,reason:`Out-of-state (${mailState})`};
   const mailCity = (fields.mail_city||'').toUpperCase().trim();
   if(ABSENTEE_METROS.includes(mailCity)) return {yes:true,reason:`Metro absentee (${mailCity})`};
@@ -619,8 +618,8 @@ function analyzeOwnership(features){
     // TxGIO: gis_acres | Regrid: ll_gisacre / gisacre
     const acres=parseFloat(fields.gis_acres||fields.ll_gisacre||fields.gisacre||0);
     const ab=isAbsentee(fields);
-    // TxGIO: mail_state | Regrid: mail_state2
-    const mailState=(fields.mail_state||fields.mail_state2||'??').toUpperCase();
+    // TxGIO: mail_stat | Regrid: mail_state2
+    const mailState=(fields.mail_stat||fields.mail_state||fields.mail_state2||'??').toUpperCase();
     const mailCity=(fields.mail_city||'').toUpperCase();
     const usedesc=(fields.land_use||fields.usedesc||fields.usecode||'').toString().toUpperCase();
 
