@@ -201,6 +201,7 @@
   <div class="badge">ERCOT · WEST TX · P3</div>
   <div class="live-badge" id="live-status">⟳ INITIALIZING…</div>
   <div class="spacer"></div>
+  <button id="basemap-btn" onclick="toggleBasemap()" style="background:#21262d;border:1px solid #30363d;color:#c9d1d9;padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;transition:background .15s">🛰 Satellite</button>
   <div class="stat-pill">Qualifying Sites: <strong id="s-qual">—</strong></div>
   <div class="stat-pill">Avg Score: <strong id="s-avg">—</strong></div>
   <div class="stat-pill">Regrid Records: <strong id="s-regrid">0 / 2,000</strong></div>
@@ -227,7 +228,7 @@
       </div>
       <div class="ds-item">
         <div class="ds-dot loading" id="dot-regrid"></div>
-        <span class="ds-label">Regrid Parcel API</span>
+        <span class="ds-label">TxGIO Parcels (Free)</span>
         <span class="ds-status" id="lbl-regrid" style="color:#f7c542">Loading…</span>
       </div>
       <div class="ds-item">
@@ -344,8 +345,8 @@
     </div>
 
     <div class="footnote">
-      🟢 <strong style="color:#8b949e">Live:</strong> NREL · HIFLD · Regrid · FEMA<br>
-      🟡 <strong style="color:#8b949e">Next:</strong> Regrid proxy · site discovery engine<br>
+      🟢 <strong style="color:#8b949e">Live:</strong> NREL · HIFLD · FEMA · TxGIO<br>
+      🟡 <strong style="color:#8b949e">Next:</strong> Site discovery engine · BLM exclusion<br>
       🟡 <strong style="color:#8b949e">Phase 5:</strong> GHL export · multi-state<br><br>
       ⚠️ Move API keys to server proxy<br>before any public deployment.
     </div>
@@ -443,7 +444,8 @@
 // ╚══════════════════════════════════════════════════════╝
 const NREL_KEY     = 'FeIpz0eke3ZFiIuzbVUzB2V9fVmSazM4sChNJMMi';
 const REGRID_TOKEN = '';   // Kept blank — token lives in Cloudflare Worker environment
-const PROXY_URL    = 'https://siteintel-regrid.codycarsonrealestate.workers.dev';
+const PROXY_URL    = '';   // ← Paste your Worker URL here after deploying
+                           //   e.g. 'https://siteintel-regrid.YOUR-NAME.workers.dev'
 
 // ══════════════════════════════════════════════════════
 // SCORING CAPS & LABELS
@@ -502,11 +504,33 @@ const FLOOD_ZONES=[
 // MAP INIT
 // ══════════════════════════════════════════════════════
 const map = L.map('map',{center:[32.05,-101.20],zoom:7});
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
-  attribution:'© OpenStreetMap contributors © CARTO',maxZoom:20,subdomains:'abcd'
-}).addTo(map);
 
-// Tooltip CSS injection
+// ══════════════════════════════════════════════════════
+// BASEMAP LAYERS + TOGGLE
+// ══════════════════════════════════════════════════════
+const BASEMAPS = {
+  dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+    attribution:'© OpenStreetMap contributors © CARTO',maxZoom:20,subdomains:'abcd'
+  }),
+  satellite: L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+    attribution:'© Esri, Maxar, Earthstar Geographics',maxZoom:19
+  })
+};
+let currentBasemap = 'dark';
+BASEMAPS.dark.addTo(map);
+
+function toggleBasemap(){
+  const next = currentBasemap==='dark' ? 'satellite' : 'dark';
+  map.removeLayer(BASEMAPS[currentBasemap]);
+  BASEMAPS[next].addTo(map);
+  // Move basemap below all data layers
+  BASEMAPS[next].bringToBack();
+  currentBasemap = next;
+  const btn = document.getElementById('basemap-btn');
+  btn.textContent = next==='satellite' ? '🌑 Dark Map' : '🛰 Satellite';
+  btn.style.background = next==='satellite' ? '#0d2a3a' : '#21262d';
+  btn.style.color = next==='satellite' ? '#58a6ff' : '#c9d1d9';
+}
 const sty=document.createElement('style');
 sty.textContent=`.tip{background:#21262d!important;border:1px solid #30363d!important;color:#e6edf3!important;font-size:12px!important;box-shadow:0 4px 14px rgba(0,0,0,.6)!important;padding:7px 10px!important;border-radius:6px!important}.tip::before,.tip::after{display:none!important}`;
 document.head.appendChild(sty);
@@ -562,7 +586,8 @@ function normalizeOwner(name){
 const ABSENTEE_METROS = ['DALLAS','FORT WORTH','HOUSTON','AUSTIN','SAN ANTONIO','PLANO','FRISCO','MCKINNEY','ALLEN','IRVING','ARLINGTON','DENTON','GARLAND','LUBBOCK','AMARILLO'];
 
 function isAbsentee(fields){
-  const mailState = (fields.mail_state2||fields.mail_state||'').toUpperCase().trim();
+  // TxGIO fields: mail_state | Regrid fields: mail_state2
+  const mailState = (fields.mail_state||fields.mail_state2||'').toUpperCase().trim();
   if(mailState && mailState!=='TX') return {yes:true,reason:`Out-of-state (${mailState})`};
   const mailCity = (fields.mail_city||'').toUpperCase().trim();
   if(ABSENTEE_METROS.includes(mailCity)) return {yes:true,reason:`Metro absentee (${mailCity})`};
@@ -588,13 +613,16 @@ function analyzeOwnership(features){
 
   features.forEach(f=>{
     const fields=f.properties?.fields||f.properties||{};
-    const rawName=(fields.owner||fields.owner2||'UNKNOWN').toString().trim();
+    // TxGIO: owner_name | Regrid: owner
+    const rawName=(fields.owner_name||fields.owner||fields.owner2||'UNKNOWN').toString().trim();
     const norm=normalizeOwner(rawName)||'UNKNOWN';
-    const acres=parseFloat(fields.ll_gisacre||fields.gisacre||fields.shape_area||0);
+    // TxGIO: gis_acres | Regrid: ll_gisacre / gisacre
+    const acres=parseFloat(fields.gis_acres||fields.ll_gisacre||fields.gisacre||0);
     const ab=isAbsentee(fields);
-    const mailState=(fields.mail_state2||fields.mail_state||'??').toUpperCase();
+    // TxGIO: mail_state | Regrid: mail_state2
+    const mailState=(fields.mail_state||fields.mail_state2||'??').toUpperCase();
     const mailCity=(fields.mail_city||'').toUpperCase();
-    const usedesc=(fields.usedesc||fields.usecode||'').toString().toUpperCase();
+    const usedesc=(fields.land_use||fields.usedesc||fields.usecode||'').toString().toUpperCase();
 
     if(!ownerMap[norm]) ownerMap[norm]={name:rawName,parcels:0,acres:0,absentee:ab.yes,reason:ab.reason,mailState,mailCity,usedesc};
     ownerMap[norm].parcels++;
