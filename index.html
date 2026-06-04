@@ -241,6 +241,10 @@
     <!-- MAP LAYERS -->
     <div class="sb-sec">
       <h3>Map Layers</h3>
+      <div class="layer-toggle" onclick="toggleLayer('parcels')">
+        <div class="layer-label"><div class="layer-dot" style="background:#a78bfa"></div>Parcel Boundaries (TxGIO, zoom 11+)</div>
+        <div class="toggle-switch on" id="tog-parcels"></div>
+      </div>
       <div class="layer-toggle" onclick="toggleLayer('transmission')">
         <div class="layer-label"><div class="layer-dot" style="background:#ff9a3c"></div>Transmission (HIFLD)</div>
         <div class="toggle-switch on" id="tog-transmission"></div>
@@ -353,6 +357,7 @@
       <div class="vk-item"><div class="vk-line" style="background:#f7c542"></div>230kV</div>
       <div class="vk-item"><div class="vk-line" style="background:#c9d1d9;opacity:.6"></div>115kV</div>
       <div class="vk-item" style="margin-top:5px"><div class="vk-line" style="background:repeating-linear-gradient(90deg,#58a6ff 0 5px,transparent 5px 9px)"></div>Fiber</div>
+      <div class="vk-item"><div class="vk-line" style="height:2px;background:#a78bfa;opacity:.8"></div>Parcel Boundaries</div>
     </div>
 
     <!-- Loading overlay -->
@@ -514,13 +519,14 @@ sty.textContent=`.tip{background:#21262d!important;border:1px solid #30363d!impo
 document.head.appendChild(sty);
 
 const LG={
+  parcels:      L.layerGroup().addTo(map),
   transmission: L.layerGroup().addTo(map),
   fiber:        L.layerGroup().addTo(map),
   flood:        L.layerGroup().addTo(map),
   solar:        L.layerGroup().addTo(map),
   sites:        L.layerGroup().addTo(map)
 };
-const LG_ON={transmission:true,fiber:true,flood:true,solar:true,sites:true};
+const LG_ON={parcels:true,transmission:true,fiber:true,flood:true,solar:true,sites:true};
 
 // Zoom hint (for FEMA tiles)
 map.on('zoomend',()=>{
@@ -772,6 +778,45 @@ function drawStaticLayers(){
   // LG.flood intentionally empty here — populated by initFEMALayer() with live NFHL tiles
   [{lat:31.42,lng:-103.49,r:55000},{lat:31.97,lng:-101.85,r:48000},{lat:32.20,lng:-101.42,r:42000}]
     .forEach(z=>L.circle([z.lat,z.lng],{radius:z.r,color:'#ff9a3c',fillColor:'#ff9a3c',fillOpacity:.06,weight:.8}).addTo(LG.solar).bindTooltip('High GHI Zone (NREL)',{className:'tip'}));
+}
+
+// ══════════════════════════════════════════════════════
+// TxGIO PARCEL BOUNDARY TILE LAYER
+// Same ArcGIS REST export pattern as FEMA — free, no key
+// Replaces Regrid tileserver. Shows Texas parcel lines
+// from the same StratMap service we query for ownership.
+// Visible at zoom 11+
+// ══════════════════════════════════════════════════════
+function initParcelTiles(){
+  try{
+    const ParcelLayer = L.GridLayer.extend({
+      createTile: function(coords, done){
+        const tile = L.DomUtil.create('img','leaflet-tile');
+        const bounds = this._tileCoordsToBounds(coords);
+        const sw = L.CRS.EPSG3857.project(bounds.getSouthWest());
+        const ne = L.CRS.EPSG3857.project(bounds.getNorthEast());
+        const size = this.getTileSize();
+        const bbox = `${sw.x},${sw.y},${ne.x},${ne.y}`;
+        tile.src = `https://feature.geographic.texas.gov/arcgis/rest/services/Parcels/stratmap_land_parcels_48_most_recent/MapServer/export`
+          + `?bbox=${encodeURIComponent(bbox)}&bboxSR=3857&imageSR=3857`
+          + `&size=${size.x},${size.y}&f=image&format=png32&transparent=true&dpi=96`;
+        tile.onload  = ()=>done(null, tile);
+        tile.onerror = (e)=>done(e);
+        return tile;
+      }
+    });
+    const parcels = new ParcelLayer({
+      tileSize: 256, opacity: 0.7,
+      attribution: 'TxGIO StratMap Parcels',
+      minZoom: 11, maxZoom: 20,
+      updateWhenIdle: true
+    });
+    parcels.addTo(LG.parcels);
+    return true;
+  }catch(e){
+    console.warn('TxGIO parcel tiles failed:',e);
+    return false;
+  }
 }
 
 // ══════════════════════════════════════════════════════
@@ -1055,6 +1100,7 @@ function setLoadTxt(id,txt){const el=document.getElementById('ld-'+id+'-txt');if
 // ══════════════════════════════════════════════════════
 async function init(){
   drawStaticLayers();
+  initParcelTiles();
 
   // ── FEMA NFHL live tiles ──
   const femaOk = initFEMALayer();
