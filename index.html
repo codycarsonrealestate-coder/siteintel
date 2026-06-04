@@ -441,8 +441,9 @@
 // ║  backend (CORS-blocked from static hosting). Added  ║
 // ║  back via the serverless proxy next step.           ║
 // ╚══════════════════════════════════════════════════════╝
-const NREL_KEY    = 'FeIpz0eke3ZFiIuzbVUzB2V9fVmSazM4sChNJMMi';
-const REGRID_TOKEN = '';
+const NREL_KEY     = 'FeIpz0eke3ZFiIuzbVUzB2V9fVmSazM4sChNJMMi';
+const REGRID_TOKEN = '';   // Kept blank — token lives in Cloudflare Worker environment
+const PROXY_URL    = '';   // https://siteintel-regrid.codycarsonrealestate.workers.dev'
 
 // ══════════════════════════════════════════════════════
 // SCORING CAPS & LABELS
@@ -635,32 +636,35 @@ function fetchWithTimeout(url, options={}, ms=12000){
 let regridRecordsUsed=0;
 
 async function fetchRegridParcels(site){
-  if(!REGRID_TOKEN){ return null; } // No token configured — handled by serverless proxy in next phase
+  // Skip if neither direct token nor proxy configured
+  if(!REGRID_TOKEN && !PROXY_URL){ return null; }
   try{
     const [w,s,e,n]=siteBbox(site);
-    const params=new URLSearchParams({
-      token:REGRID_TOKEN,
-      bbox:`${w},${s},${e},${n}`,
-      return_geometry:'true',
-      limit:'100',
-      fields:'owner,owner2,mailadd,mail_city,mail_state2,mail_zip,ll_gisacre,gisacre,usedesc,usecode,parcelnumb,siteadd'
-    });
-    const url=`https://app.regrid.com/api/v2/parcels?${params}`;
-    const r=await fetchWithTimeout(url,{
-      headers:{'Authorization':`Bearer ${REGRID_TOKEN}`,'Accept':'application/json'}
-    },12000);
+    const bbox=`${w},${s},${e},${n}`;
+
+    let url, options={};
+    if(PROXY_URL){
+      // Route through Cloudflare Worker — token lives server-side, no CORS issues
+      url=`${PROXY_URL}?bbox=${encodeURIComponent(bbox)}&limit=100`;
+    }else{
+      // Fallback: direct call (works only if Regrid allows browser CORS)
+      const params=new URLSearchParams({
+        token:REGRID_TOKEN,bbox,return_geometry:'true',limit:'100',
+        fields:'owner,owner2,mailadd,mail_city,mail_state2,mail_zip,ll_gisacre,gisacre,usedesc,usecode,parcelnumb,siteadd'
+      });
+      url=`https://app.regrid.com/api/v2/parcels?${params}`;
+      options={headers:{'Authorization':`Bearer ${REGRID_TOKEN}`,'Accept':'application/json'}};
+    }
+
+    const r=await fetchWithTimeout(url,options,12000);
     if(!r.ok) throw new Error(`HTTP ${r.status}`);
     const data=await r.json();
-
-    // Handle both v1 and v2 response envelope
     const features=data?.parcels?.features||data?.results?.features||data?.features||[];
     if(!features.length) throw new Error('No parcels returned');
 
     regridRecordsUsed+=features.length;
     updateBudget();
-
-    const analysis=analyzeOwnership(features);
-    return analysis;
+    return analyzeOwnership(features);
   }catch(e){
     console.warn(`Regrid failed for ${site.name}:`,e.message);
     return null;
@@ -1116,11 +1120,10 @@ async function init(){
   // ── REGRID PARCELS (sequential to control budget) ──
   setLoadDot('regrid','active');
   let regridLive=0;
-  if(!REGRID_TOKEN){
-    // No token in public build — comes back via serverless proxy next phase
+  if(!REGRID_TOKEN && !PROXY_URL){
     setLoadDot('regrid','done');
-    setLoadTxt('regrid','Regrid: deferred (needs backend proxy)');
-    setDotStatus('regrid','fallback','Next phase','#ff9a3c');
+    setLoadTxt('regrid','Regrid: paste PROXY_URL in config to activate');
+    setDotStatus('regrid','fallback','Set PROXY_URL','#ff9a3c');
   }else{
     setLoadTxt('regrid','Regrid: fetching parcel ownership…');
     for(let i=0;i<SITES.length;i++){
@@ -1140,8 +1143,8 @@ async function init(){
       setDotStatus('regrid','live',`${regridLive}/8 live`,'#3fb950');
     }else{
       setLoadDot('regrid','fail');
-      setLoadTxt('regrid','Regrid unavailable — check token');
-      setDotStatus('regrid','fallback','Check token','#ff9a3c');
+      setLoadTxt('regrid','Regrid: check Worker deployment');
+      setDotStatus('regrid','fallback','Check Worker','#ff9a3c');
     }
   }
 
