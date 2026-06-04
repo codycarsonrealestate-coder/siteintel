@@ -412,23 +412,16 @@
 <script>
 // ╔══════════════════════════════════════════════════════╗
 // ║  CONFIG                                              ║
-// ║  NREL/NLR key below is visible to anyone viewing    ║
-// ║  this page's source on a public host. It's free +   ║
-// ║  rate-limited; fine for testing, but the clean home ║
-// ║  for it is the serverless proxy (next phase).       ║
-// ║                                                      ║
-// ║  DOMAIN NOTE: NREL was renamed "National Laboratory ║
-// ║  of the Rockies" (NLR) by DOE, effective Dec 1 2025.║
-// ║  Old developer.nrel.gov DNS died May 29 2026.       ║
-// ║  Correct live domain is developer.nlr.gov.          ║
-// ║                                                      ║
-// ║  REGRID_TOKEN still BLANK: Regrid's API needs a     ║
-// ║  backend (CORS-blocked from static hosting). Added  ║
-// ║  back via the serverless proxy next step.           ║
+// ╔══════════════════════════════════════════════════════╗
+// ║  CONFIG                                              ║
+// ║  NLR key is visible in public source — it's free +  ║
+// ║  rate-limited. Regenerate at developer.nlr.gov.     ║
+// ║  TxGIO parcel data is free, no key needed.          ║
 // ╚══════════════════════════════════════════════════════╝
-const NREL_KEY     = 'FeIpz0eke3ZFiIuzbVUzB2V9fVmSazM4sChNJMMi';
-const REGRID_TOKEN = '';   // Kept blank — token lives in Cloudflare Worker environment
-const PROXY_URL    = 'https://siteintel-regrid.codycarsonrealestate.workers.dev';
+const NREL_KEY = 'FeIpz0eke3ZFiIuzbVUzB2V9fVmSazM4sChNJMMi';
+
+// TxGIO StratMap — direct call, no token, same CORS behaviour as HIFLD
+const TXGIO_PARCELS = 'https://feature.geographic.texas.gov/arcgis/rest/services/Parcels/stratmap_land_parcels_48_most_recent/MapServer/0/query';
 
 // ══════════════════════════════════════════════════════
 // SCORING CAPS & LABELS
@@ -444,9 +437,13 @@ const SCORE_LABELS = {
 };
 
 // ══════════════════════════════════════════════════════
-// SITE DATA — parcel & solar scores overwritten by live
+// SITE DATA
+// App tries to load sites.json from the repo root first.
+// If not found, falls back to these 8 demo pins.
+// Run site_discovery.py in Colab, commit sites.json,
+// and the map will automatically show real candidates.
 // ══════════════════════════════════════════════════════
-const SITES = [
+const DEMO_SITES = [
   {id:1,name:"Big Spring Solar Corridor",county:"Howard Co.",state:"TX",lat:32.215,lng:-101.420,acres:1840,curtailment:"Low",
    scores:{solar:22,tx:19,fiber:17,flood:15,parcel:9,tax:9},solarSrc:'demo',parcelData:null,
    meta:{"Nearest Sub":"1.2 mi","Fiber Dist.":"0.8 mi","Flood Zone":"X – None","Zoning":"Agricultural","ERCOT Node":"BIGSPRING_1","Curtailment":"Low"}},
@@ -472,6 +469,7 @@ const SITES = [
    scores:{solar:22,tx:18,fiber:15,flood:15,parcel:9,tax:9},solarSrc:'demo',parcelData:null,
    meta:{"Nearest Sub":"2.0 mi","Fiber Dist.":"2.8 mi","Flood Zone":"X – None","Zoning":"Agricultural","ERCOT Node":"STANTON","Curtailment":"Low"}}
 ];
+let SITES = DEMO_SITES;
 
 // Static fiber & flood fallback
 const FIBER_ROUTES=[
@@ -519,7 +517,7 @@ sty.textContent=`.tip{background:#21262d!important;border:1px solid #30363d!impo
 document.head.appendChild(sty);
 
 const LG={
-  parcels:      L.layerGroup().addTo(map),
+  parcels:      L.layerGroup().addTo(map),   // TxGIO parcel boundary polygons (on click)
   transmission: L.layerGroup().addTo(map),
   fiber:        L.layerGroup().addTo(map),
   flood:        L.layerGroup().addTo(map),
@@ -639,48 +637,41 @@ function fetchWithTimeout(url, options={}, ms=12000){
 }
 
 // ══════════════════════════════════════════════════════
-// FETCH: REGRID PARCEL API
+// FETCH: TxGIO PARCEL DATA (direct — no proxy needed)
+// Same public ArcGIS REST pattern as HIFLD
 // ══════════════════════════════════════════════════════
-let regridRecordsUsed=0;
+let parcelsFetched=0;
 
-async function fetchRegridParcels(site){
-  // Skip if neither direct token nor proxy configured
-  if(!REGRID_TOKEN && !PROXY_URL){ return null; }
+async function fetchParcelData(site){
   try{
     const [w,s,e,n]=siteBbox(site);
-    const bbox=`${w},${s},${e},${n}`;
-
-    let url, options={};
-    if(PROXY_URL){
-      // Route through Cloudflare Worker — token lives server-side, no CORS issues
-      url=`${PROXY_URL}?bbox=${encodeURIComponent(bbox)}&limit=100`;
-    }else{
-      // Fallback: direct call (works only if Regrid allows browser CORS)
-      const params=new URLSearchParams({
-        token:REGRID_TOKEN,bbox,return_geometry:'true',limit:'100',
-        fields:'owner,owner2,mailadd,mail_city,mail_state2,mail_zip,ll_gisacre,gisacre,usedesc,usecode,parcelnumb,siteadd'
-      });
-      url=`https://app.regrid.com/api/v2/parcels?${params}`;
-      options={headers:{'Authorization':`Bearer ${REGRID_TOKEN}`,'Accept':'application/json'}};
-    }
-
-    const r=await fetchWithTimeout(url,options,12000);
+    const params=new URLSearchParams({
+      where:'1=1',
+      geometry:`${w},${s},${e},${n}`,
+      geometryType:'esriGeometryEnvelope',
+      spatialRel:'esriSpatialRelIntersects',
+      inSR:'4326',outSR:'4326',
+      outFields:'*',
+      f:'geojson',
+      resultRecordCount:'100'
+    });
+    const r=await fetchWithTimeout(`${TXGIO_PARCELS}?${params}`,{},12000);
     if(!r.ok) throw new Error(`HTTP ${r.status}`);
     const data=await r.json();
-    const features=data?.parcels?.features||data?.results?.features||data?.features||[];
-    if(!features.length) throw new Error('No parcels returned');
-
-    regridRecordsUsed+=features.length;
-    updateBudget();
+    const features=data?.features||[];
+    if(!features.length) throw new Error('No parcels');
+    parcelsFetched+=features.length;
+    document.getElementById('s-regrid').textContent=`${parcelsFetched.toLocaleString()} fetched`;
+    site.parcelFeatures=features;           // store for boundary drawing
     return analyzeOwnership(features);
   }catch(e){
-    console.warn(`Regrid failed for ${site.name}:`,e.message);
+    console.warn(`TxGIO failed for ${site.name}:`,e.message);
     return null;
   }
 }
 
 function updateBudget(){
-  document.getElementById('s-regrid').textContent=`${regridRecordsUsed.toLocaleString()} fetched`;
+  document.getElementById('s-regrid').textContent=`${parcelsFetched.toLocaleString()} fetched`;
 }
 
 // ══════════════════════════════════════════════════════
@@ -781,42 +772,55 @@ function drawStaticLayers(){
 }
 
 // ══════════════════════════════════════════════════════
-// TxGIO PARCEL BOUNDARY TILE LAYER
-// Same ArcGIS REST export pattern as FEMA — free, no key
-// Replaces Regrid tileserver. Shows Texas parcel lines
-// from the same StratMap service we query for ownership.
-// Visible at zoom 11+
+// PARCEL BOUNDARY DRAWING
+// drawAllParcels()  — subtle outlines for all sites
+//                     called after TxGIO data loads
+// drawParcelBoundaries(site) — ownership-coloured
+//                     highlight for selected site,
+//                     layered on top of background
 // ══════════════════════════════════════════════════════
-function initParcelTiles(){
-  try{
-    const ParcelLayer = L.GridLayer.extend({
-      createTile: function(coords, done){
-        const tile = L.DomUtil.create('img','leaflet-tile');
-        const bounds = this._tileCoordsToBounds(coords);
-        const sw = L.CRS.EPSG3857.project(bounds.getSouthWest());
-        const ne = L.CRS.EPSG3857.project(bounds.getNorthEast());
-        const size = this.getTileSize();
-        const bbox = `${sw.x},${sw.y},${ne.x},${ne.y}`;
-        tile.src = `https://feature.geographic.texas.gov/arcgis/rest/services/Parcels/stratmap_land_parcels_48_most_recent/MapServer/export`
-          + `?bbox=${encodeURIComponent(bbox)}&bboxSR=3857&imageSR=3857`
-          + `&size=${size.x},${size.y}&f=image&format=png32&transparent=true&dpi=96`;
-        tile.onload  = ()=>done(null, tile);
-        tile.onerror = (e)=>done(e);
-        return tile;
-      }
-    });
-    const parcels = new ParcelLayer({
-      tileSize: 256, opacity: 0.7,
-      attribution: 'TxGIO StratMap Parcels',
-      minZoom: 11, maxZoom: 20,
-      updateWhenIdle: true
-    });
-    parcels.addTo(LG.parcels);
-    return true;
-  }catch(e){
-    console.warn('TxGIO parcel tiles failed:',e);
-    return false;
-  }
+function drawAllParcels(){
+  LG.parcels.clearLayers();
+  SITES.forEach(s=>{
+    if(!s.parcelFeatures?.length) return;
+    L.geoJSON(s.parcelFeatures,{
+      style:()=>({color:'#58a6ff',fillOpacity:.04,weight:1,opacity:.35})
+    }).addTo(LG.parcels);
+  });
+}
+
+function drawParcelBoundaries(site){
+  LG.parcels.clearLayers();
+  // Background: all other sites in faint blue
+  SITES.forEach(s=>{
+    if(!s.parcelFeatures?.length||s.id===site.id) return;
+    L.geoJSON(s.parcelFeatures,{
+      style:()=>({color:'#58a6ff',fillOpacity:.03,weight:1,opacity:.25})
+    }).addTo(LG.parcels);
+  });
+  // Foreground: selected site, ownership-coloured
+  if(!site.parcelFeatures?.length) return;
+  L.geoJSON(site.parcelFeatures,{
+    style:f=>{
+      const ab=isAbsentee(f.properties||{});
+      return ab.yes
+        ? {color:'#f7c542',fillColor:'#f7c542',fillOpacity:.22,weight:2.5,opacity:1}
+        : {color:'#3fb950',fillColor:'#3fb950',fillOpacity:.1, weight:2,  opacity:.9};
+    },
+    onEachFeature:(f,layer)=>{
+      const p=f.properties||{};
+      const owner=p.owner_name||'Unknown';
+      const acres=parseFloat(p.gis_area||0).toFixed(1);
+      const ab=isAbsentee(p);
+      const flag=ab.yes?`⚠️ ${ab.reason}`:'✅ Local';
+      const city=p.mail_city||'';
+      const st=p.mail_stat||p.mail_state||'';
+      layer.bindTooltip(
+        `<strong>${owner}</strong><br>${acres} ac · ${flag}<br><small>${city}${st?', '+st:''}</small>`,
+        {className:'tip',sticky:true}
+      );
+    }
+  }).addTo(LG.parcels);
 }
 
 // ══════════════════════════════════════════════════════
@@ -946,7 +950,7 @@ function openDetail(site){
     const pct=(v/max)*100;
     const bc=pct>=85?'#3fb950':pct>=65?'#58a6ff':'#f7c542';
     const tag=k==='solar'&&site.solarSrc==='live'?`<span class="live-tag live">NREL</span>`:
-               k==='parcel'&&site.parcelData?.live?`<span class="live-tag live">REGRID</span>`:``;
+               k==='parcel'&&site.parcelData?.live?`<span class="live-tag live">TxGIO</span>`:``;
     bars+=`<div class="score-item">
       <div class="si-head"><span>${SCORE_LABELS[k]}${tag}</span><span style="color:${bc}">${v}/${max}</span></div>
       <div class="bar-bg"><div class="bar-fill" style="width:${pct}%;background:${bc}"></div></div>
@@ -966,6 +970,7 @@ function openDetail(site){
 
   document.getElementById('detail').classList.add('open');
   map.panTo([site.lat,site.lng],{animate:true,duration:.5});
+  drawParcelBoundaries(site);
 }
 
 function renderParcelSection(site){
@@ -1035,6 +1040,7 @@ function renderParcelSection(site){
 function closeDetail(){
   document.getElementById('detail').classList.remove('open');
   activeSite=null;
+  drawAllParcels();
 }
 
 function zoomToParcels(){
@@ -1066,7 +1072,7 @@ function exportSite(){
   ];
   Object.entries(activeSite.scores).forEach(([k,v])=>lines.push(`  ${SCORE_LABELS[k]}: ${v}/${SCORE_CAPS[k]}`));
   if(pd?.live){
-    lines.push(``,`PARCEL INTELLIGENCE (Regrid Live):`,
+    lines.push(``,`PARCEL INTELLIGENCE (TxGIO):`,
       `  Total Parcels: ${pd.totalParcels}`,
       `  Unique Owners: ${pd.uniqueOwners}`,
       `  Absentee %: ${pd.absenteePct}%`,
@@ -1099,8 +1105,22 @@ function setLoadTxt(id,txt){const el=document.getElementById('ld-'+id+'-txt');if
 // MAIN INIT
 // ══════════════════════════════════════════════════════
 async function init(){
+  // Try to load real discovered sites — falls back to demo data silently
+  try{
+    const r = await fetchWithTimeout('./sites.json',{},5000);
+    if(r.ok){
+      const discovered = await r.json();
+      if(Array.isArray(discovered) && discovered.length){
+        SITES = discovered.map((s,i)=>({
+          ...s, id:i+1, parcelData:null, parcelFeatures:null,
+          scores: s.scores||{solar:18,tx:15,fiber:14,flood:12,parcel:6,tax:6}
+        }));
+        console.log(`Loaded ${SITES.length} real sites from sites.json`);
+      }
+    }
+  }catch(e){ /* demo sites stand */ }
+
   drawStaticLayers();
-  initParcelTiles();
 
   // ── FEMA NFHL live tiles ──
   const femaOk = initFEMALayer();
@@ -1127,51 +1147,46 @@ async function init(){
 
   // ── NREL (parallel) ──
   setLoadDot('nrel','active');
-  setLoadTxt('nrel','Fetching NREL solar for 8 sites…');
+  setLoadTxt('nrel','Fetching NLR solar for 8 sites…');
   const nrelResults=await Promise.all(SITES.map(fetchNREL));
   const nrelLive=nrelResults.filter(Boolean).length;
   if(nrelLive>0){
     setLoadDot('nrel','done');
-    setLoadTxt('nrel',`NREL: ${nrelLive}/8 sites live`);
+    setLoadTxt('nrel',`NLR: ${nrelLive}/8 sites live`);
     setDotStatus('nrel','live',`${nrelLive}/8 live`,'#3fb950');
     document.getElementById('s-src').textContent=`${nrelLive}/8 Live`;
   }else{
     setLoadDot('nrel','fail');
-    setLoadTxt('nrel','NREL unavailable — estimated GHI');
+    setLoadTxt('nrel','NLR unavailable — estimated GHI');
     setDotStatus('nrel','fallback','Estimated','#ff9a3c');
     document.getElementById('s-src').textContent='Estimated';
   }
 
-  // ── REGRID PARCELS (sequential to control budget) ──
+  // ── TxGIO PARCELS (sequential — respects server rate limits) ──
   setLoadDot('regrid','active');
-  let regridLive=0;
-  if(!REGRID_TOKEN && !PROXY_URL){
-    setLoadDot('regrid','done');
-    setLoadTxt('regrid','Regrid: paste PROXY_URL in config to activate');
-    setDotStatus('regrid','fallback','Set PROXY_URL','#ff9a3c');
-  }else{
-    setLoadTxt('regrid','Regrid: fetching parcel ownership…');
-    for(let i=0;i<SITES.length;i++){
-      setLoadTxt('regrid',`Regrid: site ${i+1}/${SITES.length} — ${SITES[i].name.split(' ').slice(0,2).join(' ')}…`);
-      const pd=await fetchRegridParcels(SITES[i]);
-      if(pd){
-        SITES[i].parcelData=pd;
-        SITES[i].scores.parcel=pd.score;
-        SITES[i].meta['Landowners']=pd.uniqueOwners.toString();
-        SITES[i].meta['Absentee %']=pd.absenteePct+'%';
-        regridLive++;
-      }
-    }
-    if(regridLive>0){
-      setLoadDot('regrid','done');
-      setLoadTxt('regrid',`Regrid: ${regridLive}/8 sites live · ${regridRecordsUsed} records`);
-      setDotStatus('regrid','live',`${regridLive}/8 live`,'#3fb950');
-    }else{
-      setLoadDot('regrid','fail');
-      setLoadTxt('regrid','Regrid: check Worker deployment');
-      setDotStatus('regrid','fallback','Check Worker','#ff9a3c');
+  let parcelLive=0;
+  setLoadTxt('regrid','TxGIO: fetching parcel ownership…');
+  for(let i=0;i<SITES.length;i++){
+    setLoadTxt('regrid',`TxGIO: site ${i+1}/${SITES.length} — ${SITES[i].name.split(' ').slice(0,2).join(' ')}…`);
+    const pd=await fetchParcelData(SITES[i]);
+    if(pd){
+      SITES[i].parcelData=pd;
+      SITES[i].scores.parcel=pd.score;
+      SITES[i].meta['Landowners']=pd.uniqueOwners.toString();
+      SITES[i].meta['Absentee %']=pd.absenteePct+'%';
+      parcelLive++;
     }
   }
+  if(parcelLive>0){
+    setLoadDot('regrid','done');
+    setLoadTxt('regrid',`TxGIO: ${parcelLive}/8 sites live`);
+    setDotStatus('regrid','live',`${parcelLive}/8 live`,'#3fb950');
+  }else{
+    setLoadDot('regrid','fail');
+    setLoadTxt('regrid','TxGIO: check network or service');
+    setDotStatus('regrid','fallback','Unavailable','#ff9a3c');
+  }
+  drawAllParcels(); // draw boundary outlines for all loaded sites
 
   // ── RENDER ──
   setLoadDot('render','active');
@@ -1181,10 +1196,9 @@ async function init(){
   setLoadDot('render','done');
   document.getElementById('loading').style.display='none';
 
-  // Update top bar badge
-  const allLive=nrelLive>0||regridLive>0;
+  const allLive=nrelLive>0||parcelLive>0;
   const badge=document.getElementById('live-status');
-  badge.textContent=`✦ NREL ${nrelLive}/8 · REGRID ${regridLive}/8 · HIFLD ${hifldGeo?'LIVE':'EST'}`;
+  badge.textContent=`✦ NLR ${nrelLive}/8 · TxGIO ${parcelLive}/8 · HIFLD ${hifldGeo?'LIVE':'EST'}`;
   badge.style.animation='none';
   badge.style.color=allLive?'#3fb950':'#ff9a3c';
   badge.style.borderColor=allLive?'#2ea043':'#6b3a00';
