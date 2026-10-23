@@ -1,0 +1,618 @@
+[
+{
+"county": "Andrews",
+"file": "parcels/andrews.geojson",
+"count": 1456,
+"bbox": [
+-103.0648,
+32.0862,
+-102.2015,
+32.5233
+]
+},
+{
+"county": "Bandera",
+"file": "parcels/bandera.geojson",
+"count": 326,
+"bbox": [
+-99.6034,
+29.5918,
+-98.7909,
+29.9071
+]
+},
+{
+"county": "Borden",
+"file": "parcels/borden.geojson",
+"count": 1678,
+"bbox": [
+-101.6911,
+32.5238,
+-101.1731,
+32.9635
+]
+},
+{
+"county": "Brewster",
+"file": "parcels/brewster.geojson",
+"count": 902,
+"bbox": [
+-103.7983,
+29.2256,
+-102.3226,
+30.6657
+]
+},
+{
+"county": "Callahan",
+"file": "parcels/callahan.geojson",
+"count": 497,
+"bbox": [
+-99.6281,
+32.0802,
+-99.1171,
+32.5151
+]
+},
+{
+"county": "Coke",
+"file": "parcels/coke.geojson",
+"count": 1002,
+"bbox": [
+-100.8253,
+31.6929,
+-100.2342,
+32.0857
+]
+},
+{
+"county": "Coleman",
+"file": "parcels/coleman.geojson",
+"count": 851,
+"bbox": [
+-99.7221,
+31.4099,
+-99.1966,
+32.0815
+]
+},
+{
+"county": "Concho",
+"file": "parcels/concho.geojson",
+"count": 958,
+"bbox": [
+-100.1153,
+31.087,
+-99.6012,
+31.5806
+]
+},
+{
+"county": "Crane",
+"file": "parcels/crane.geojson",
+"count": 2601,
+"bbox": [
+-102.7677,
+31.086,
+-102.301,
+31.6515
+]
+},
+{
+"county": "Crockett",
+"file": "parcels/crockett.geojson",
+"count": 4345,
+"bbox": [
+-102.3582,
+30.2859,
+-100.9603,
+31.0868
+]
+},
+{
+"county": "Dawson",
+"file": "parcels/dawson.geojson",
+"count": 621,
+"bbox": [
+-102.2078,
+32.5233,
+-101.6888,
+32.9759
+]
+},
+{
+"county": "Ector",
+"file": "parcels/ector.geojson",
+"count": 766,
+"bbox": [
+-102.7976,
+31.6508,
+-102.2869,
+32.0875
+]
+},
+{
+"county": "Edwards",
+"file": "parcels/edwards.geojson",
+"count": 1720,
+"bbox": [
+-100.7003,
+29.6219,
+-99.7539,
+30.2909
+]
+},
+{
+"county": "Fisher",
+"file": "parcels/fisher.geojson",
+"count": 738,
+"bbox": [
+-100.6603,
+32.523,
+-100.1429,
+32.9635
+]
+},
+{
+"county": "Gaines",
+"file": "parcels/gaines.geojson",
+"count": 1318,
+"bbox": [
+-103.065,
+32.5222,
+-102.2029,
+32.9643
+]
+},
+{
+"county": "Garza",
+"file": "parcels/garza.geojson",
+"count": 991,
+"bbox": [
+-101.6304,
+32.9612,
+-101.0239,
+33.3966
+]
+},
+{
+"county": "Glasscock",
+"file": "parcels/glasscock.geojson",
+"count": 1418,
+"bbox": [
+-101.7759,
+31.6509,
+-101.2642,
+32.0875
+]
+},
+{
+"county": "Haskell",
+"file": "parcels/haskell.geojson",
+"count": 515,
+"bbox": [
+-99.9897,
+32.9574,
+-99.4714,
+33.4121
+]
+},
+{
+"county": "Howard",
+"file": "parcels/howard.geojson",
+"count": 705,
+"bbox": [
+-101.6943,
+32.0871,
+-101.1746,
+32.525
+]
+},
+{
+"county": "Irion",
+"file": "parcels/irion.geojson",
+"count": 1378,
+"bbox": [
+-101.2717,
+31.0799,
+-100.6903,
+31.5287
+]
+},
+{
+"county": "Jeff Davis",
+"file": "parcels/jeff_davis.geojson",
+"count": 2741,
+"bbox": [
+-104.9738,
+30.4047,
+-103.4501,
+31.1052
+]
+},
+{
+"county": "Jones",
+"file": "parcels/jones.geojson",
+"count": 401,
+"bbox": [
+-100.153,
+32.5207,
+-99.612,
+32.9582
+]
+},
+{
+"county": "Kent",
+"file": "parcels/kent.geojson",
+"count": 1049,
+"bbox": [
+-101.044,
+32.9629,
+-100.5191,
+33.4002
+]
+},
+{
+"county": "Kerr",
+"file": "parcels/kerr.geojson",
+"count": 522,
+"bbox": [
+-99.7574,
+29.8033,
+-98.9204,
+30.2905
+]
+},
+{
+"county": "Kimble",
+"file": "parcels/kimble.geojson",
+"count": 877,
+"bbox": [
+-100.1168,
+30.2882,
+-99.3038,
+30.7107
+]
+},
+{
+"county": "Loving",
+"file": "parcels/loving.geojson",
+"count": 917,
+"bbox": [
+-103.9744,
+31.6513,
+-103.3269,
+32.0005
+]
+},
+{
+"county": "Lynn",
+"file": "parcels/lynn.geojson",
+"count": 813,
+"bbox": [
+-102.0761,
+32.9612,
+-101.5599,
+33.389
+]
+},
+{
+"county": "Martin",
+"file": "parcels/martin.geojson",
+"count": 1030,
+"bbox": [
+-102.2118,
+32.0867,
+-101.6911,
+32.525
+]
+},
+{
+"county": "Mason",
+"file": "parcels/mason.geojson",
+"count": 509,
+"bbox": [
+-99.4847,
+30.498,
+-98.9637,
+30.9409
+]
+},
+{
+"county": "Mcculloch",
+"file": "parcels/mcculloch.geojson",
+"count": 1520,
+"bbox": [
+-99.6013,
+30.9405,
+-99.0918,
+31.4901
+]
+},
+{
+"county": "Menard",
+"file": "parcels/menard.geojson",
+"count": 1780,
+"bbox": [
+-100.1539,
+30.7104,
+-99.4842,
+31.088
+]
+},
+{
+"county": "Midland",
+"file": "parcels/midland.geojson",
+"count": 637,
+"bbox": [
+-102.2875,
+31.6513,
+-101.7757,
+32.1093
+]
+},
+{
+"county": "Mitchell",
+"file": "parcels/mitchell.geojson",
+"count": 1163,
+"bbox": [
+-101.1837,
+32.0854,
+-100.6604,
+32.5275
+]
+},
+{
+"county": "Nolan",
+"file": "parcels/nolan.geojson",
+"count": 744,
+"bbox": [
+-100.6739,
+32.0756,
+-100.1397,
+32.5257
+]
+},
+{
+"county": "Pecos",
+"file": "parcels/pecos.geojson",
+"count": 6695,
+"bbox": [
+-103.5829,
+30.0657,
+-101.7694,
+31.37
+]
+},
+{
+"county": "Presidio",
+"file": "parcels/presidio.geojson",
+"count": 7484,
+"bbox": [
+-104.9695,
+29.2583,
+-103.7922,
+30.6234
+]
+},
+{
+"county": "Reagan",
+"file": "parcels/reagan.geojson",
+"count": 1294,
+"bbox": [
+-101.7757,
+31.0793,
+-101.2686,
+31.6515
+]
+},
+{
+"county": "Real",
+"file": "parcels/real.geojson",
+"count": 501,
+"bbox": [
+-100.0638,
+29.624,
+-99.6026,
+30.0778
+]
+},
+{
+"county": "Reeves",
+"file": "parcels/reeves.geojson",
+"count": 5213,
+"bbox": [
+-104.1182,
+30.7709,
+-103.0122,
+32.0003
+]
+},
+{
+"county": "Runnels",
+"file": "parcels/runnels.geojson",
+"count": 589,
+"bbox": [
+-100.2356,
+31.5768,
+-99.7137,
+32.0817
+]
+},
+{
+"county": "Schleicher",
+"file": "parcels/schleicher.geojson",
+"count": 1300,
+"bbox": [
+-100.9569,
+30.706,
+-100.116,
+31.0881
+]
+},
+{
+"county": "Scurry",
+"file": "parcels/scurry.geojson",
+"count": 827,
+"bbox": [
+-101.1744,
+32.4799,
+-100.594,
+33.1041
+]
+},
+{
+"county": "Shackelford",
+"file": "parcels/shackelford.geojson",
+"count": 769,
+"bbox": [
+-99.6121,
+32.5147,
+-99.0958,
+32.9571
+]
+},
+{
+"county": "Sterling",
+"file": "parcels/sterling.geojson",
+"count": 1904,
+"bbox": [
+-101.2676,
+31.5565,
+-100.8216,
+32.0871
+]
+},
+{
+"county": "Stonewall",
+"file": "parcels/stonewall.geojson",
+"count": 1261,
+"bbox": [
+-100.5251,
+32.9594,
+-99.9895,
+33.3983
+]
+},
+{
+"county": "Sutton",
+"file": "parcels/sutton.geojson",
+"count": 1291,
+"bbox": [
+-100.9608,
+30.2875,
+-100.1162,
+30.7101
+]
+},
+{
+"county": "Taylor",
+"file": "parcels/taylor.geojson",
+"count": 334,
+"bbox": [
+-100.1509,
+32.0813,
+-99.6307,
+32.6151
+]
+},
+{
+"county": "Terrell",
+"file": "parcels/terrell.geojson",
+"count": 2129,
+"bbox": [
+-102.567,
+29.7789,
+-101.6463,
+30.6582
+]
+},
+{
+"county": "Terry",
+"file": "parcels/terry.geojson",
+"count": 783,
+"bbox": [
+-102.5952,
+32.9587,
+-102.0756,
+33.3888
+]
+},
+{
+"county": "Throckmorton",
+"file": "parcels/throckmorton.geojson",
+"count": 1363,
+"bbox": [
+-99.473,
+32.956,
+-98.9528,
+33.3987
+]
+},
+{
+"county": "Tom Green",
+"file": "parcels/tom_green.geojson",
+"count": 1005,
+"bbox": [
+-101.2626,
+31.087,
+-100.1126,
+31.6983
+]
+},
+{
+"county": "Upton",
+"file": "parcels/upton.geojson",
+"count": 1649,
+"bbox": [
+-102.3179,
+31.0842,
+-101.775,
+31.6517
+]
+},
+{
+"county": "Val Verde",
+"file": "parcels/val_verde.geojson",
+"count": 2712,
+"bbox": [
+-101.7638,
+29.2378,
+-100.6944,
+30.2883
+]
+},
+{
+"county": "Ward",
+"file": "parcels/ward.geojson",
+"count": 1771,
+"bbox": [
+-103.5876,
+31.2729,
+-102.7675,
+31.6561
+]
+},
+{
+"county": "Winkler",
+"file": "parcels/winkler.geojson",
+"count": 1599,
+"bbox": [
+-103.3274,
+31.6513,
+-102.7985,
+32.087
+]
+},
+{
+"county": "Yoakum",
+"file": "parcels/yoakum.geojson",
+"count": 1288,
+"bbox": [
+-103.0643,
+32.9586,
+-102.5941,
+33.3879
+]
+}
+]
