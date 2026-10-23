@@ -983,7 +983,7 @@ function drawStaticLayers(){
 // one small file per county (300+ acre tracts with owner info), loaded only
 // for the counties in view at zoom 11+. At zoom 14+ the TxGIO map service
 // also draws every lot line.
-let PARCEL_INDEX=[];
+let PARCEL_INDEX=[], PARCEL_BASE='./parcels/';
 const PARCEL_CACHE={}, PARCEL_DRAWN=new Set();
 const PARCEL_VIEW=L.layerGroup().addTo(LG.parcels);
 const PARCEL_SEL=L.layerGroup().addTo(LG.parcels);
@@ -991,7 +991,13 @@ L.tileLayer.wms(PARCEL_WMS,{layers:'0',format:'image/png',transparent:true,minZo
   opacity:.7,attribution:'TxGIO StratMap Parcels'}).addTo(LG.parcels);
 
 async function loadParcelIndex(){
-  try{ const r=await fetchWithTimeout(DATA.parcelIndex,{},8000); if(r.ok) PARCEL_INDEX=await r.json(); }catch(e){}
+  // GitHub Pages is case-sensitive, so check both folder spellings
+  for(const base of ['./parcels/','./Parcels/']){
+    try{
+      const r=await fetchWithTimeout(base+'index.json',{},8000);
+      if(r.ok){ PARCEL_INDEX=await r.json(); PARCEL_BASE=base; break; }
+    }catch(e){}
+  }
   return PARCEL_INDEX.length;
 }
 function countyKey(c){ return String(c||'').replace(/\s*Co\.?$/i,'').trim().toLowerCase(); }
@@ -1001,7 +1007,7 @@ async function loadCountyParcels(county){
   const ent=PARCEL_INDEX.find(e=>e.county.toLowerCase()===key);
   if(!ent) return null;
   try{
-    const r=await fetchWithTimeout('./'+ent.file,{},25000);
+    const r=await fetchWithTimeout(PARCEL_BASE+String(ent.file).split('/').pop(),{},25000);
     if(!r.ok) return null;
     PARCEL_CACHE[key]=await r.json();
     return PARCEL_CACHE[key];
@@ -1092,7 +1098,8 @@ function initFEMALayer(){
         const bbox = `${sw.x},${sw.y},${ne.x},${ne.y}`;
         tile.src = `https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/export`
           + `?bbox=${encodeURIComponent(bbox)}&bboxSR=3857&imageSR=3857`
-          + `&size=${size.x},${size.y}&f=image&format=png32&transparent=true&dpi=96`;
+          + `&size=${size.x},${size.y}&f=image&format=png32&transparent=true&dpi=96`
+          + `&layers=show:28`;   // Flood Hazard Zones only (no FIRM panel labels)
         tile.onload  = ()=>done(null, tile);
         tile.onerror = (e)=>done(e);
         return tile;
