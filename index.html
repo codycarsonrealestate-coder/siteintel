@@ -71,7 +71,7 @@
 
     /* Zoom hint */
     #zoom-hint{
-      position:absolute;top:12px;left:50%;transform:translateX(-50%);
+      position:absolute;top:12px;right:12px;
       background:rgba(22,27,34,.92);border:1px solid #f7c542;
       color:#f7c542;font-size:12px;padding:7px 16px;border-radius:6px;
       z-index:500;pointer-events:none;display:none;
@@ -191,6 +191,45 @@
     ::-webkit-scrollbar{width:5px}
     ::-webkit-scrollbar-track{background:#0d1117}
     ::-webkit-scrollbar-thumb{background:#30363d;border-radius:3px}
+  
+    /* ── SEARCH ── */
+    #srch{position:absolute;top:10px;left:56px;z-index:800;width:min(430px,calc(100% - 76px));font-family:inherit}
+    #srch-box{display:flex;align-items:center;background:rgba(22,27,34,.97);border:1px solid #30363d;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.55);transition:border-color .15s}
+    #srch-box:focus-within{border-color:#58a6ff}
+    .srch-ico{color:#8b949e;padding:0 2px 0 12px;font-size:15px;line-height:1}
+    #srch-in{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#e6edf3;font-size:13px;padding:10px 8px;font-family:inherit}
+    #srch-in::placeholder{color:#6e7681}
+    .srch-key{font-size:10px;color:#6e7681;border:1px solid #30363d;border-radius:4px;padding:1px 6px;margin-right:10px}
+    #srch-clear{background:none;border:0;color:#8b949e;font-size:18px;line-height:1;padding:0 12px;cursor:pointer;display:none}
+    #srch-clear:hover{color:#e6edf3}
+    #srch-res{display:none;margin-top:6px;background:rgba(22,27,34,.98);border:1px solid #30363d;border-radius:8px;max-height:62vh;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.6);padding-bottom:4px}
+    .sr-grp{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#6e7681;padding:10px 12px 4px}
+    .sr-item{display:flex;gap:10px;align-items:flex-start;padding:7px 12px;cursor:pointer;border-left:2px solid transparent}
+    .sr-item.act,.sr-item:hover{background:#21262d;border-left-color:#58a6ff}
+    .sr-ic{width:18px;text-align:center;flex-shrink:0;font-size:13px;line-height:18px}
+    .sr-t{font-size:12.5px;color:#e6edf3;line-height:18px}
+    .sr-s{font-size:11px;color:#8b949e;margin-top:1px;line-height:15px}
+    .sr-t mark{background:none;color:#58a6ff;font-weight:700}
+    .sr-act .sr-t{color:#58a6ff}
+    .sr-dim{opacity:.55}
+    .sr-empty{padding:12px;font-size:12px;color:#8b949e}
+    #srch-chip{display:none;margin-top:6px;background:#0d2a3a;border:1px solid #1f6feb;color:#58a6ff;font-size:11.5px;border-radius:14px;padding:4px 6px 4px 12px;width:max-content;max-width:100%;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+    #srch-chip button{background:none;border:0;color:#58a6ff;cursor:pointer;font-size:14px;padding:0 6px}
+    #srch-card{display:none;margin-top:6px;background:rgba(22,27,34,.98);border:1px solid #30363d;border-radius:8px;padding:12px 14px;box-shadow:0 8px 24px rgba(0,0,0,.6);max-height:56vh;overflow-y:auto}
+    .sc-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .sc-title{font-size:14px;font-weight:700;color:#fff;line-height:1.3}
+    .sc-sub{font-size:11px;color:#8b949e;margin-top:2px}
+    .sc-x{background:none;border:0;color:#8b949e;font-size:18px;cursor:pointer;line-height:1;padding:0}
+    .sc-sec{margin-top:10px;padding-top:9px;border-top:1px solid #21262d}
+    .sc-sec h5{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#6e7681;margin-bottom:6px}
+    .sc-row{display:flex;justify-content:space-between;gap:12px;font-size:12px;padding:2px 0;color:#c9d1d9}
+    .sc-row span:last-child{color:#e6edf3;text-align:right}
+    .sc-link{cursor:pointer}
+    .sc-link:hover span:first-child{color:#58a6ff}
+    .sc-btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+    .sc-btn{background:#21262d;border:1px solid #30363d;color:#c9d1d9;border-radius:6px;font-size:11px;padding:5px 10px;cursor:pointer;font-family:inherit}
+    .sc-btn:hover{border-color:#58a6ff;color:#58a6ff}
+    .sc-btn.on{background:#0d2a3a;border-color:#1f6feb;color:#58a6ff}
   </style>
 </head>
 <body>
@@ -374,6 +413,20 @@
   <!-- ══════════ MAP ══════════ -->
   <div id="map-wrap">
     <div id="map"></div>
+
+    <!-- SEARCH -->
+    <div id="srch">
+      <div id="srch-box">
+        <span class="srch-ico">⌕</span>
+        <input id="srch-in" type="text" autocomplete="off" spellcheck="false"
+          placeholder="City, county, owner, substation, plant, site, or lat, lng">
+        <span class="srch-key" id="srch-key">/</span>
+        <button id="srch-clear" title="Clear search">×</button>
+      </div>
+      <div id="srch-chip"></div>
+      <div id="srch-res"></div>
+      <div id="srch-card"></div>
+    </div>
 
     <div id="zoom-hint">🔍 Zoom in to see parcel outlines and owners</div>
 
@@ -895,7 +948,7 @@ function drawSubstations(geo){
     const name=p.name||p.NAME||'Unnamed Substation';
     const type=p.type||p.TYPE||'';
     const isTap=/tap|riser|dead end/i.test(type);
-    SUBSTATIONS.push({lat,lng,name,voltage:maxV,lines,type,isTap,pas:p.pas,q_mw:p.q_mw||0,county:p.county||''});
+    SUBSTATIONS.push({lat,lng,name,voltage:maxV,lines,type,isTap,pas:p.pas,q_mw:p.q_mw||0,county:p.county||'',operator:p.operator||p.OWNER||''});
     const style=maxV>=230?{r:6,c:'#f7c542'}:maxV>=115?{r:4.5,c:'#58a6ff'}:{r:3,c:'#c9d1d9'};
     const q=p.q_mw?`<br>ERCOT queue here: ${Math.round(p.q_mw).toLocaleString()} MW (${p.q_projects} projects)`:'';
     const pas=p.pas!=null?`<br>Power Access Score: <strong>${p.pas}/100</strong>`:'';
@@ -940,7 +993,7 @@ function drawPlants(geo){
     const mw=+p.op_mw||0; if(lat==null||mw<5) return;
     const [fg,col]=fuelGroup(p.fuels);
     const retiring=p.retire_year&&p.retire_year<=2032;
-    PLANTS.push({lat,lng,name:p.name,mw,fuel:fg,retiring,retire:p.retire_year});
+    PLANTS.push({lat,lng,name:p.name,mw,fuel:fg,retiring,retire:p.retire_year,owner:p.owner||'',ba:p.ba||''});
     L.circleMarker([lat,lng],{renderer:CANVAS,radius:Math.max(3,Math.min(14,Math.sqrt(mw)/3)),
       color:retiring?'#ff6b6b':col,weight:retiring?2.5:1,fillColor:col,fillOpacity:.55})
      .addTo(LG.plants).bindTooltip(`<strong>${p.name}</strong><br>${Math.round(mw).toLocaleString()} MW · ${fg}${p.owner?'<br>'+p.owner:''}${retiring?`<br>⚠️ Planned retirement ${p.retire_year}: brownfield lead (dates often slip)`:''}`,{className:'tip',sticky:true});
@@ -1163,7 +1216,7 @@ function redraw(){
   let qual=0,tot=0;
   SITES.forEach(site=>{
     const s=totalScore(site);
-    const show=s>=threshold&&site.acres>=minAcres&&curtPass(site)&&ownerPass(site)&&opPass(site)&&tenurePass(site);
+    const show=s>=threshold&&site.acres>=minAcres&&curtPass(site)&&ownerPass(site)&&opPass(site)&&tenurePass(site)&&areaPass(site);
     if(show){qual++;tot+=s}
     const c=show?scoreColor(s):'#30363d';
     const liveDot=site.solarSrc==='live'?`<span style="position:absolute;top:-2px;right:-2px;width:9px;height:9px;background:#3fb950;border-radius:50%;border:1.5px solid #0d1117"></span>`:'';
@@ -1511,6 +1564,422 @@ async function init(){
   badge.style.color=allLive?'#3fb950':'#ff9a3c';
   badge.style.borderColor=allLive?'#2ea043':'#6b3a00';
   badge.style.background=allLive?'#0d4a1a':'#2a1a00';
+}
+
+// ══════════════════════════════════════════════════════
+// SEARCH
+// One box for everything: candidate sites, counties, cities and
+// addresses, substations, power plants, landowners, parcel IDs,
+// and raw coordinates. Local data answers as you type; places
+// are looked up through OpenStreetMap's Nominatim only when you
+// press Enter or click "Search places" (their usage policy does
+// not allow keystroke-by-keystroke lookups).
+// ══════════════════════════════════════════════════════
+const TX_COUNTIES=['Anderson','Andrews','Angelina','Aransas','Archer','Armstrong','Atascosa','Austin','Bailey','Bandera','Bastrop','Baylor','Bee','Bell','Bexar','Blanco','Borden','Bosque','Bowie','Brazoria','Brazos','Brewster','Briscoe','Brooks','Brown','Burleson','Burnet','Caldwell','Calhoun','Callahan','Cameron','Camp','Carson','Cass','Castro','Chambers','Cherokee','Childress','Clay','Cochran','Coke','Coleman','Collin','Collingsworth','Colorado','Comal','Comanche','Concho','Cooke','Coryell','Cottle','Crane','Crockett','Crosby','Culberson','Dallam','Dallas','Dawson','Deaf Smith','Delta','Denton','DeWitt','Dickens','Dimmit','Donley','Duval','Eastland','Ector','Edwards','El Paso','Ellis','Erath','Falls','Fannin','Fayette','Fisher','Floyd','Foard','Fort Bend','Franklin','Freestone','Frio','Gaines','Galveston','Garza','Gillespie','Glasscock','Goliad','Gonzales','Gray','Grayson','Gregg','Grimes','Guadalupe','Hale','Hall','Hamilton','Hansford','Hardeman','Hardin','Harris','Harrison','Hartley','Haskell','Hays','Hemphill','Henderson','Hidalgo','Hill','Hockley','Hood','Hopkins','Houston','Howard','Hudspeth','Hunt','Hutchinson','Irion','Jack','Jackson','Jasper','Jeff Davis','Jefferson','Jim Hogg','Jim Wells','Johnson','Jones','Karnes','Kaufman','Kendall','Kenedy','Kent','Kerr','Kimble','King','Kinney','Kleberg','Knox','La Salle','Lamar','Lamb','Lampasas','Lavaca','Lee','Leon','Liberty','Limestone','Lipscomb','Live Oak','Llano','Loving','Lubbock','Lynn','Madison','Marion','Martin','Mason','Matagorda','Maverick','McCulloch','McLennan','McMullen','Medina','Menard','Midland','Milam','Mills','Mitchell','Montague','Montgomery','Moore','Morris','Motley','Nacogdoches','Navarro','Newton','Nolan','Nueces','Ochiltree','Oldham','Orange','Palo Pinto','Panola','Parker','Parmer','Pecos','Polk','Potter','Presidio','Rains','Randall','Reagan','Real','Red River','Reeves','Refugio','Roberts','Robertson','Rockwall','Runnels','Rusk','Sabine','San Augustine','San Jacinto','San Patricio','San Saba','Schleicher','Scurry','Shackelford','Shelby','Sherman','Smith','Somervell','Starr','Stephens','Sterling','Stonewall','Sutton','Swisher','Tarrant','Taylor','Terrell','Terry','Throckmorton','Titus','Tom Green','Travis','Trinity','Tyler','Upshur','Upton','Uvalde','Val Verde','Van Zandt','Victoria','Walker','Waller','Ward','Washington','Webb','Wharton','Wheeler','Wichita','Wilbarger','Willacy','Williamson','Wilson','Winkler','Wise','Wood','Yoakum','Young','Zapata','Zavala'];
+
+const SRCH={sel:-1,items:[],q:'',places:{},placeBusy:false,ownerIdx:null,idIdx:null,ownerBusy:false,ownerProg:'',cardActs:[]};
+const SRCH_HL=L.layerGroup().addTo(map);   // search highlights (outlines, pins, owner tracts)
+let AREA_FILTER=null;                       // {label, test(site)} — set from a search result card
+function areaPass(site){ return !AREA_FILTER||AREA_FILTER.test(site); }
+
+const srIn=document.getElementById('srch-in'), srRes=document.getElementById('srch-res'),
+      srCard=document.getElementById('srch-card'), srChip=document.getElementById('srch-chip'),
+      srClear=document.getElementById('srch-clear'), srKey=document.getElementById('srch-key');
+// keep map from panning/zooming when scrolling or clicking inside the search panel
+L.DomEvent.disableClickPropagation(document.getElementById('srch'));
+L.DomEvent.disableScrollPropagation(document.getElementById('srch'));
+
+function snorm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9.\- ]+/g,' ').replace(/\s+/g,' ').trim()}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function hlText(text,toks){
+  let h=esc(text); if(!toks.length) return h;
+  const re=new RegExp('('+toks.map(t=>t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+')','ig');
+  return h.replace(re,'<mark>$1</mark>');
+}
+// 100 exact · 80 starts with · 60 every word prefix-matches · 40 contains · 0 no match
+function mscore(hay,q,toks){
+  const h=snorm(hay); if(!h) return 0;
+  if(h===q) return 100;
+  if(h.startsWith(q)) return 80;
+  if(!toks.every(t=>h.includes(t))) return 0;
+  const w=h.split(' ');
+  return toks.every(t=>w.some(x=>x.startsWith(t)))?60:40;
+}
+function hvKm(a,b,c,d){const r=Math.PI/180,x=Math.sin((c-a)*r/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin((d-b)*r/2)**2;return 12742*Math.asin(Math.sqrt(x))}
+const fmtMi=km=>`${(km*0.621371).toFixed(km<16?1:0)} mi`;
+const siteQualifies=s=>{const t=totalScore(s);return t>=threshold&&s.acres>=minAcres&&curtPass(s)&&ownerPass(s)&&opPass(s)&&tenurePass(s)};
+const realSubs=()=>SUBSTATIONS.filter(s=>!s.isTap);
+
+function parseCoords(raw){
+  const m=String(raw).trim().match(/^(-?\d{1,2}(?:\.\d+)?)\s*[,\s]\s*(-?\d{1,3}(?:\.\d+)?)$/);
+  if(!m) return null;
+  let lat=+m[1], lng=+m[2];
+  if(lng>0&&lng>=93&&lng<=107&&lat>=25&&lat<=37) lng=-lng;   // "31.9, 102.1" → West Texas
+  if(Math.abs(lat)>90||Math.abs(lng)>180) return null;
+  return {lat,lng};
+}
+function pip(lat,lng,gj){
+  if(!gj) return false;
+  const polys=gj.type==='Polygon'?[gj.coordinates]:gj.type==='MultiPolygon'?gj.coordinates:[];
+  return polys.some(poly=>{let inside=false;const ring=poly[0];
+    for(let i=0,j=ring.length-1;i<ring.length;j=i++){const [xi,yi]=ring[i],[xj,yj]=ring[j];
+      if(((yi>lat)!==(yj>lat))&&(lng<(xj-xi)*(lat-yi)/(yj-yi)+xi)) inside=!inside;}
+    return inside;});
+}
+
+// ── RESULTS ──
+function buildResults(raw){
+  const q=snorm(raw), toks=q.split(' ').filter(Boolean), groups=[];
+  const coord=parseCoords(raw);
+  if(coord) groups.push({label:'Coordinates',items:[{ic:'🎯',t:`${coord.lat.toFixed(5)}, ${coord.lng.toFixed(5)}`,
+    s:'Drop a pin and show the nearest grid + candidate sites',score:200,act:()=>goPoint(coord.lat,coord.lng,'Dropped pin')}]});
+  if(q.length<2&&!coord) return [];
+
+  // Candidate sites: name, county, owner, mailing city, property IDs
+  const sites=SITES.map(s=>{
+    const sc=Math.max(mscore(s.name,q,toks),mscore(s.county,q,toks),mscore(s.owner_name,q,toks)*.95,
+      (s.prop_ids||[]).some(id=>String(id)===q)?100:0);
+    const mc=mscore(s.mail_city,q,toks)*.7;
+    return mc>sc?{s,sc:mc,why:`owner mails from ${s.mail_city}`}:{s,sc};
+  }).filter(x=>x.sc).sort((a,b)=>b.sc-a.sc||totalScore(b.s)-totalScore(a.s)).slice(0,6);
+  if(sites.length) groups.push({label:'Candidate sites',items:sites.map(({s,sc,why})=>{const ok=siteQualifies(s);return{
+    ic:'📍',t:hlText(s.name,toks),score:sc,dim:!ok,
+    s:`${esc(s.county)} · ${Math.round(s.acres).toLocaleString()} ac · Score ${totalScore(s)}${s.owner_name?' · '+hlText(String(s.owner_name).slice(0,34),toks):''}${why?' · '+hlText(why,toks):''}${ok?'':' · hidden by filters'}`,
+    act:()=>goSite(s)}})});
+
+  // Counties: all 254, with parcel coverage flagged
+  const cos=TX_COUNTIES.map(c=>({c,sc:Math.max(mscore(c,q,toks),mscore(c+' county',q,toks))})).filter(x=>x.sc)
+    .sort((a,b)=>b.sc-a.sc).slice(0,5);
+  if(cos.length) groups.push({label:'Counties',items:cos.map(({c,sc})=>{
+    const has=PARCEL_INDEX.find(e=>e.county.toLowerCase()===c.toLowerCase());
+    const n=SITES.filter(s=>countyKey(s.county)===c.toLowerCase()).length;
+    return {ic:'🗺',t:hlText(c+' County',toks),score:sc,
+      s:has?`Parcel coverage · ${(has.count||0).toLocaleString()} tracts · ${n} candidate site${n!==1?'s':''}`:'Outside current parcel coverage',
+      act:()=>goCounty(c)};})});
+
+  // Places already looked up for this query
+  const pl=SRCH.places[q];
+  if(pl&&pl.length) groups.push({label:'Places',items:pl.map(p=>({ic:'🌐',t:hlText(p.name,toks),s:esc(p.desc),score:70,act:()=>goPlace(p)}))});
+
+  // Substations (named ones), by name or operator
+  const subs=realSubs().filter(s=>!/^unknown\d*$/i.test(s.name)).map(s=>({s,sc:Math.max(mscore(s.name,q,toks),mscore(s.operator,q,toks)*.8)}))
+    .filter(x=>x.sc).sort((a,b)=>b.sc-a.sc||(b.s.pas||0)-(a.s.pas||0)||b.s.voltage-a.s.voltage).slice(0,6);
+  if(subs.length) groups.push({label:'Substations',items:subs.map(({s,sc})=>({ic:'⚡',t:hlText(s.name,toks),score:sc,
+    s:`${s.voltage||'?'}kV · ${s.lines||'?'} lines${s.pas!=null?' · PAS '+s.pas:''}${s.county?' · '+esc(s.county)+' Co.':''}${s.operator?' · '+hlText(s.operator,toks):''}`,
+    act:()=>goSub(s)}))});
+
+  // Power plants, by name or owner
+  const pls=PLANTS.map(p=>({p,sc:Math.max(mscore(p.name,q,toks),mscore(p.owner,q,toks)*.8)})).filter(x=>x.sc)
+    .sort((a,b)=>b.sc-a.sc||b.p.mw-a.p.mw).slice(0,5);
+  if(pls.length) groups.push({label:'Power plants',items:pls.map(({p,sc})=>({ic:p.retiring?'⭕':'🏭',t:hlText(p.name,toks),score:sc,
+    s:`${Math.round(p.mw).toLocaleString()} MW ${p.fuel}${p.owner?' · '+hlText(p.owner,toks):''}${p.retiring?' · retiring '+p.retire:''}`,
+    act:()=>goPlant(p)}))});
+
+  // Landowners and parcel IDs (counties already loaded, or all 56 after a full owner index)
+  if(q.length>=3){
+    const own=searchOwners(q,toks);
+    if(own.length) groups.push({label:SRCH.ownerIdx?'Landowners · all 56 counties':'Landowners · counties loaded so far',
+      items:own.map(o=>({ic:'👤',t:hlText(o.owner,toks),score:o.sc,
+        s:`${o.county} Co. · ${o.n} tract${o.n!==1?'s':''} · ${Math.round(o.acres).toLocaleString()} ac${o.absentee?' · absentee':''}${o.mail?' · '+esc(o.mail):''}`,
+        act:()=>goOwner(o)}))});
+  }
+
+  // Actions
+  const acts=[];
+  if(!coord&&!pl) acts.push({ic:'🌐',t:`Search places for “${esc(raw.trim())}”`,s:'Cities, towns, addresses, landmarks (OpenStreetMap) · Enter',
+    cls:'sr-act',score:1,act:()=>runPlaceSearch(raw),keep:true});
+  if(pl&&!pl.length) acts.push({ic:'🌐',t:'No places found',s:'Try adding “TX” or a ZIP code',cls:'sr-dim',score:0,act:()=>{},keep:true});
+  if(!SRCH.ownerIdx&&q.length>=3&&PARCEL_INDEX.length) acts.push({ic:'👤',
+    t:SRCH.ownerBusy?`Indexing landowners… ${SRCH.ownerProg}`:`Search all ${PARCEL_INDEX.length} counties for owner “${esc(raw.trim())}”`,
+    s:'One-time load of ~'+PARCEL_INDEX.reduce((a,e)=>a+(e.count||0),0).toLocaleString()+' tracts; after that owner search is instant',
+    cls:'sr-act',score:1,act:()=>buildOwnerIndex(),keep:true});
+  if(acts.length) groups.push({label:'More',items:acts});
+  return groups;
+}
+
+function renderResults(){
+  const raw=srIn.value;
+  srClear.style.display=raw?'block':'none'; srKey.style.display=raw?'none':'inline';
+  if(!raw.trim()){ srRes.style.display='none'; SRCH.items=[]; return; }
+  const groups=buildResults(raw);
+  SRCH.items=[]; let html='';
+  groups.forEach(g=>{
+    html+=`<div class="sr-grp">${g.label}</div>`;
+    g.items.forEach(it=>{const i=SRCH.items.push(it)-1;
+      html+=`<div class="sr-item ${it.cls||''} ${it.dim?'sr-dim':''} ${i===SRCH.sel?'act':''}" data-i="${i}"><div class="sr-ic">${it.ic}</div><div><div class="sr-t">${it.t}</div>${it.s?`<div class="sr-s">${it.s}</div>`:''}</div></div>`;});
+  });
+  srRes.innerHTML=html||'<div class="sr-empty">Type at least 2 characters</div>';
+  srRes.style.display='block';
+}
+srRes.addEventListener('mousedown',e=>{
+  const el=e.target.closest('.sr-item'); if(!el) return;
+  e.preventDefault(); activate(+el.dataset.i);
+});
+function activate(i){
+  const it=SRCH.items[i]; if(!it) return;
+  if(!it.keep){ srRes.style.display='none'; srIn.blur(); }
+  it.act();
+}
+srIn.addEventListener('input',()=>{SRCH.sel=-1;renderResults();});
+srIn.addEventListener('focus',()=>{ if(srIn.value.trim()) renderResults(); });
+srIn.addEventListener('blur',()=>setTimeout(()=>{ if(document.activeElement!==srIn) srRes.style.display='none'; },150));
+srIn.addEventListener('keydown',e=>{
+  const n=SRCH.items.length;
+  if(e.key==='ArrowDown'){e.preventDefault();SRCH.sel=n?(SRCH.sel+1)%n:-1;renderResults();scrollSel();}
+  else if(e.key==='ArrowUp'){e.preventDefault();SRCH.sel=n?(SRCH.sel-1+n)%n:-1;renderResults();scrollSel();}
+  else if(e.key==='Escape'){srRes.style.display='none';srIn.blur();}
+  else if(e.key==='Enter'){
+    e.preventDefault();
+    if(SRCH.sel>=0) return activate(SRCH.sel);
+    // strong local match (exact name, coordinates) goes straight there; otherwise look up the place
+    const best=SRCH.items.reduce((b,it,i)=>it.score>(SRCH.items[b]?.score??-1)?i:b,-1);
+    if(best>=0&&SRCH.items[best].score>=100) return activate(best);
+    const q=snorm(srIn.value);
+    if(SRCH.places[q]?.length) return activate(SRCH.items.findIndex(it=>it.ic==='🌐'));
+    runPlaceSearch(srIn.value);
+  }
+});
+function scrollSel(){ srRes.querySelector('.sr-item.act')?.scrollIntoView({block:'nearest'}); }
+srClear.addEventListener('click',()=>{srIn.value='';SRCH.sel=-1;renderResults();SRCH_HL.clearLayers();closeCard();srIn.focus();});
+document.addEventListener('keydown',e=>{
+  if(e.key==='/'&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement?.tagName||'')){e.preventDefault();srIn.focus();srIn.select();}
+});
+
+// ── PLACE LOOKUP (Nominatim) ──
+async function runPlaceSearch(raw){
+  const q=snorm(raw); if(q.length<2||SRCH.placeBusy) return;
+  SRCH.placeBusy=true;
+  srRes.style.display='block';
+  srRes.insertAdjacentHTML('afterbegin','<div class="sr-empty" id="sr-busy">Looking up places…</div>');
+  try{
+    const u='https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&countrycodes=us&polygon_geojson=1&polygon_threshold=0.002'
+      +'&viewbox=-106.65,36.5,-93.5,25.8&q='+encodeURIComponent(raw.trim());
+    const r=await fetchWithTimeout(u,{headers:{'Accept-Language':'en'}},10000);
+    const d=r.ok?await r.json():[];
+    SRCH.places[q]=d.map(p=>{
+      const parts=String(p.display_name||'').split(',').map(x=>x.trim());
+      return {name:parts[0],desc:`${(p.addresstype||p.type||'place').replace(/_/g,' ')} · ${parts.slice(1,4).join(', ')}`,
+        lat:+p.lat,lng:+p.lon,bbox:p.boundingbox?.map(Number),geojson:p.geojson,full:p.display_name,
+        isCounty:/county/i.test(p.addresstype||'')||/ County$/.test(parts[0])};
+    });
+  }catch(e){ SRCH.places[q]=[]; console.warn('place search:',e.message); }
+  SRCH.placeBusy=false;
+  if(snorm(srIn.value)===q){
+    SRCH.sel=-1; renderResults();
+    const first=SRCH.items.findIndex(it=>it.ic==='🌐'&&it.act&&!it.keep);
+    if(first>=0){ SRCH.sel=first; renderResults(); }
+  }
+}
+async function fetchCountyOutline(name){
+  try{
+    const u='https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&polygon_geojson=1&polygon_threshold=0.002&q='
+      +encodeURIComponent(`${name} County, Texas`);
+    const r=await fetchWithTimeout(u,{},10000); if(!r.ok) return null;
+    const d=await r.json(); return d[0]||null;
+  }catch(e){ return null; }
+}
+
+// ── LANDOWNER INDEX ──
+function ownerEntriesFrom(g,countyName){
+  const by={};
+  (g.features||[]).forEach(f=>{
+    const p=f.properties||{}; const k=(p.owner||'Unknown').toUpperCase();
+    if(!by[k]) by[k]={owner:p.owner||'Unknown',on:snorm(p.owner),county:p.county||countyName,n:0,acres:0,
+      absentee:!!p.absentee,mail:p.mail||'',feats:[]};
+    by[k].n++; by[k].acres+=+p.acres||0; by[k].feats.push(f);
+  });
+  return Object.values(by);
+}
+function searchOwners(q,toks){
+  const idMatch=/^\d{3,}$/.test(q);
+  let pool;
+  if(SRCH.ownerIdx) pool=SRCH.ownerIdx;
+  else pool=Object.entries(PARCEL_CACHE).flatMap(([k,g])=>g?ownerEntriesFrom(g,k.replace(/\b\w/g,c=>c.toUpperCase())):[]);
+  const out=[];
+  pool.forEach(o=>{
+    let sc=0;
+    if(o.on===q) sc=100; else if(o.on.startsWith(q)) sc=80;
+    else if(toks.every(t=>o.on.includes(t))) sc=toks.every(t=>o.on.split(' ').some(w=>w.startsWith(t)))?60:40;
+    if(idMatch&&o.feats.some(f=>String(f.properties.id)===q)) sc=100;
+    if(sc) out.push({...o,sc});
+  });
+  return out.sort((a,b)=>b.sc-a.sc||b.acres-a.acres).slice(0,8);
+}
+async function buildOwnerIndex(){
+  if(SRCH.ownerIdx||SRCH.ownerBusy) return;
+  SRCH.ownerBusy=true; let done=0; const tot=PARCEL_INDEX.length;
+  const queue=[...PARCEL_INDEX];
+  async function worker(){
+    while(queue.length){
+      const e=queue.shift(); await loadCountyParcels(e.county); done++;
+      SRCH.ownerProg=`${done}/${tot} counties`;
+      if(srRes.style.display==='block') renderResults();
+    }
+  }
+  await Promise.all([worker(),worker(),worker(),worker()]);
+  SRCH.ownerIdx=PARCEL_INDEX.flatMap(e=>{const g=PARCEL_CACHE[e.county.toLowerCase()];return g?ownerEntriesFrom(g,e.county):[];});
+  SRCH.ownerBusy=false;
+  renderResults(); srIn.focus();
+}
+
+// ── RESULT CARD ──
+function closeCard(){ srCard.style.display='none'; srCard.innerHTML=''; }
+function cardAct(i){ SRCH.cardActs[i]?.(); }
+function showCard(title,sub,sections,buttons=[]){
+  SRCH.cardActs=[];
+  const reg=fn=>SRCH.cardActs.push(fn)-1;
+  const secHtml=sections.filter(s=>s&&s.rows.length).map(s=>`<div class="sc-sec"><h5>${s.h}</h5>${s.rows.map(r=>
+    `<div class="sc-row ${r.go?'sc-link':''}" ${r.go?`onclick="cardAct(${reg(r.go)})"`:''}><span>${r.k}</span><span>${r.v??''}</span></div>`).join('')}</div>`).join('');
+  const btnHtml=buttons.length?`<div class="sc-btns">${buttons.map(b=>`<button class="sc-btn ${b.on?'on':''}" onclick="cardAct(${reg(b.go)})">${b.label}</button>`).join('')}</div>`:'';
+  srCard.innerHTML=`<div class="sc-head"><div><div class="sc-title">${title}</div>${sub?`<div class="sc-sub">${sub}</div>`:''}</div><button class="sc-x" onclick="closeCard()">×</button></div>${secHtml}${btnHtml}`;
+  srCard.style.display='block';
+}
+function setAreaFilter(f){
+  AREA_FILTER=f; redraw();
+  if(f){ srChip.innerHTML=`Showing sites ${esc(f.label)} <button title="Clear area filter" onclick="setAreaFilter(null)">×</button>`; srChip.style.display='block'; }
+  else { srChip.style.display='none'; }
+  if(srCard.style.display==='block'&&lastCard) lastCard();
+}
+
+// Grid + sites around any point: what you need to judge a location in one glance
+function nearbySections(lat,lng,opts={}){
+  const subs=realSubs().map(s=>({...s,d:hvKm(lat,lng,s.lat,s.lng)}));
+  const nearestAt=kv=>subs.filter(s=>s.voltage>=kv).sort((a,b)=>a.d-b.d)[0];
+  const grid=[[345,'Nearest 345kV+'],[230,'Nearest 230kV+'],[115,'Nearest 115kV+']].map(([kv,k])=>{
+    const s=nearestAt(kv); return s?{k,v:`${esc(s.name)} (${s.voltage}kV) · ${fmtMi(s.d)}`,go:()=>goSub(s)}:null;}).filter(Boolean);
+  const bestPas=subs.filter(s=>s.d<=40&&s.pas!=null).sort((a,b)=>b.pas-a.pas).slice(0,3)
+    .map(s=>({k:`${esc(s.name)} · ${s.voltage}kV`,v:`PAS ${s.pas} · ${fmtMi(s.d)}`,go:()=>goSub(s)}));
+  const R=opts.siteKm||80;
+  const sites=SITES.map(s=>({s,d:hvKm(lat,lng,s.lat,s.lng)})).filter(x=>x.d<=R).sort((a,b)=>a.d-b.d);
+  const qual=sites.filter(x=>siteQualifies(x.s));
+  const siteRows=[{k:`Within ${fmtMi(R)}`,v:`${sites.length} candidate${sites.length!==1?'s':''} · ${qual.length} pass filters`}]
+    .concat(sites.slice(0,4).map(({s,d})=>({k:esc(s.name),v:`${totalScore(s)} · ${fmtMi(d)}`,go:()=>goSite(s)})));
+  const ret=PLANTS.filter(p=>p.retiring).map(p=>({p,d:hvKm(lat,lng,p.lat,p.lng)})).filter(x=>x.d<=80).sort((a,b)=>a.d-b.d).slice(0,3)
+    .map(({p,d})=>({k:`${esc(p.name)} · ${Math.round(p.mw)} MW ${p.fuel}`,v:`retire ${p.retire} · ${fmtMi(d)}`,go:()=>goPlant(p)}));
+  return [{h:'Grid access',rows:grid},{h:'Best Power Access Score within 25 mi',rows:bestPas},
+          {h:'Candidate sites',rows:sites.length?siteRows:[{k:`None within ${fmtMi(R)}`,v:''}]},
+          {h:'Retiring plants within 50 mi (brownfield leads)',rows:ret}];
+}
+function radiusButtons(lat,lng,label){
+  return [25,50,100].map(m=>({label:`Sites within ${m} mi`,on:AREA_FILTER?.key===`r${m}:${lat},${lng}`,
+    go:()=>{const on=AREA_FILTER?.key===`r${m}:${lat},${lng}`;
+      setAreaFilter(on?null:{key:`r${m}:${lat},${lng}`,label:`within ${m} mi of ${label}`,test:s=>hvKm(lat,lng,s.lat,s.lng)<=m/0.621371});
+      if(!on) map.fitBounds(L.latLng(lat,lng).toBounds(m*1609.34*2),{padding:[20,20]});
+      refreshCardButtons();}}));
+}
+let lastCard=null;
+function refreshCardButtons(){ if(lastCard) lastCard(); }
+function pin(lat,lng){
+  L.circleMarker([lat,lng],{radius:9,color:'#f778ba',weight:3,fillColor:'#f778ba',fillOpacity:.25}).addTo(SRCH_HL);
+  L.circleMarker([lat,lng],{radius:2.5,color:'#f778ba',fillColor:'#fff',fillOpacity:1,weight:1}).addTo(SRCH_HL);
+}
+function outline(gj){
+  if(!gj||!/Polygon/.test(gj.type)) return null;
+  return L.geoJSON(gj,{style:{color:'#f778ba',weight:2.2,dashArray:'6,5',fillColor:'#f778ba',fillOpacity:.04}}).addTo(SRCH_HL);
+}
+
+// ── GO-TO ACTIONS ──
+function goSite(site){
+  SRCH_HL.clearLayers(); closeCard();
+  map.flyTo([site.lat,site.lng],Math.max(map.getZoom(),12),{duration:1});
+  openDetail(site);
+}
+function goPoint(lat,lng,label){
+  SRCH_HL.clearLayers(); pin(lat,lng);
+  map.flyTo([lat,lng],11,{duration:1});
+  lastCard=()=>showCard(esc(label),`${lat.toFixed(5)}, ${lng.toFixed(5)}`,nearbySections(lat,lng),radiusButtons(lat,lng,esc(label)));
+  lastCard();
+}
+function goPlace(p){
+  SRCH_HL.clearLayers();
+  if(p.isCounty){ const nm=p.name.replace(/ County$/,''); if(TX_COUNTIES.includes(nm)) return goCounty(nm); }
+  const ol=outline(p.geojson); pin(p.lat,p.lng);
+  if(ol&&p.bbox) map.fitBounds([[p.bbox[0],p.bbox[2]],[p.bbox[1],p.bbox[3]]],{padding:[30,30],maxZoom:13});
+  else map.flyTo([p.lat,p.lng],12,{duration:1});
+  lastCard=()=>showCard(esc(p.name),esc(p.full),nearbySections(p.lat,p.lng),radiusButtons(p.lat,p.lng,esc(p.name)));
+  lastCard();
+}
+async function goCounty(name){
+  SRCH_HL.clearLayers();
+  const key=name.toLowerCase();
+  const ent=PARCEL_INDEX.find(e=>e.county.toLowerCase()===key);
+  if(ent){ const [w,s,e,n]=ent.bbox; map.fitBounds([[s,w],[n,e]],{padding:[20,20]}); }
+  let geo=null;
+  const render=()=>{
+    const sites=SITES.filter(s=>countyKey(s.county)===key).sort((a,b)=>totalScore(b)-totalScore(a));
+    const qual=sites.filter(siteQualifies);
+    const subs=realSubs().filter(s=>String(s.county).toLowerCase()===key);
+    const cls=[[345,Infinity,'345kV+'],[230,345,'230–344kV'],[115,230,'115–229kV']].map(([lo,hi,k])=>{
+      const c=subs.filter(s=>s.voltage>=lo&&s.voltage<hi).length; return c?{k,v:`${c} substation${c!==1?'s':''}`}:null;}).filter(Boolean);
+    const topPas=subs.filter(s=>s.pas!=null).sort((a,b)=>b.pas-a.pas).slice(0,3)
+      .map(s=>({k:`${esc(s.name)} · ${s.voltage}kV`,v:`PAS ${s.pas}`,go:()=>goSub(s)}));
+    const qmw=subs.reduce((a,s)=>a+(s.q_mw||0),0);
+    const plants=geo?.geojson?PLANTS.filter(p=>pip(p.lat,p.lng,geo.geojson)):[];
+    const pmw=plants.reduce((a,p)=>a+p.mw,0), ret=plants.filter(p=>p.retiring);
+    const on=AREA_FILTER?.key==='c:'+key;
+    showCard(`${esc(name)} County`,
+      ent?`Parcel coverage · ${(ent.count||0).toLocaleString()} tracts ≥300 ac`:'Outside current parcel coverage (add it in the Colab pipeline)',
+      [{h:'Candidate sites',rows:[{k:'In county',v:`${sites.length} · ${qual.length} pass filters`}]
+          .concat(sites.slice(0,5).map(s=>({k:esc(s.name),v:`${totalScore(s)} · ${Math.round(s.acres).toLocaleString()} ac`,go:()=>goSite(s)})))},
+       {h:'Substations in county',rows:cls.concat(qmw?[{k:'ERCOT queue at these subs',v:`${Math.round(qmw).toLocaleString()} MW`}]:[])},
+       {h:'Highest Power Access Score',rows:topPas},
+       {h:'Power plants in county',rows:plants.length?[{k:`${plants.length} plant${plants.length!==1?'s':''}`,v:`${Math.round(pmw).toLocaleString()} MW`}]
+          .concat(ret.slice(0,3).map(p=>({k:`⭕ ${esc(p.name)}`,v:`retire ${p.retire}`,go:()=>goPlant(p)}))):(geo?[]:[{k:'Loading county outline…',v:''}])}],
+      [{label:on?'✓ Filtering to this county':'Show only this county’s sites',on,
+        go:()=>{setAreaFilter(on?null:{key:'c:'+key,label:`in ${name} County`,test:s=>countyKey(s.county)===key});render();}}]);
+  };
+  lastCard=render; render();
+  geo=await fetchCountyOutline(name);
+  if(geo){
+    outline(geo.geojson);
+    if(!ent&&geo.boundingbox){ const b=geo.boundingbox.map(Number); map.fitBounds([[b[0],b[2]],[b[1],b[3]]],{padding:[20,20]}); }
+  }
+  if(lastCard===render) render();
+}
+function goSub(s){
+  SRCH_HL.clearLayers(); pin(s.lat,s.lng);
+  map.flyTo([s.lat,s.lng],13,{duration:1});
+  lastCard=()=>showCard(`⚡ ${esc(s.name)}`,`${s.voltage||'?'}kV · ${s.lines||'?'} lines${s.county?' · '+esc(s.county)+' Co.':''}`,
+    [{h:'Substation',rows:[
+      s.pas!=null?{k:'Power Access Score',v:`${s.pas}/100`}:null,
+      voltageCapacityRange(s.voltage)?{k:'Typical capacity class',v:voltageCapacityRange(s.voltage)}:null,
+      s.q_mw?{k:'ERCOT queue here',v:`${Math.round(s.q_mw).toLocaleString()} MW`}:null,
+      s.operator?{k:'Operator',v:esc(s.operator)}:null,
+      {k:'Coordinates',v:`${s.lat.toFixed(5)}, ${s.lng.toFixed(5)}`}].filter(Boolean)}]
+    .concat(nearbySections(s.lat,s.lng,{siteKm:40}).slice(2)),
+    radiusButtons(s.lat,s.lng,esc(s.name)));
+  lastCard();
+}
+function goPlant(p){
+  SRCH_HL.clearLayers(); pin(p.lat,p.lng);
+  map.flyTo([p.lat,p.lng],13,{duration:1});
+  lastCard=()=>showCard(`${p.retiring?'⭕':'🏭'} ${esc(p.name)}`,`${Math.round(p.mw).toLocaleString()} MW · ${p.fuel}${p.owner?' · '+esc(p.owner):''}`,
+    [{h:'Plant',rows:[p.retiring?{k:'Planned retirement',v:`${p.retire} (dates often slip)`}:null,
+      p.ba?{k:'Balancing authority',v:esc(p.ba)}:null,{k:'Coordinates',v:`${p.lat.toFixed(5)}, ${p.lng.toFixed(5)}`}].filter(Boolean)}]
+    .concat(nearbySections(p.lat,p.lng,{siteKm:40})),
+    radiusButtons(p.lat,p.lng,esc(p.name)));
+  lastCard();
+}
+async function goOwner(o){
+  SRCH_HL.clearLayers();
+  const lay=L.geoJSON({type:'FeatureCollection',features:o.feats},{
+    style:{color:'#f778ba',weight:2,fillColor:'#f778ba',fillOpacity:.18},
+    onEachFeature:(f,l)=>l.bindTooltip(parcelTip(f.properties),{className:'tip',sticky:true})}).addTo(SRCH_HL);
+  const b=lay.getBounds(); if(b.isValid()) map.fitBounds(b,{padding:[40,40],maxZoom:14});
+  const c=b.isValid()?b.getCenter():null;
+  const tracts=[...o.feats].sort((a,b)=>(+b.properties.acres||0)-(+a.properties.acres||0)).slice(0,8)
+    .map(f=>{const p=f.properties;const ctr=featureCenter(f);return{k:`ID ${esc(p.id||'—')}${p.lu?' · '+esc(p.lu):''}`,
+      v:`${Math.round(+p.acres||0).toLocaleString()} ac${p.block_ac&&p.block_ac>p.acres+1?' (block '+Math.round(p.block_ac).toLocaleString()+')':''}`,
+      go:ctr?()=>map.flyTo([ctr.lat,ctr.lng],14,{duration:.8}):null};});
+  const other=SRCH.ownerIdx?SRCH.ownerIdx.filter(x=>x.on===o.on&&x.county!==o.county):[];
+  lastCard=()=>showCard(`👤 ${esc(o.owner)}`,`${esc(o.county)} Co. · ${o.n} tract${o.n!==1?'s':''} · ${Math.round(o.acres).toLocaleString()} ac`,
+    [{h:'Owner',rows:[{k:'Mailing',v:esc(o.mail||'—')},{k:'Absentee',v:o.absentee?'Yes':'No'},
+      o.feats[0]?.properties?.tenure?{k:'Tenure',v:esc(o.feats[0].properties.tenure)}:null].filter(Boolean)},
+     {h:'Largest tracts (click to zoom)',rows:tracts},
+     {h:'Same owner in other counties',rows:other.slice(0,5).map(x=>({k:`${esc(x.county)} Co.`,v:`${x.n} tracts · ${Math.round(x.acres).toLocaleString()} ac`,go:()=>goOwner(x)}))}]
+    .concat(c?nearbySections(c.lat,c.lng,{siteKm:40}).slice(0,1):[]),
+    []);
+  lastCard();
 }
 
 init();
