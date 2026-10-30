@@ -368,7 +368,7 @@
    "Footprint": "5 parcels",
    "Curtailment (est.)": "Medium \u00b7 1,087 MW wind/solar built + 7,451 MW queued within 31 mi \u00b7 345kV+ at 7.4 mi",
    "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
-   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
   "fiber_km": 0.0,
   "protected": "none",
@@ -492,10 +492,10 @@
    "Footprint": "11 parcels",
    "Curtailment (est.)": "Medium \u00b7 3,711 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 2.1 mi",
    "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
-   "Protected Land (PAD-US)": "\ud83d\udc40 Permanent University Fund (State Resource Management Area, State Land Board) \u00b7 0.8 mi away"
+   "Protected Land (PAD-US)": "\u2705 No conservation or park land nearby \u00b7 State trust land 0.8 mi away: Permanent University Fund (leasable, not a restriction)"
   },
   "fiber_km": 7.78,
-  "protected": "nearby",
+  "protected": "none",
   "protected_pct": 0.0
  },
  {
@@ -937,11 +937,11 @@
    "Footprint": "6 parcels",
    "Curtailment (est.)": "High \u00b7 3,059 MW wind/solar built + 1,948 MW queued within 31 mi \u00b7 345kV+ at 19.6 mi",
    "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
-   "Protected Land (PAD-US)": "\u26a0\ufe0f 5% of block protected: Permanent University Fund (State Resource Management Area, State Land Board)"
+   "Protected Land (PAD-US)": "\ud83d\udc40 Crane County Park (conservation easement, County Land) \u00b7 1.0 mi away \u00b7 State trust land overlaps 5% (likely a boundary mismatch): Permanent University Fund (leasable, not a restriction)"
   },
   "fiber_km": 0.07,
-  "protected": "partial",
-  "protected_pct": 5.4
+  "protected": "nearby",
+  "protected_pct": 0.0
  },
  {
   "id": 16,
@@ -1065,11 +1065,11 @@
    "Footprint": "6 parcels",
    "Curtailment (est.)": "Medium \u00b7 2,325 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 7.3 mi",
    "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
-   "Protected Land (PAD-US)": "\u26a0\ufe0f 7% of block protected: Permanent University Fund (State Resource Management Area, State Land Board)"
+   "Protected Land (PAD-US)": "\u2705 No conservation or park land nearby \u00b7 State trust land overlaps 7% (likely a boundary mismatch): Permanent University Fund (leasable, not a restriction)"
   },
   "fiber_km": 6.15,
-  "protected": "partial",
-  "protected_pct": 6.8
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 18,
@@ -1440,7 +1440,7 @@
    "Curtailment (est.)": "Medium \u00b7 2,164 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 4.4 mi",
    "Flood Zone (FEMA)": "16% in 100-yr floodplain (A)",
    "Acres Outside Floodplain": "5,343",
-   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
   "fiber_km": 4.76,
   "protected": "none",
@@ -1561,10 +1561,10 @@
    "Footprint": "4 parcels",
    "Curtailment (est.)": "Medium \u00b7 2,164 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 6.6 mi",
    "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
-   "Protected Land (PAD-US)": "\ud83d\udc40 Permanent University Fund (State Resource Management Area, State Land Board) \u00b7 0.0 mi away"
+   "Protected Land (PAD-US)": "\u2705 No conservation or park land nearby \u00b7 State trust land 0.0 mi away: Permanent University Fund (leasable, not a restriction)"
   },
   "fiber_km": 4.5,
-  "protected": "nearby",
+  "protected": "none",
   "protected_pct": 0.0
  },
  {
@@ -1751,11 +1751,11 @@
    "Footprint": "6 parcels",
    "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 14.2 mi",
    "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
-   "Protected Land (PAD-US)": "\u26a0\ufe0f 1% of block protected: Permanent University Fund (State Resource Management Area, State Land Board)"
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title) \u00b7 State trust land overlaps 1% (likely a boundary mismatch): Permanent University Fund (leasable, not a restriction)"
   },
   "fiber_km": 19.05,
-  "protected": "partial",
-  "protected_pct": 1.2
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 29,
@@ -1816,11 +1816,11 @@
    "Footprint": "11 parcels",
    "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 14.2 mi",
    "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
-   "Protected Land (PAD-US)": "\u26a0\ufe0f 1% of block protected: Permanent University Fund (State Resource Management Area, State Land Board)"
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title) \u00b7 State trust land overlaps 1% (likely a boundary mismatch): Permanent University Fund (leasable, not a restriction)"
   },
   "fiber_km": 19.05,
-  "protected": "partial",
-  "protected_pct": 1.2
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 30,
@@ -1882,11 +1882,11 @@
    "Footprint": "12 parcels",
    "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 14.2 mi",
    "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
-   "Protected Land (PAD-US)": "\u26a0\ufe0f 1% of block protected: Permanent University Fund (State Resource Management Area, State Land Board)"
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title) \u00b7 State trust land overlaps 1% (likely a boundary mismatch): Permanent University Fund (leasable, not a restriction)"
   },
   "fiber_km": 19.05,
-  "protected": "partial",
-  "protected_pct": 1.1
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 31,
@@ -2073,10 +2073,10 @@
    "Curtailment (est.)": "Medium \u00b7 2,164 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 4.4 mi",
    "Flood Zone (FEMA)": "14% in 100-yr floodplain (A)",
    "Acres Outside Floodplain": "6,041",
-   "Protected Land (PAD-US)": "\ud83d\udc40 Permanent University Fund (State Resource Management Area, State Land Board) \u00b7 0.8 mi away"
+   "Protected Land (PAD-US)": "\u2705 No conservation or park land nearby \u00b7 State trust land 0.8 mi away: Permanent University Fund (leasable, not a restriction)"
   },
   "fiber_km": 12.88,
-  "protected": "nearby",
+  "protected": "none",
   "protected_pct": 0.0
  },
  {
@@ -2438,10 +2438,10 @@
    "Footprint": "4 parcels",
    "Curtailment (est.)": "High \u00b7 3,302 MW wind/solar built + 1,500 MW queued within 31 mi \u00b7 345kV+ at 10.7 mi",
    "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
-   "Protected Land (PAD-US)": "\ud83d\udc40 Permanent University Fund (State Resource Management Area, State Land Board) \u00b7 0.1 mi away"
+   "Protected Land (PAD-US)": "\u2705 No conservation or park land nearby \u00b7 State trust land 0.1 mi away: Permanent University Fund (leasable, not a restriction)"
   },
   "fiber_km": 4.99,
-  "protected": "nearby",
+  "protected": "none",
   "protected_pct": 0.0
  },
  {
@@ -2692,10 +2692,10 @@
    "Footprint": "12 parcels",
    "Curtailment (est.)": "Low \u00b7 100 MW wind/solar built within 31 mi \u00b7 345kV+ at 32.1 mi",
    "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
-   "Protected Land (PAD-US)": "\ud83d\udc40 Permanent University Fund (State Resource Management Area, State Land Board) \u00b7 0.1 mi away"
+   "Protected Land (PAD-US)": "\u2705 No conservation or park land nearby \u00b7 State trust land 0.1 mi away: Permanent University Fund (leasable, not a restriction)"
   },
   "fiber_km": 17.16,
-  "protected": "nearby",
+  "protected": "none",
   "protected_pct": 0.0
  },
  {
@@ -2817,10 +2817,10 @@
    "Footprint": "5 parcels",
    "Curtailment (est.)": "Low \u00b7 250 MW wind/solar built within 31 mi \u00b7 345kV+ at 27.0 mi",
    "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
-   "Protected Land (PAD-US)": "\ud83d\udc40 Permanent University Fund (State Resource Management Area, State Land Board) \u00b7 0.3 mi away"
+   "Protected Land (PAD-US)": "\u2705 No conservation or park land nearby \u00b7 State trust land 0.3 mi away: Permanent University Fund (leasable, not a restriction)"
   },
   "fiber_km": 26.5,
-  "protected": "nearby",
+  "protected": "none",
   "protected_pct": 0.0
  },
  {
@@ -2943,7 +2943,7 @@
    "Footprint": "8 parcels",
    "Curtailment (est.)": "Low \u00b7 100 MW wind/solar built within 31 mi \u00b7 345kV+ at 29.8 mi",
    "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
-   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
   "fiber_km": 23.72,
   "protected": "none",
@@ -3068,10 +3068,10 @@
    "Footprint": "5 parcels",
    "Curtailment (est.)": "Low \u00b7 250 MW wind/solar built within 31 mi \u00b7 345kV+ at 25.8 mi",
    "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
-   "Protected Land (PAD-US)": "\ud83d\udc40 Permanent University Fund (State Resource Management Area, State Land Board) \u00b7 0.2 mi away"
+   "Protected Land (PAD-US)": "\u2705 No conservation or park land nearby \u00b7 State trust land 0.2 mi away: Permanent University Fund (leasable, not a restriction)"
   },
   "fiber_km": 29.12,
-  "protected": "nearby",
+  "protected": "none",
   "protected_pct": 0.0
  },
  {
@@ -3131,7 +3131,7 @@
    "Footprint": "8 parcels",
    "Curtailment (est.)": "Low \u00b7 250 MW wind/solar built within 31 mi \u00b7 345kV+ at 27.8 mi",
    "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
-   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
   "fiber_km": 29.29,
   "protected": "none",

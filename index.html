@@ -1087,8 +1087,11 @@ async function loadFiber(){
 // ══════════════════════════════════════════════════════
 const PADUS_URL='https://services.arcgis.com/v01gqwM5QqNysAAi/ArcGIS/rest/services/PADUS_Protected_Areas_National/FeatureServer/0/query';
 let PADUS_CTRL=null;
+const TRUST_RE=/permanent university fund|university lands|permanent school fund|general land office/i;
+const isTrustLand=p=>TRUST_RE.test([p.Unit_Nm,p.BndryName,p.MngNm_Desc,p.Mang_Name].join(' '));
 function padusStyle(f){
   const c=String(f.properties.Category||f.properties.FeatClass||'');
+  if(isTrustLand(f.properties)) return {color:'#39d0d8',weight:1,dashArray:'6,4',fillColor:'#39d0d8',fillOpacity:.06};
   if(/easement/i.test(c)) return {color:'#f778ba',weight:1.6,dashArray:'5,4',fillColor:'#f778ba',fillOpacity:.10};
   if(/proclamation/i.test(c)) return {color:'#8b949e',weight:1,dashArray:'2,4',fill:false};
   return {color:'#2ea043',weight:1.2,fillColor:'#2ea043',fillOpacity:.16};
@@ -1111,7 +1114,7 @@ async function refreshProtected(){
     LG.protected.clearLayers();
     L.geoJSON(g,{renderer:CANVAS,style:padusStyle,onEachFeature:(f,l)=>{
       const p=f.properties;
-      l.bindTooltip(`<strong>${esc(p.Unit_Nm||p.BndryName||'Protected area')}</strong><br>${esc(p.Category||p.FeatClass||'')}${p.DesTp_Desc?' · '+esc(p.DesTp_Desc):''}`
+      l.bindTooltip(`<strong>${esc(p.Unit_Nm||p.BndryName||'Protected area')}</strong><br>${isTrustLand(p)?'State trust land · leasable, not a conservation restriction':esc(p.Category||p.FeatClass||'')+(p.DesTp_Desc?' · '+esc(p.DesTp_Desc):'')}`
         +`${p.MngNm_Desc||p.Mang_Name?'<br>'+esc(p.MngNm_Desc||p.Mang_Name):''}${p.GIS_Acres?'<br>'+Math.round(p.GIS_Acres).toLocaleString()+' ac':''}`
         +`${p.Pub_Access?' · access: '+esc(p.Pub_Access):''}`,{className:'tip',sticky:true});
     }}).addTo(LG.protected);
