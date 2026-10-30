@@ -52,9 +52,12 @@
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "6 parcels",
    "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 33.7 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 12.1
+  "fiber_km": 12.1,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 2,
@@ -115,9 +118,12 @@
    "Route Diversity (est.)": "4 corridors within 10 mi: US-67 0.4 mi, US-90 2.9 mi",
    "Footprint": "12 parcels",
    "Curtailment (est.)": "Low \u00b7 50 MW wind/solar built within 31 mi \u00b7 345kV+ at 17.8 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 0.52
+  "fiber_km": 0.52,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 3,
@@ -171,9 +177,12 @@
    "Footprint": "3 parcels",
    "Curtailment (est.)": "Medium \u00b7 1,215 MW wind/solar built + 883 MW queued within 31 mi \u00b7 345kV+ at 3.2 mi",
    "Flood Zone (FEMA)": "Outside 100-yr floodplain",
-   "Acres Outside Floodplain": "1,739"
+   "Acres Outside Floodplain": "1,739",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 0.04
+  "fiber_km": 0.04,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 4,
@@ -234,9 +243,12 @@
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "11 parcels",
    "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,256 MW queued within 31 mi \u00b7 345kV+ at 2.5 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 0.0
+  "fiber_km": 0.0,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 5,
@@ -296,9 +308,12 @@
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "10 parcels",
    "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,256 MW queued within 31 mi \u00b7 345kV+ at 1.2 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 0.0
+  "fiber_km": 0.0,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 6,
@@ -352,9 +367,12 @@
    "Route Diversity (est.)": "4 corridors within 10 mi: US-285 0.9 mi, US-67 2.0 mi",
    "Footprint": "5 parcels",
    "Curtailment (est.)": "Medium \u00b7 1,087 MW wind/solar built + 7,451 MW queued within 31 mi \u00b7 345kV+ at 7.4 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 0.0
+  "fiber_km": 0.0,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 7,
@@ -408,9 +426,12 @@
    "Footprint": "4 parcels",
    "Curtailment (est.)": "Medium \u00b7 1,404 MW wind/solar built + 825 MW queued within 31 mi \u00b7 345kV+ at 7.0 mi",
    "Flood Zone (FEMA)": "5% in 100-yr floodplain (A, AE)",
-   "Acres Outside Floodplain": "2,170"
+   "Acres Outside Floodplain": "2,170",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 5.42
+  "fiber_km": 5.42,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 8,
@@ -470,9 +491,12 @@
    "Route Diversity (est.)": "3 corridors within 10 mi: US-67 3.8 mi, US-385 9.5 mi",
    "Footprint": "11 parcels",
    "Curtailment (est.)": "Medium \u00b7 3,711 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 2.1 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\ud83d\udc40 Permanent University Fund (State Resource Management Area, State Land Board) \u00b7 0.8 mi away"
   },
-  "fiber_km": 7.78
+  "fiber_km": 7.78,
+  "protected": "nearby",
+  "protected_pct": 0.0
  },
  {
   "id": 9,
@@ -530,9 +554,12 @@
    "Footprint": "8 parcels",
    "Curtailment (est.)": "Medium \u00b7 1,654 MW wind/solar built + 1,235 MW queued within 31 mi \u00b7 345kV+ at 4.1 mi",
    "Flood Zone (FEMA)": "Outside 100-yr floodplain",
-   "Acres Outside Floodplain": "650"
+   "Acres Outside Floodplain": "650",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 3.21
+  "fiber_km": 3.21,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 10,
@@ -589,9 +616,12 @@
    "Route Diversity (est.)": "2 corridors within 10 mi: US-285 8.4 mi",
    "Footprint": "8 parcels",
    "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,758 MW queued within 31 mi \u00b7 345kV+ at 3.8 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 0.34
+  "fiber_km": 0.34,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 11,
@@ -652,9 +682,12 @@
    "Route Diversity (est.)": "4 corridors within 10 mi: US-67 0.2 mi, Mainline railroad 0.5 mi",
    "Footprint": "12 parcels",
    "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built within 31 mi \u00b7 345kV+ at 19.6 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 0.51
+  "fiber_km": 0.51,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 12,
@@ -713,9 +746,12 @@
    "Route Diversity (est.)": "4 corridors within 10 mi: US-67 8.3 mi, US-90 9.2 mi",
    "Footprint": "9 parcels",
    "Curtailment (est.)": "Low \u00b7 50 MW wind/solar built within 31 mi \u00b7 345kV+ at 15.1 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 13.18
+  "fiber_km": 13.18,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 13,
@@ -770,9 +806,12 @@
    "Footprint": "5 parcels",
    "Curtailment (est.)": "Medium \u00b7 2,064 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 1.6 mi",
    "Flood Zone (FEMA)": "8% in 100-yr floodplain (A)",
-   "Acres Outside Floodplain": "3,009"
+   "Acres Outside Floodplain": "3,009",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 6.45
+  "fiber_km": 6.45,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 14,
@@ -833,9 +872,12 @@
    "Route Diversity (est.)": "3 corridors within 10 mi: US-90 1.3 mi, US-67 1.7 mi",
    "Footprint": "12 parcels",
    "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built within 31 mi \u00b7 345kV+ at 22.9 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u26d4 52% of block protected (52% easement): George Ranch (conservation easement, Non-Governmental Organization); The Nature Conservancy Conservation Easement (conservation easement, Non-Governmental Organization)"
   },
-  "fiber_km": 1.66
+  "fiber_km": 1.66,
+  "protected": "blocked",
+  "protected_pct": 52.0
  },
  {
   "id": 15,
@@ -894,9 +936,12 @@
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "6 parcels",
    "Curtailment (est.)": "High \u00b7 3,059 MW wind/solar built + 1,948 MW queued within 31 mi \u00b7 345kV+ at 19.6 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u26a0\ufe0f 5% of block protected: Permanent University Fund (State Resource Management Area, State Land Board)"
   },
-  "fiber_km": 0.07
+  "fiber_km": 0.07,
+  "protected": "partial",
+  "protected_pct": 5.4
  },
  {
   "id": 16,
@@ -957,9 +1002,12 @@
    "Route Diversity (est.)": "2 corridors within 10 mi: US-67 3.8 mi",
    "Footprint": "10 parcels",
    "Curtailment (est.)": "Medium \u00b7 3,882 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 6.8 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 3.27
+  "fiber_km": 3.27,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 17,
@@ -1016,9 +1064,12 @@
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "6 parcels",
    "Curtailment (est.)": "Medium \u00b7 2,325 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 7.3 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u26a0\ufe0f 7% of block protected: Permanent University Fund (State Resource Management Area, State Land Board)"
   },
-  "fiber_km": 6.15
+  "fiber_km": 6.15,
+  "protected": "partial",
+  "protected_pct": 6.8
  },
  {
   "id": 18,
@@ -1071,9 +1122,12 @@
    "Route Diversity (est.)": "2 corridors within 10 mi: US-380 3.5 mi",
    "Footprint": "4 parcels",
    "Curtailment (est.)": "Low \u00b7 150 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 29.8 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 4.44
+  "fiber_km": 4.44,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 19,
@@ -1130,9 +1184,12 @@
    "Route Diversity (est.)": "2 corridors within 10 mi: US-380 9.1 mi",
    "Footprint": "7 parcels",
    "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 26.7 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 9.66
+  "fiber_km": 9.66,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 20,
@@ -1189,9 +1246,12 @@
    "Route Diversity (est.)": "2 corridors within 10 mi: US-380 9.1 mi",
    "Footprint": "7 parcels",
    "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 26.7 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 9.66
+  "fiber_km": 9.66,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 21,
@@ -1252,9 +1312,12 @@
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "11 parcels",
    "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,451 MW queued within 31 mi \u00b7 345kV+ at 3.2 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 19.27
+  "fiber_km": 19.27,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 22,
@@ -1309,9 +1372,12 @@
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "5 parcels",
    "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,451 MW queued within 31 mi \u00b7 345kV+ at 1.7 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 16.26
+  "fiber_km": 16.26,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 23,
@@ -1373,9 +1439,12 @@
    "Footprint": "11 parcels",
    "Curtailment (est.)": "Medium \u00b7 2,164 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 4.4 mi",
    "Flood Zone (FEMA)": "16% in 100-yr floodplain (A)",
-   "Acres Outside Floodplain": "5,343"
+   "Acres Outside Floodplain": "5,343",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 4.76
+  "fiber_km": 4.76,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 24,
@@ -1432,9 +1501,12 @@
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "7 parcels",
    "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 18.44
+  "fiber_km": 18.44,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 25,
@@ -1488,9 +1560,12 @@
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "4 parcels",
    "Curtailment (est.)": "Medium \u00b7 2,164 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 6.6 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\ud83d\udc40 Permanent University Fund (State Resource Management Area, State Land Board) \u00b7 0.0 mi away"
   },
-  "fiber_km": 4.5
+  "fiber_km": 4.5,
+  "protected": "nearby",
+  "protected_pct": 0.0
  },
  {
   "id": 26,
@@ -1549,9 +1624,12 @@
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "10 parcels",
    "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 16.3 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 24.24
+  "fiber_km": 24.24,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 27,
@@ -1612,9 +1690,12 @@
    "Route Diversity (est.)": "2 corridors within 10 mi: US-67 8.3 mi",
    "Footprint": "11 parcels",
    "Curtailment (est.)": "High \u00b7 3,579 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 11.1 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 0.0
+  "fiber_km": 0.0,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 28,
@@ -1669,9 +1750,12 @@
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "6 parcels",
    "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 14.2 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u26a0\ufe0f 1% of block protected: Permanent University Fund (State Resource Management Area, State Land Board)"
   },
-  "fiber_km": 19.05
+  "fiber_km": 19.05,
+  "protected": "partial",
+  "protected_pct": 1.2
  },
  {
   "id": 29,
@@ -1731,9 +1815,12 @@
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "11 parcels",
    "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 14.2 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u26a0\ufe0f 1% of block protected: Permanent University Fund (State Resource Management Area, State Land Board)"
   },
-  "fiber_km": 19.05
+  "fiber_km": 19.05,
+  "protected": "partial",
+  "protected_pct": 1.2
  },
  {
   "id": 30,
@@ -1794,9 +1881,12 @@
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "12 parcels",
    "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 14.2 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u26a0\ufe0f 1% of block protected: Permanent University Fund (State Resource Management Area, State Land Board)"
   },
-  "fiber_km": 19.05
+  "fiber_km": 19.05,
+  "protected": "partial",
+  "protected_pct": 1.1
  },
  {
   "id": 31,
@@ -1857,9 +1947,12 @@
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "11 parcels",
    "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 18.44
+  "fiber_km": 18.44,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 32,
@@ -1912,9 +2005,12 @@
    "Footprint": "3 parcels",
    "Curtailment (est.)": "Medium \u00b7 2,064 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 1.4 mi",
    "Flood Zone (FEMA)": "11% in 100-yr floodplain (A)",
-   "Acres Outside Floodplain": "1,710"
+   "Acres Outside Floodplain": "1,710",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 6.43
+  "fiber_km": 6.43,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 33,
@@ -1976,9 +2072,12 @@
    "Footprint": "12 parcels",
    "Curtailment (est.)": "Medium \u00b7 2,164 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 4.4 mi",
    "Flood Zone (FEMA)": "14% in 100-yr floodplain (A)",
-   "Acres Outside Floodplain": "6,041"
+   "Acres Outside Floodplain": "6,041",
+   "Protected Land (PAD-US)": "\ud83d\udc40 Permanent University Fund (State Resource Management Area, State Land Board) \u00b7 0.8 mi away"
   },
-  "fiber_km": 12.88
+  "fiber_km": 12.88,
+  "protected": "nearby",
+  "protected_pct": 0.0
  },
  {
   "id": 34,
@@ -2036,9 +2135,12 @@
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "7 parcels",
    "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 18.44
+  "fiber_km": 18.44,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 35,
@@ -2098,9 +2200,12 @@
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "7 parcels",
    "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 18.44
+  "fiber_km": 18.44,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 36,
@@ -2157,9 +2262,12 @@
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "7 parcels",
    "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 18.44
+  "fiber_km": 18.44,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 37,
@@ -2214,9 +2322,12 @@
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "3 parcels",
    "Curtailment (est.)": "Medium \u00b7 784 MW wind/solar built + 1,210 MW queued within 31 mi \u00b7 345kV+ at 30.1 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 1.39
+  "fiber_km": 1.39,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 38,
@@ -2268,9 +2379,12 @@
    "Route Diversity (est.)": "4 corridors within 10 mi: US-67 0.5 mi, US-90 0.8 mi",
    "Footprint": "2 parcels",
    "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built within 31 mi \u00b7 345kV+ at 20.6 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\ud83d\udc40 Coffield Park (conservation easement, City Land) \u00b7 0.7 mi away"
   },
-  "fiber_km": 0.63
+  "fiber_km": 0.63,
+  "protected": "nearby",
+  "protected_pct": 0.0
  },
  {
   "id": 39,
@@ -2323,9 +2437,12 @@
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "4 parcels",
    "Curtailment (est.)": "High \u00b7 3,302 MW wind/solar built + 1,500 MW queued within 31 mi \u00b7 345kV+ at 10.7 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\ud83d\udc40 Permanent University Fund (State Resource Management Area, State Land Board) \u00b7 0.1 mi away"
   },
-  "fiber_km": 4.99
+  "fiber_km": 4.99,
+  "protected": "nearby",
+  "protected_pct": 0.0
  },
  {
   "id": 40,
@@ -2381,9 +2498,12 @@
    "Route Diversity (est.)": "2 corridors within 10 mi: US-380 7.7 mi",
    "Footprint": "7 parcels",
    "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 25.7 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 4.85
+  "fiber_km": 4.85,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 41,
@@ -2439,9 +2559,12 @@
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "6 parcels",
    "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,256 MW queued within 31 mi \u00b7 345kV+ at 3.5 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 0.0
+  "fiber_km": 0.0,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 42,
@@ -2502,9 +2625,12 @@
    "Route Diversity (est.)": "2 corridors within 10 mi: US-67 4.1 mi",
    "Footprint": "12 parcels",
    "Curtailment (est.)": "Medium \u00b7 3,711 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 8.9 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 3.69
+  "fiber_km": 3.69,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 43,
@@ -2565,9 +2691,12 @@
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "12 parcels",
    "Curtailment (est.)": "Low \u00b7 100 MW wind/solar built within 31 mi \u00b7 345kV+ at 32.1 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\ud83d\udc40 Permanent University Fund (State Resource Management Area, State Land Board) \u00b7 0.1 mi away"
   },
-  "fiber_km": 17.16
+  "fiber_km": 17.16,
+  "protected": "nearby",
+  "protected_pct": 0.0
  },
  {
   "id": 44,
@@ -2628,9 +2757,12 @@
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "11 parcels",
    "Curtailment (est.)": "Medium \u00b7 699 MW wind/solar built + 7,256 MW queued within 31 mi \u00b7 345kV+ at 5.7 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 5.25
+  "fiber_km": 5.25,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 45,
@@ -2684,9 +2816,12 @@
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "5 parcels",
    "Curtailment (est.)": "Low \u00b7 250 MW wind/solar built within 31 mi \u00b7 345kV+ at 27.0 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\ud83d\udc40 Permanent University Fund (State Resource Management Area, State Land Board) \u00b7 0.3 mi away"
   },
-  "fiber_km": 26.5
+  "fiber_km": 26.5,
+  "protected": "nearby",
+  "protected_pct": 0.0
  },
  {
   "id": 46,
@@ -2745,9 +2880,12 @@
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "8 parcels",
    "Curtailment (est.)": "Low \u00b7 125 MW wind/solar built within 31 mi \u00b7 345kV+ at 42.0 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 12.42
+  "fiber_km": 12.42,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 47,
@@ -2804,9 +2942,12 @@
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "8 parcels",
    "Curtailment (est.)": "Low \u00b7 100 MW wind/solar built within 31 mi \u00b7 345kV+ at 29.8 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 23.72
+  "fiber_km": 23.72,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 48,
@@ -2867,9 +3008,12 @@
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "12 parcels",
    "Curtailment (est.)": "Low \u00b7 135 MW wind/solar built + 990 MW queued within 31 mi \u00b7 345kV+ at 51.0 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land within ~2 mi (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 0.73
+  "fiber_km": 0.73,
+  "protected": "none",
+  "protected_pct": 0.0
  },
  {
   "id": 49,
@@ -2923,9 +3067,12 @@
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "5 parcels",
    "Curtailment (est.)": "Low \u00b7 250 MW wind/solar built within 31 mi \u00b7 345kV+ at 25.8 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\ud83d\udc40 Permanent University Fund (State Resource Management Area, State Land Board) \u00b7 0.2 mi away"
   },
-  "fiber_km": 29.12
+  "fiber_km": 29.12,
+  "protected": "nearby",
+  "protected_pct": 0.0
  },
  {
   "id": 50,
@@ -2983,8 +3130,11 @@
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "8 parcels",
    "Curtailment (est.)": "Low \u00b7 250 MW wind/solar built within 31 mi \u00b7 345kV+ at 27.8 mi",
-   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin",
+   "Protected Land (PAD-US)": "\u2705 No PAD-US protected land on block (easement records are incomplete: confirm in title)"
   },
-  "fiber_km": 29.29
+  "fiber_km": 29.29,
+  "protected": "none",
+  "protected_pct": 0.0
  }
 ]

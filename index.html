@@ -324,6 +324,10 @@
         <div class="layer-label"><div class="layer-dot" style="background:#ff6b6b"></div>FEMA Flood Zones (Live, zoom 10+)</div>
         <div class="toggle-switch on" id="tog-flood"></div>
       </div>
+      <div class="layer-toggle" onclick="toggleLayer('protected')">
+        <div class="layer-label"><div class="layer-dot" style="background:#2ea043"></div>Protected Land (PAD-US, zoom 8+)</div>
+        <div class="toggle-switch" id="tog-protected"></div>
+      </div>
       <div class="layer-toggle" onclick="toggleLayer('solar')">
         <div class="layer-label"><div class="layer-dot" style="background:#ff9a3c"></div>High GHI Zones</div>
         <div class="toggle-switch on" id="tog-solar"></div>
@@ -407,6 +411,14 @@
           <option value="all" selected>Any</option>
           <option value="Private">Private only</option>
           <option value="noutil">Hide utility/energy-owned</option>
+        </select>
+      </div>
+      <div style="margin-top:10px">
+        <div style="font-size:12px;color:#8b949e;margin-bottom:4px">Protected Land (PAD-US):</div>
+        <select id="protect-filter" onchange="redraw()">
+          <option value="hideblocked" selected>Hide blocked sites</option>
+          <option value="hidepartial">Hide blocked + partial overlap</option>
+          <option value="all">Show all</option>
         </select>
       </div>
     </div>
@@ -655,9 +667,10 @@ const LG={
   fiber:        L.layerGroup().addTo(map),
   flood:        L.layerGroup().addTo(map),
   solar:        L.layerGroup().addTo(map),
+  protected:    L.layerGroup(),               // PAD-US protected land, live (off by default)
   sites:        L.layerGroup().addTo(map)
 };
-const LG_ON={parcels:true,transmission:true,substations:true,plants:true,fiber:true,flood:true,solar:true,sites:true};
+const LG_ON={parcels:true,transmission:true,substations:true,plants:true,fiber:true,flood:true,solar:true,protected:false,sites:true};
 
 // Zoom hint (for FEMA tiles)
 map.on('zoomend',()=>{
@@ -1066,6 +1079,46 @@ async function loadFiber(){
   return false;
 }
 
+// ══════════════════════════════════════════════════════
+// PROTECTED LAND (USGS PAD-US), live for the current view, zoom 8+
+// Green = public / nonprofit-owned land, pink dashed = conservation easement,
+// gray dashed = proclamation boundary (may contain private land).
+// Small areas are skipped when zoomed out to keep it fast.
+// ══════════════════════════════════════════════════════
+const PADUS_URL='https://services.arcgis.com/v01gqwM5QqNysAAi/ArcGIS/rest/services/PADUS_Protected_Areas_National/FeatureServer/0/query';
+let PADUS_CTRL=null;
+function padusStyle(f){
+  const c=String(f.properties.Category||f.properties.FeatClass||'');
+  if(/easement/i.test(c)) return {color:'#f778ba',weight:1.6,dashArray:'5,4',fillColor:'#f778ba',fillOpacity:.10};
+  if(/proclamation/i.test(c)) return {color:'#8b949e',weight:1,dashArray:'2,4',fill:false};
+  return {color:'#2ea043',weight:1.2,fillColor:'#2ea043',fillOpacity:.16};
+}
+async function refreshProtected(){
+  if(!LG_ON.protected) return;
+  if(map.getZoom()<8){ LG.protected.clearLayers(); return; }
+  PADUS_CTRL?.abort(); PADUS_CTRL=new AbortController();
+  const b=map.getBounds(), z=map.getZoom();
+  const minAc=z<10?640:z<12?40:0;
+  const offset=(b.getEast()-b.getWest())/map.getSize().x;   // ~1 pixel, in degrees
+  const u=PADUS_URL+'?'+new URLSearchParams({
+    geometry:`${b.getWest()},${b.getSouth()},${b.getEast()},${b.getNorth()}`,geometryType:'esriGeometryEnvelope',inSR:4326,
+    spatialRel:'esriSpatialRelIntersects',where:minAc?`GIS_Acres>=${minAc}`:'1=1',
+    outFields:'Category,FeatClass,Unit_Nm,BndryName,MngNm_Desc,Mang_Name,DesTp_Desc,GAP_Sts,Pub_Access,GIS_Acres',
+    returnGeometry:'true',outSR:4326,maxAllowableOffset:offset,resultRecordCount:2000,f:'geojson'});
+  try{
+    const r=await fetch(u,{signal:PADUS_CTRL.signal}); if(!r.ok) throw new Error('HTTP '+r.status);
+    const g=await r.json();
+    LG.protected.clearLayers();
+    L.geoJSON(g,{renderer:CANVAS,style:padusStyle,onEachFeature:(f,l)=>{
+      const p=f.properties;
+      l.bindTooltip(`<strong>${esc(p.Unit_Nm||p.BndryName||'Protected area')}</strong><br>${esc(p.Category||p.FeatClass||'')}${p.DesTp_Desc?' · '+esc(p.DesTp_Desc):''}`
+        +`${p.MngNm_Desc||p.Mang_Name?'<br>'+esc(p.MngNm_Desc||p.Mang_Name):''}${p.GIS_Acres?'<br>'+Math.round(p.GIS_Acres).toLocaleString()+' ac':''}`
+        +`${p.Pub_Access?' · access: '+esc(p.Pub_Access):''}`,{className:'tip',sticky:true});
+    }}).addTo(LG.protected);
+  }catch(e){ if(e.name!=='AbortError') console.warn('PAD-US:',e.message); }
+}
+map.on('moveend',refreshProtected);
+
 // Nearest substation to a given site — powers the "Power Access"
 // readout in the detail panel. Distance only; NOT a capacity claim.
 function nearestSubstation(lat,lng){
@@ -1410,7 +1463,16 @@ function initFEMALayer(){
 let threshold=70,minAcres=500,curtMax='low',maxOwners=3;
 let activeSite=null;
 
-function totalScore(site){return Object.values(site.scores).reduce((a,b)=>a+b,0)}
+// Scoring weights from the sidebar sliders. Each factor's raw points are scaled to its
+// share (raw/cap × weight) and the total is normalized back to 0–100, so the defaults
+// (weights = caps, summing to 100) give exactly the raw sum.
+const WEIGHTS={...SCORE_CAPS};
+function totalScore(site){
+  const wsum=Object.keys(site.scores).reduce((a,k)=>a+(WEIGHTS[k]??0),0);
+  if(!wsum) return 0;
+  const pts=Object.entries(site.scores).reduce((a,[k,v])=>a+(SCORE_CAPS[k]?v/SCORE_CAPS[k]:0)*(WEIGHTS[k]??0),0);
+  return Math.round(pts*100/wsum);
+}
 function scoreColor(s){return s>=90?'#3fb950':s>=80?'#58a6ff':s>=70?'#f7c542':'#484f58'}
 function scoreTier(s){
   return s>=90?'⚡ Tier 1 — Premium Co-Location Site':
@@ -1435,6 +1497,14 @@ function opPass(site){
   const v=document.getElementById('op-filter')?.value||'all';
   return v==='all'||!site.grid_op||site.grid_op===v;
 }
+// Protected-land screen from siteintel_protected.ipynb (PAD-US). Sites without a flag yet always pass.
+function protectPass(site){
+  const v=document.getElementById('protect-filter')?.value||'hideblocked';
+  const p=site.protected;
+  if(v==='all'||!p) return true;
+  if(v==='hidepartial') return p!=='blocked'&&p!=='partial';
+  return p!=='blocked';
+}
 function tenurePass(site){
   const v=document.getElementById('tenure-filter')?.value||'all';
   if(v==='all'||!site.tenure) return true;
@@ -1448,14 +1518,15 @@ function redraw(){
   let qual=0,tot=0;
   SITES.forEach(site=>{
     const s=totalScore(site);
-    const show=s>=threshold&&site.acres>=minAcres&&curtPass(site)&&ownerPass(site)&&opPass(site)&&tenurePass(site)&&areaPass(site);
+    const show=s>=threshold&&site.acres>=minAcres&&curtPass(site)&&ownerPass(site)&&opPass(site)&&tenurePass(site)&&protectPass(site)&&areaPass(site);
     if(show){qual++;tot+=s}
     const c=show?scoreColor(s):'#30363d';
     const liveDot=site.solarSrc==='live'?`<span style="position:absolute;top:-2px;right:-2px;width:9px;height:9px;background:#3fb950;border-radius:50%;border:1.5px solid #0d1117"></span>`:'';
+    const protDot=(site.protected==='blocked'||site.protected==='partial')?`<span title="Protected land overlap" style="position:absolute;top:-4px;left:-4px;font-size:12px;line-height:1">${site.protected==='blocked'?'⛔':'⚠️'}</span>`:'';
     const parcelDot=site.parcelData?.live?`<span style="position:absolute;bottom:-2px;right:-2px;width:9px;height:9px;background:#a78bfa;border-radius:50%;border:1.5px solid #0d1117"></span>`:'';
     const icon=L.divIcon({
       className:'',
-      html:`<div style="position:relative;width:38px;height:38px;background:${c};border:2.5px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#0d1117;box-shadow:0 0 14px ${c}90;cursor:pointer;opacity:${show?1:.22}">${s}${liveDot}${parcelDot}</div>`,
+      html:`<div style="position:relative;width:38px;height:38px;background:${c};border:2.5px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#0d1117;box-shadow:0 0 14px ${c}90;cursor:pointer;opacity:${show?1:.22}">${s}${liveDot}${parcelDot}${protDot}</div>`,
       iconSize:[38,38],iconAnchor:[19,19]
     });
     const m=L.marker([site.lat,site.lng],{icon}).addTo(LG.sites);
@@ -1481,8 +1552,20 @@ function toggleLayer(name){
     hint.style.display=(LG_ON[name]&&map.getZoom()<11)?'block':'none';
     if(LG_ON[name]){ refreshParcelView(); refreshParcelImage(); }
   }
+  if(name==='protected'&&LG_ON[name]) refreshProtected();
 }
-function reweight(k,v){document.getElementById(`wv-${k}`).textContent=v;redraw()}
+function reweight(k,v){
+  WEIGHTS[k]=+v;
+  document.getElementById(`wv-${k}`).textContent=v;
+  redraw();
+  // keep an open detail panel in sync without moving the map
+  if(activeSite&&document.getElementById('detail').classList.contains('open')){
+    const sc=totalScore(activeSite), c=scoreColor(sc), ring=document.getElementById('d-ring');
+    ring.style.borderColor=c; ring.style.color=c;
+    document.getElementById('d-score').textContent=sc;
+    document.getElementById('d-tier').textContent=scoreTier(sc);
+  }
+}
 function setThreshold(v){threshold=+v;document.getElementById('thr-val').textContent=v;redraw()}
 function setAcres(v){minAcres=+v;document.getElementById('ac-val').textContent=v;redraw()}
 
@@ -1840,7 +1923,7 @@ function mscore(hay,q,toks){
 }
 function hvKm(a,b,c,d){const r=Math.PI/180,x=Math.sin((c-a)*r/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin((d-b)*r/2)**2;return 12742*Math.asin(Math.sqrt(x))}
 const fmtMi=km=>`${(km*0.621371).toFixed(km<16?1:0)} mi`;
-const siteQualifies=s=>{const t=totalScore(s);return t>=threshold&&s.acres>=minAcres&&curtPass(s)&&ownerPass(s)&&opPass(s)&&tenurePass(s)};
+const siteQualifies=s=>{const t=totalScore(s);return t>=threshold&&s.acres>=minAcres&&curtPass(s)&&ownerPass(s)&&opPass(s)&&tenurePass(s)&&protectPass(s)};
 const realSubs=()=>SUBSTATIONS.filter(s=>!s.isTap);
 
 function parseCoords(raw){
