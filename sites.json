@@ -12,7 +12,7 @@
    "solar": 15,
    "tx": 18,
    "fiber": 8,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -51,7 +51,8 @@
    "Fiber Corridor (est.)": "US-62 (US highway) \u00b7 7.5 mi",
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "6 parcels",
-   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 33.7 mi"
+   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 33.7 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 12.1
  },
@@ -68,7 +69,7 @@
    "solar": 17,
    "tx": 15,
    "fiber": 18,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -113,7 +114,8 @@
    "Fiber Corridor (est.)": "Union Pacific Railroad (mainline rail) \u00b7 0.3 mi",
    "Route Diversity (est.)": "4 corridors within 10 mi: US-67 0.4 mi, US-90 2.9 mi",
    "Footprint": "12 parcels",
-   "Curtailment (est.)": "Low \u00b7 50 MW wind/solar built within 31 mi \u00b7 345kV+ at 17.8 mi"
+   "Curtailment (est.)": "Low \u00b7 50 MW wind/solar built within 31 mi \u00b7 345kV+ at 17.8 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 0.52
  },
@@ -167,7 +169,9 @@
    "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 0.0 mi",
    "Route Diversity (est.)": "3 corridors within 10 mi: Union Pacific Railroad 0.7 mi, US-385 4.5 mi",
    "Footprint": "3 parcels",
-   "Curtailment (est.)": "Medium \u00b7 1,215 MW wind/solar built + 883 MW queued within 31 mi \u00b7 345kV+ at 3.2 mi"
+   "Curtailment (est.)": "Medium \u00b7 1,215 MW wind/solar built + 883 MW queued within 31 mi \u00b7 345kV+ at 3.2 mi",
+   "Flood Zone (FEMA)": "Outside 100-yr floodplain",
+   "Acres Outside Floodplain": "1,739"
   },
   "fiber_km": 0.04
  },
@@ -184,7 +188,7 @@
    "solar": 16,
    "tx": 15,
    "fiber": 16,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -229,7 +233,8 @@
    "Fiber Corridor (est.)": "I-10 (interstate) \u00b7 0.0 mi",
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "11 parcels",
-   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,256 MW queued within 31 mi \u00b7 345kV+ at 2.5 mi"
+   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,256 MW queued within 31 mi \u00b7 345kV+ at 2.5 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 0.0
  },
@@ -246,7 +251,7 @@
    "solar": 16,
    "tx": 15,
    "fiber": 16,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -290,7 +295,8 @@
    "Fiber Corridor (est.)": "I-10 (interstate) \u00b7 0.0 mi",
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "10 parcels",
-   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,256 MW queued within 31 mi \u00b7 345kV+ at 1.2 mi"
+   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,256 MW queued within 31 mi \u00b7 345kV+ at 1.2 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 0.0
  },
@@ -307,7 +313,7 @@
    "solar": 16,
    "tx": 15,
    "fiber": 20,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -345,7 +351,8 @@
    "Fiber Corridor (est.)": "I-10 (interstate) \u00b7 0.0 mi",
    "Route Diversity (est.)": "4 corridors within 10 mi: US-285 0.9 mi, US-67 2.0 mi",
    "Footprint": "5 parcels",
-   "Curtailment (est.)": "Medium \u00b7 1,087 MW wind/solar built + 7,451 MW queued within 31 mi \u00b7 345kV+ at 7.4 mi"
+   "Curtailment (est.)": "Medium \u00b7 1,087 MW wind/solar built + 7,451 MW queued within 31 mi \u00b7 345kV+ at 7.4 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 0.0
  },
@@ -362,7 +369,7 @@
    "solar": 15,
    "tx": 16,
    "fiber": 18,
-   "flood": 15,
+   "flood": 13,
    "parcel": 10,
    "tax": 8
   },
@@ -399,7 +406,9 @@
    "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 3.4 mi",
    "Route Diversity (est.)": "3 corridors within 10 mi: US-385 2.1 mi, Union Pacific Railroad 3.4 mi",
    "Footprint": "4 parcels",
-   "Curtailment (est.)": "Medium \u00b7 1,404 MW wind/solar built + 825 MW queued within 31 mi \u00b7 345kV+ at 7.0 mi"
+   "Curtailment (est.)": "Medium \u00b7 1,404 MW wind/solar built + 825 MW queued within 31 mi \u00b7 345kV+ at 7.0 mi",
+   "Flood Zone (FEMA)": "5% in 100-yr floodplain (A, AE)",
+   "Acres Outside Floodplain": "2,170"
   },
   "fiber_km": 5.42
  },
@@ -416,7 +425,7 @@
    "solar": 15,
    "tx": 16,
    "fiber": 16,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -460,7 +469,8 @@
    "Fiber Corridor (est.)": "I-10 (interstate) \u00b7 4.8 mi",
    "Route Diversity (est.)": "3 corridors within 10 mi: US-67 3.8 mi, US-385 9.5 mi",
    "Footprint": "11 parcels",
-   "Curtailment (est.)": "Medium \u00b7 3,711 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 2.1 mi"
+   "Curtailment (est.)": "Medium \u00b7 3,711 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 2.1 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 7.78
  },
@@ -518,7 +528,9 @@
    "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 2.0 mi",
    "Route Diversity (est.)": "3 corridors within 10 mi: Union Pacific Railroad 6.7 mi, I-20 6.7 mi",
    "Footprint": "8 parcels",
-   "Curtailment (est.)": "Medium \u00b7 1,654 MW wind/solar built + 1,235 MW queued within 31 mi \u00b7 345kV+ at 4.1 mi"
+   "Curtailment (est.)": "Medium \u00b7 1,654 MW wind/solar built + 1,235 MW queued within 31 mi \u00b7 345kV+ at 4.1 mi",
+   "Flood Zone (FEMA)": "Outside 100-yr floodplain",
+   "Acres Outside Floodplain": "650"
   },
   "fiber_km": 3.21
  },
@@ -535,7 +547,7 @@
    "solar": 16,
    "tx": 14,
    "fiber": 18,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -576,7 +588,8 @@
    "Fiber Corridor (est.)": "I-10 (interstate) \u00b7 0.2 mi",
    "Route Diversity (est.)": "2 corridors within 10 mi: US-285 8.4 mi",
    "Footprint": "8 parcels",
-   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,758 MW queued within 31 mi \u00b7 345kV+ at 3.8 mi"
+   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,758 MW queued within 31 mi \u00b7 345kV+ at 3.8 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 0.34
  },
@@ -593,7 +606,7 @@
    "solar": 17,
    "tx": 13,
    "fiber": 18,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -638,7 +651,8 @@
    "Fiber Corridor (est.)": "Union Pacific Railroad (mainline rail) \u00b7 0.3 mi",
    "Route Diversity (est.)": "4 corridors within 10 mi: US-67 0.2 mi, Mainline railroad 0.5 mi",
    "Footprint": "12 parcels",
-   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built within 31 mi \u00b7 345kV+ at 19.6 mi"
+   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built within 31 mi \u00b7 345kV+ at 19.6 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 0.51
  },
@@ -655,7 +669,7 @@
    "solar": 17,
    "tx": 13,
    "fiber": 13,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -698,7 +712,8 @@
    "Fiber Corridor (est.)": "Union Pacific Railroad (mainline rail) \u00b7 8.2 mi",
    "Route Diversity (est.)": "4 corridors within 10 mi: US-67 8.3 mi, US-90 9.2 mi",
    "Footprint": "9 parcels",
-   "Curtailment (est.)": "Low \u00b7 50 MW wind/solar built within 31 mi \u00b7 345kV+ at 15.1 mi"
+   "Curtailment (est.)": "Low \u00b7 50 MW wind/solar built within 31 mi \u00b7 345kV+ at 15.1 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 13.18
  },
@@ -715,7 +730,7 @@
    "solar": 15,
    "tx": 15,
    "fiber": 15,
-   "flood": 15,
+   "flood": 13,
    "parcel": 10,
    "tax": 8
   },
@@ -753,7 +768,9 @@
    "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 4.0 mi",
    "Route Diversity (est.)": "3 corridors within 10 mi: I-20 9.7 mi, Union Pacific Railroad 9.8 mi",
    "Footprint": "5 parcels",
-   "Curtailment (est.)": "Medium \u00b7 2,064 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 1.6 mi"
+   "Curtailment (est.)": "Medium \u00b7 2,064 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 1.6 mi",
+   "Flood Zone (FEMA)": "8% in 100-yr floodplain (A)",
+   "Acres Outside Floodplain": "3,009"
   },
   "fiber_km": 6.45
  },
@@ -770,7 +787,7 @@
    "solar": 17,
    "tx": 13,
    "fiber": 18,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -815,7 +832,8 @@
    "Fiber Corridor (est.)": "Union Pacific Railroad (mainline rail) \u00b7 1.0 mi",
    "Route Diversity (est.)": "3 corridors within 10 mi: US-90 1.3 mi, US-67 1.7 mi",
    "Footprint": "12 parcels",
-   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built within 31 mi \u00b7 345kV+ at 22.9 mi"
+   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built within 31 mi \u00b7 345kV+ at 22.9 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 1.66
  },
@@ -832,7 +850,7 @@
    "solar": 15,
    "tx": 15,
    "fiber": 13,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -875,7 +893,8 @@
    "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 0.0 mi",
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "6 parcels",
-   "Curtailment (est.)": "High \u00b7 3,059 MW wind/solar built + 1,948 MW queued within 31 mi \u00b7 345kV+ at 19.6 mi"
+   "Curtailment (est.)": "High \u00b7 3,059 MW wind/solar built + 1,948 MW queued within 31 mi \u00b7 345kV+ at 19.6 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 0.07
  },
@@ -892,7 +911,7 @@
    "solar": 15,
    "tx": 15,
    "fiber": 14,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -937,7 +956,8 @@
    "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 2.0 mi",
    "Route Diversity (est.)": "2 corridors within 10 mi: US-67 3.8 mi",
    "Footprint": "10 parcels",
-   "Curtailment (est.)": "Medium \u00b7 3,882 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 6.8 mi"
+   "Curtailment (est.)": "Medium \u00b7 3,882 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 6.8 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 3.27
  },
@@ -954,7 +974,7 @@
    "solar": 15,
    "tx": 15,
    "fiber": 11,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -995,7 +1015,8 @@
    "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 3.8 mi",
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "6 parcels",
-   "Curtailment (est.)": "Medium \u00b7 2,325 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 7.3 mi"
+   "Curtailment (est.)": "Medium \u00b7 2,325 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 7.3 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 6.15
  },
@@ -1012,7 +1033,7 @@
    "solar": 15,
    "tx": 15,
    "fiber": 13,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -1049,7 +1070,8 @@
    "Fiber Corridor (est.)": "US-82 (US highway) \u00b7 2.8 mi",
    "Route Diversity (est.)": "2 corridors within 10 mi: US-380 3.5 mi",
    "Footprint": "4 parcels",
-   "Curtailment (est.)": "Low \u00b7 150 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 29.8 mi"
+   "Curtailment (est.)": "Low \u00b7 150 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 29.8 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 4.44
  },
@@ -1066,7 +1088,7 @@
    "solar": 15,
    "tx": 15,
    "fiber": 11,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -1107,7 +1129,8 @@
    "Fiber Corridor (est.)": "US-82 (US highway) \u00b7 6.0 mi",
    "Route Diversity (est.)": "2 corridors within 10 mi: US-380 9.1 mi",
    "Footprint": "7 parcels",
-   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 26.7 mi"
+   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 26.7 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 9.66
  },
@@ -1124,7 +1147,7 @@
    "solar": 15,
    "tx": 15,
    "fiber": 11,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -1165,7 +1188,8 @@
    "Fiber Corridor (est.)": "US-82 (US highway) \u00b7 6.0 mi",
    "Route Diversity (est.)": "2 corridors within 10 mi: US-380 9.1 mi",
    "Footprint": "7 parcels",
-   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 26.7 mi"
+   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 26.7 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 9.66
  },
@@ -1182,7 +1206,7 @@
    "solar": 16,
    "tx": 14,
    "fiber": 6,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -1227,7 +1251,8 @@
    "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 12.0 mi",
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "11 parcels",
-   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,451 MW queued within 31 mi \u00b7 345kV+ at 3.2 mi"
+   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,451 MW queued within 31 mi \u00b7 345kV+ at 3.2 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 19.27
  },
@@ -1244,7 +1269,7 @@
    "solar": 16,
    "tx": 14,
    "fiber": 6,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -1283,7 +1308,8 @@
    "Fiber Corridor (est.)": "US-285 (US highway) \u00b7 10.1 mi",
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "5 parcels",
-   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,451 MW queued within 31 mi \u00b7 345kV+ at 1.7 mi"
+   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,451 MW queued within 31 mi \u00b7 345kV+ at 1.7 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 16.26
  },
@@ -1300,7 +1326,7 @@
    "solar": 15,
    "tx": 15,
    "fiber": 11,
-   "flood": 15,
+   "flood": 12,
    "parcel": 10,
    "tax": 8
   },
@@ -1345,7 +1371,9 @@
    "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 3.0 mi",
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "11 parcels",
-   "Curtailment (est.)": "Medium \u00b7 2,164 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 4.4 mi"
+   "Curtailment (est.)": "Medium \u00b7 2,164 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 4.4 mi",
+   "Flood Zone (FEMA)": "16% in 100-yr floodplain (A)",
+   "Acres Outside Floodplain": "5,343"
   },
   "fiber_km": 4.76
  },
@@ -1362,7 +1390,7 @@
    "solar": 16,
    "tx": 14,
    "fiber": 6,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -1403,7 +1431,8 @@
    "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 11.5 mi",
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "7 parcels",
-   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi"
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 18.44
  },
@@ -1420,7 +1449,7 @@
    "solar": 15,
    "tx": 15,
    "fiber": 11,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -1458,7 +1487,8 @@
    "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 2.8 mi",
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "4 parcels",
-   "Curtailment (est.)": "Medium \u00b7 2,164 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 6.6 mi"
+   "Curtailment (est.)": "Medium \u00b7 2,164 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 6.6 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 4.5
  },
@@ -1475,7 +1505,7 @@
    "solar": 16,
    "tx": 14,
    "fiber": 3,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -1518,7 +1548,8 @@
    "Fiber Corridor (est.)": "Union Pacific Railroad (mainline rail) \u00b7 15.1 mi",
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "10 parcels",
-   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 16.3 mi"
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 16.3 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 24.24
  },
@@ -1535,7 +1566,7 @@
    "solar": 15,
    "tx": 15,
    "fiber": 15,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -1580,7 +1611,8 @@
    "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 0.0 mi",
    "Route Diversity (est.)": "2 corridors within 10 mi: US-67 8.3 mi",
    "Footprint": "11 parcels",
-   "Curtailment (est.)": "High \u00b7 3,579 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 11.1 mi"
+   "Curtailment (est.)": "High \u00b7 3,579 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 11.1 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 0.0
  },
@@ -1597,7 +1629,7 @@
    "solar": 16,
    "tx": 14,
    "fiber": 6,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -1636,7 +1668,8 @@
    "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 11.8 mi",
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "6 parcels",
-   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 14.2 mi"
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 14.2 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 19.05
  },
@@ -1653,7 +1686,7 @@
    "solar": 16,
    "tx": 14,
    "fiber": 6,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -1697,7 +1730,8 @@
    "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 11.8 mi",
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "11 parcels",
-   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 14.2 mi"
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 14.2 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 19.05
  },
@@ -1714,7 +1748,7 @@
    "solar": 16,
    "tx": 14,
    "fiber": 6,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -1759,7 +1793,8 @@
    "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 11.8 mi",
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "12 parcels",
-   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 14.2 mi"
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 14.2 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 19.05
  },
@@ -1776,7 +1811,7 @@
    "solar": 16,
    "tx": 14,
    "fiber": 6,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -1821,7 +1856,8 @@
    "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 11.5 mi",
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "11 parcels",
-   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi"
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 18.44
  },
@@ -1838,7 +1874,7 @@
    "solar": 15,
    "tx": 15,
    "fiber": 11,
-   "flood": 15,
+   "flood": 12,
    "parcel": 10,
    "tax": 8
   },
@@ -1874,7 +1910,9 @@
    "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 4.0 mi",
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "3 parcels",
-   "Curtailment (est.)": "Medium \u00b7 2,064 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 1.4 mi"
+   "Curtailment (est.)": "Medium \u00b7 2,064 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 1.4 mi",
+   "Flood Zone (FEMA)": "11% in 100-yr floodplain (A)",
+   "Acres Outside Floodplain": "1,710"
   },
   "fiber_km": 6.43
  },
@@ -1891,7 +1929,7 @@
    "solar": 15,
    "tx": 15,
    "fiber": 8,
-   "flood": 15,
+   "flood": 12,
    "parcel": 10,
    "tax": 8
   },
@@ -1936,7 +1974,9 @@
    "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 8.0 mi",
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "12 parcels",
-   "Curtailment (est.)": "Medium \u00b7 2,164 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 4.4 mi"
+   "Curtailment (est.)": "Medium \u00b7 2,164 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 4.4 mi",
+   "Flood Zone (FEMA)": "14% in 100-yr floodplain (A)",
+   "Acres Outside Floodplain": "6,041"
   },
   "fiber_km": 12.88
  },
@@ -1953,7 +1993,7 @@
    "solar": 16,
    "tx": 14,
    "fiber": 6,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -1995,7 +2035,8 @@
    "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 11.5 mi",
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "7 parcels",
-   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi"
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 18.44
  },
@@ -2012,7 +2053,7 @@
    "solar": 16,
    "tx": 14,
    "fiber": 6,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -2056,7 +2097,8 @@
    "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 11.5 mi",
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "7 parcels",
-   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi"
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 18.44
  },
@@ -2073,7 +2115,7 @@
    "solar": 16,
    "tx": 14,
    "fiber": 6,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -2114,7 +2156,8 @@
    "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 11.5 mi",
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "7 parcels",
-   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi"
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 18.44
  },
@@ -2131,7 +2174,7 @@
    "solar": 16,
    "tx": 14,
    "fiber": 13,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -2170,7 +2213,8 @@
    "Fiber Corridor (est.)": "US-285 (US highway) \u00b7 0.9 mi",
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "3 parcels",
-   "Curtailment (est.)": "Medium \u00b7 784 MW wind/solar built + 1,210 MW queued within 31 mi \u00b7 345kV+ at 30.1 mi"
+   "Curtailment (est.)": "Medium \u00b7 784 MW wind/solar built + 1,210 MW queued within 31 mi \u00b7 345kV+ at 30.1 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 1.39
  },
@@ -2187,7 +2231,7 @@
    "solar": 17,
    "tx": 15,
    "fiber": 18,
-   "flood": 15,
+   "flood": 11,
    "parcel": 7,
    "tax": 8
   },
@@ -2223,7 +2267,8 @@
    "Fiber Corridor (est.)": "Union Pacific Railroad (mainline rail) \u00b7 0.4 mi",
    "Route Diversity (est.)": "4 corridors within 10 mi: US-67 0.5 mi, US-90 0.8 mi",
    "Footprint": "2 parcels",
-   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built within 31 mi \u00b7 345kV+ at 20.6 mi"
+   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built within 31 mi \u00b7 345kV+ at 20.6 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 0.63
  },
@@ -2240,7 +2285,7 @@
    "solar": 15,
    "tx": 14,
    "fiber": 14,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -2277,7 +2322,8 @@
    "Fiber Corridor (est.)": "I-10 (interstate) \u00b7 3.1 mi",
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "4 parcels",
-   "Curtailment (est.)": "High \u00b7 3,302 MW wind/solar built + 1,500 MW queued within 31 mi \u00b7 345kV+ at 10.7 mi"
+   "Curtailment (est.)": "High \u00b7 3,302 MW wind/solar built + 1,500 MW queued within 31 mi \u00b7 345kV+ at 10.7 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 4.99
  },
@@ -2294,7 +2340,7 @@
    "solar": 14,
    "tx": 15,
    "fiber": 13,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -2334,7 +2380,8 @@
    "Fiber Corridor (est.)": "US-82 (US highway) \u00b7 3.0 mi",
    "Route Diversity (est.)": "2 corridors within 10 mi: US-380 7.7 mi",
    "Footprint": "7 parcels",
-   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 25.7 mi"
+   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 25.7 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 4.85
  },
@@ -2351,7 +2398,7 @@
    "solar": 16,
    "tx": 13,
    "fiber": 16,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -2391,7 +2438,8 @@
    "Fiber Corridor (est.)": "I-10 (interstate) \u00b7 0.0 mi",
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "6 parcels",
-   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,256 MW queued within 31 mi \u00b7 345kV+ at 3.5 mi"
+   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,256 MW queued within 31 mi \u00b7 345kV+ at 3.5 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 0.0
  },
@@ -2408,7 +2456,7 @@
    "solar": 15,
    "tx": 14,
    "fiber": 14,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -2453,7 +2501,8 @@
    "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 2.3 mi",
    "Route Diversity (est.)": "2 corridors within 10 mi: US-67 4.1 mi",
    "Footprint": "12 parcels",
-   "Curtailment (est.)": "Medium \u00b7 3,711 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 8.9 mi"
+   "Curtailment (est.)": "Medium \u00b7 3,711 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 8.9 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 3.69
  },
@@ -2470,7 +2519,7 @@
    "solar": 16,
    "tx": 13,
    "fiber": 6,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -2515,7 +2564,8 @@
    "Fiber Corridor (est.)": "US-285 (US highway) \u00b7 10.7 mi",
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "12 parcels",
-   "Curtailment (est.)": "Low \u00b7 100 MW wind/solar built within 31 mi \u00b7 345kV+ at 32.1 mi"
+   "Curtailment (est.)": "Low \u00b7 100 MW wind/solar built within 31 mi \u00b7 345kV+ at 32.1 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 17.16
  },
@@ -2532,7 +2582,7 @@
    "solar": 16,
    "tx": 13,
    "fiber": 14,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -2577,7 +2627,8 @@
    "Fiber Corridor (est.)": "I-10 (interstate) \u00b7 3.3 mi",
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "11 parcels",
-   "Curtailment (est.)": "Medium \u00b7 699 MW wind/solar built + 7,256 MW queued within 31 mi \u00b7 345kV+ at 5.7 mi"
+   "Curtailment (est.)": "Medium \u00b7 699 MW wind/solar built + 7,256 MW queued within 31 mi \u00b7 345kV+ at 5.7 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 5.25
  },
@@ -2594,7 +2645,7 @@
    "solar": 16,
    "tx": 13,
    "fiber": 2,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -2632,7 +2683,8 @@
    "Fiber Corridor (est.)": "US-285 (US highway) \u00b7 16.5 mi",
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "5 parcels",
-   "Curtailment (est.)": "Low \u00b7 250 MW wind/solar built within 31 mi \u00b7 345kV+ at 27.0 mi"
+   "Curtailment (est.)": "Low \u00b7 250 MW wind/solar built within 31 mi \u00b7 345kV+ at 27.0 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 26.5
  },
@@ -2649,7 +2701,7 @@
    "solar": 16,
    "tx": 13,
    "fiber": 8,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -2692,7 +2744,8 @@
    "Fiber Corridor (est.)": "US-285 (US highway) \u00b7 7.7 mi",
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "8 parcels",
-   "Curtailment (est.)": "Low \u00b7 125 MW wind/solar built within 31 mi \u00b7 345kV+ at 42.0 mi"
+   "Curtailment (est.)": "Low \u00b7 125 MW wind/solar built within 31 mi \u00b7 345kV+ at 42.0 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 12.42
  },
@@ -2709,7 +2762,7 @@
    "solar": 16,
    "tx": 13,
    "fiber": 3,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -2750,7 +2803,8 @@
    "Fiber Corridor (est.)": "US-285 (US highway) \u00b7 14.7 mi",
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "8 parcels",
-   "Curtailment (est.)": "Low \u00b7 100 MW wind/solar built within 31 mi \u00b7 345kV+ at 29.8 mi"
+   "Curtailment (est.)": "Low \u00b7 100 MW wind/solar built within 31 mi \u00b7 345kV+ at 29.8 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 23.72
  },
@@ -2767,7 +2821,7 @@
    "solar": 16,
    "tx": 13,
    "fiber": 13,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -2812,7 +2866,8 @@
    "Fiber Corridor (est.)": "US-285 (US highway) \u00b7 0.5 mi",
    "Route Diversity (est.)": "1 corridor within 10 mi",
    "Footprint": "12 parcels",
-   "Curtailment (est.)": "Low \u00b7 135 MW wind/solar built + 990 MW queued within 31 mi \u00b7 345kV+ at 51.0 mi"
+   "Curtailment (est.)": "Low \u00b7 135 MW wind/solar built + 990 MW queued within 31 mi \u00b7 345kV+ at 51.0 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 0.73
  },
@@ -2829,7 +2884,7 @@
    "solar": 16,
    "tx": 13,
    "fiber": 0,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -2867,7 +2922,8 @@
    "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 18.1 mi",
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "5 parcels",
-   "Curtailment (est.)": "Low \u00b7 250 MW wind/solar built within 31 mi \u00b7 345kV+ at 25.8 mi"
+   "Curtailment (est.)": "Low \u00b7 250 MW wind/solar built within 31 mi \u00b7 345kV+ at 25.8 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 29.12
  },
@@ -2884,7 +2940,7 @@
    "solar": 16,
    "tx": 13,
    "fiber": 0,
-   "flood": 15,
+   "flood": 11,
    "parcel": 10,
    "tax": 8
   },
@@ -2926,7 +2982,8 @@
    "Fiber Corridor (est.)": "US-285 (US highway) \u00b7 18.2 mi",
    "Route Diversity (est.)": "0 corridors within 10 mi",
    "Footprint": "8 parcels",
-   "Curtailment (est.)": "Low \u00b7 250 MW wind/solar built within 31 mi \u00b7 345kV+ at 27.8 mi"
+   "Curtailment (est.)": "Low \u00b7 250 MW wind/solar built within 31 mi \u00b7 345kV+ at 27.8 mi",
+   "Flood Zone (FEMA)": "No FEMA digital flood map here: verify with county floodplain admin"
   },
   "fiber_km": 29.29
  }
