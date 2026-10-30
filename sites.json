@@ -7,11 +7,11 @@
   "lat": 32.97724,
   "lng": -102.7383,
   "acres": 2682.2,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 15,
    "tx": 18,
-   "fiber": 10,
+   "fiber": 8,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -48,9 +48,12 @@
    "Tenure": "Utility/energy-owned",
    "Grid Operator (est.)": "SPP",
    "Queued Gen in County": "n/a: ERCOT queue doesn't cover SPP",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-62 (US highway) \u00b7 7.5 mi",
+   "Route Diversity (est.)": "1 corridor within 10 mi",
+   "Footprint": "6 parcels",
+   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 33.7 mi"
+  },
+  "fiber_km": 12.1
  },
  {
   "id": 2,
@@ -60,11 +63,11 @@
   "lat": 30.3459,
   "lng": -103.96171,
   "acres": 17488.3,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 17,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 18,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -107,9 +110,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "0 MW",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "Union Pacific Railroad (mainline rail) \u00b7 0.3 mi",
+   "Route Diversity (est.)": "4 corridors within 10 mi: US-67 0.4 mi, US-90 2.9 mi",
+   "Footprint": "12 parcels",
+   "Curtailment (est.)": "Low \u00b7 50 MW wind/solar built within 31 mi \u00b7 345kV+ at 17.8 mi"
+  },
+  "fiber_km": 0.52
  },
  {
   "id": 3,
@@ -119,11 +125,11 @@
   "lat": 31.85688,
   "lng": -102.26488,
   "acres": 1937.7,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 14,
    "tx": 18,
-   "fiber": 10,
+   "fiber": 20,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -158,9 +164,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "854 MW \u00b7 7 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 0.0 mi",
+   "Route Diversity (est.)": "3 corridors within 10 mi: Union Pacific Railroad 0.7 mi, US-385 4.5 mi",
+   "Footprint": "3 parcels",
+   "Curtailment (est.)": "Medium \u00b7 1,215 MW wind/solar built + 883 MW queued within 31 mi \u00b7 345kV+ at 3.2 mi"
+  },
+  "fiber_km": 0.04
  },
  {
   "id": 4,
@@ -170,11 +179,11 @@
   "lat": 30.91237,
   "lng": -103.36237,
   "acres": 14894.7,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 16,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 16,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -217,9 +226,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "21,364 MW \u00b7 56 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-10 (interstate) \u00b7 0.0 mi",
+   "Route Diversity (est.)": "1 corridor within 10 mi",
+   "Footprint": "11 parcels",
+   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,256 MW queued within 31 mi \u00b7 345kV+ at 2.5 mi"
+  },
+  "fiber_km": 0.0
  },
  {
   "id": 5,
@@ -229,11 +241,11 @@
   "lat": 30.96451,
   "lng": -103.36909,
   "acres": 6373.1,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 16,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 16,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -275,9 +287,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "21,364 MW \u00b7 56 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-10 (interstate) \u00b7 0.0 mi",
+   "Route Diversity (est.)": "1 corridor within 10 mi",
+   "Footprint": "10 parcels",
+   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,256 MW queued within 31 mi \u00b7 345kV+ at 1.2 mi"
+  },
+  "fiber_km": 0.0
  },
  {
   "id": 6,
@@ -287,11 +302,11 @@
   "lat": 30.90563,
   "lng": -102.99373,
   "acres": 3279.6,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 16,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 20,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -327,9 +342,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "21,364 MW \u00b7 56 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-10 (interstate) \u00b7 0.0 mi",
+   "Route Diversity (est.)": "4 corridors within 10 mi: US-285 0.9 mi, US-67 2.0 mi",
+   "Footprint": "5 parcels",
+   "Curtailment (est.)": "Medium \u00b7 1,087 MW wind/solar built + 7,451 MW queued within 31 mi \u00b7 345kV+ at 7.4 mi"
+  },
+  "fiber_km": 0.0
  },
  {
   "id": 7,
@@ -339,11 +357,11 @@
   "lat": 31.93874,
   "lng": -102.33987,
   "acres": 2293.7,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 15,
    "tx": 16,
-   "fiber": 10,
+   "fiber": 18,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -378,9 +396,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "4,045 MW \u00b7 20 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 3.4 mi",
+   "Route Diversity (est.)": "3 corridors within 10 mi: US-385 2.1 mi, Union Pacific Railroad 3.4 mi",
+   "Footprint": "4 parcels",
+   "Curtailment (est.)": "Medium \u00b7 1,404 MW wind/solar built + 825 MW queued within 31 mi \u00b7 345kV+ at 7.0 mi"
+  },
+  "fiber_km": 5.42
  },
  {
   "id": 8,
@@ -390,11 +411,11 @@
   "lat": 30.99954,
   "lng": -102.326,
   "acres": 6707.7,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 15,
    "tx": 16,
-   "fiber": 10,
+   "fiber": 16,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -436,9 +457,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "21,364 MW \u00b7 56 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-10 (interstate) \u00b7 4.8 mi",
+   "Route Diversity (est.)": "3 corridors within 10 mi: US-67 3.8 mi, US-385 9.5 mi",
+   "Footprint": "11 parcels",
+   "Curtailment (est.)": "Medium \u00b7 3,711 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 2.1 mi"
+  },
+  "fiber_km": 7.78
  },
  {
   "id": 9,
@@ -448,11 +472,11 @@
   "lat": 31.78892,
   "lng": -102.43191,
   "acres": 3737.1,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 15,
    "tx": 16,
-   "fiber": 10,
+   "fiber": 16,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -491,9 +515,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "4,045 MW \u00b7 20 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 2.0 mi",
+   "Route Diversity (est.)": "3 corridors within 10 mi: Union Pacific Railroad 6.7 mi, I-20 6.7 mi",
+   "Footprint": "8 parcels",
+   "Curtailment (est.)": "Medium \u00b7 1,654 MW wind/solar built + 1,235 MW queued within 31 mi \u00b7 345kV+ at 4.1 mi"
+  },
+  "fiber_km": 3.21
  },
  {
   "id": 10,
@@ -503,11 +530,11 @@
   "lat": 30.96739,
   "lng": -103.30196,
   "acres": 4571.7,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 16,
    "tx": 14,
-   "fiber": 10,
+   "fiber": 18,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -546,9 +573,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "21,364 MW \u00b7 56 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-10 (interstate) \u00b7 0.2 mi",
+   "Route Diversity (est.)": "2 corridors within 10 mi: US-285 8.4 mi",
+   "Footprint": "8 parcels",
+   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,758 MW queued within 31 mi \u00b7 345kV+ at 3.8 mi"
+  },
+  "fiber_km": 0.34
  },
  {
   "id": 11,
@@ -558,11 +588,11 @@
   "lat": 30.25731,
   "lng": -103.97098,
   "acres": 28267.1,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 17,
    "tx": 13,
-   "fiber": 10,
+   "fiber": 18,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -605,9 +635,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "0 MW",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "Union Pacific Railroad (mainline rail) \u00b7 0.3 mi",
+   "Route Diversity (est.)": "4 corridors within 10 mi: US-67 0.2 mi, Mainline railroad 0.5 mi",
+   "Footprint": "12 parcels",
+   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built within 31 mi \u00b7 345kV+ at 19.6 mi"
+  },
+  "fiber_km": 0.51
  },
  {
   "id": 12,
@@ -617,11 +650,11 @@
   "lat": 30.42816,
   "lng": -103.90137,
   "acres": 5626.8,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 17,
    "tx": 13,
-   "fiber": 10,
+   "fiber": 13,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -662,9 +695,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "0 MW",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "Union Pacific Railroad (mainline rail) \u00b7 8.2 mi",
+   "Route Diversity (est.)": "4 corridors within 10 mi: US-67 8.3 mi, US-90 9.2 mi",
+   "Footprint": "9 parcels",
+   "Curtailment (est.)": "Low \u00b7 50 MW wind/solar built within 31 mi \u00b7 345kV+ at 15.1 mi"
+  },
+  "fiber_km": 13.18
  },
  {
   "id": 13,
@@ -674,11 +710,11 @@
   "lat": 31.98281,
   "lng": -102.51159,
   "acres": 3261.7,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 15,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 15,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -714,9 +750,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "4,045 MW \u00b7 20 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 4.0 mi",
+   "Route Diversity (est.)": "3 corridors within 10 mi: I-20 9.7 mi, Union Pacific Railroad 9.8 mi",
+   "Footprint": "5 parcels",
+   "Curtailment (est.)": "Medium \u00b7 2,064 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 1.6 mi"
+  },
+  "fiber_km": 6.45
  },
  {
   "id": 14,
@@ -726,11 +765,11 @@
   "lat": 30.36928,
   "lng": -104.04617,
   "acres": 17453.7,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 17,
    "tx": 13,
-   "fiber": 10,
+   "fiber": 18,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -773,9 +812,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "0 MW",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "Union Pacific Railroad (mainline rail) \u00b7 1.0 mi",
+   "Route Diversity (est.)": "3 corridors within 10 mi: US-90 1.3 mi, US-67 1.7 mi",
+   "Footprint": "12 parcels",
+   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built within 31 mi \u00b7 345kV+ at 22.9 mi"
+  },
+  "fiber_km": 1.66
  },
  {
   "id": 15,
@@ -785,11 +827,11 @@
   "lat": 31.42187,
   "lng": -102.33137,
   "acres": 3444.7,
-  "curtailment": "TBD",
+  "curtailment": "High",
   "scores": {
    "solar": 15,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 13,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -830,9 +872,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "2,740 MW \u00b7 12 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 0.0 mi",
+   "Route Diversity (est.)": "1 corridor within 10 mi",
+   "Footprint": "6 parcels",
+   "Curtailment (est.)": "High \u00b7 3,059 MW wind/solar built + 1,948 MW queued within 31 mi \u00b7 345kV+ at 19.6 mi"
+  },
+  "fiber_km": 0.07
  },
  {
   "id": 16,
@@ -842,11 +887,11 @@
   "lat": 31.16928,
   "lng": -102.33683,
   "acres": 5774.9,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 15,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 14,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -889,9 +934,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "2,740 MW \u00b7 12 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 2.0 mi",
+   "Route Diversity (est.)": "2 corridors within 10 mi: US-67 3.8 mi",
+   "Footprint": "10 parcels",
+   "Curtailment (est.)": "Medium \u00b7 3,882 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 6.8 mi"
+  },
+  "fiber_km": 3.27
  },
  {
   "id": 17,
@@ -901,11 +949,11 @@
   "lat": 32.10427,
   "lng": -102.56285,
   "acres": 3531.7,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 15,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 11,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -944,9 +992,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "2,212 MW \u00b7 9 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 3.8 mi",
+   "Route Diversity (est.)": "1 corridor within 10 mi",
+   "Footprint": "6 parcels",
+   "Curtailment (est.)": "Medium \u00b7 2,325 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 7.3 mi"
+  },
+  "fiber_km": 6.15
  },
  {
   "id": 18,
@@ -956,11 +1007,11 @@
   "lat": 33.10966,
   "lng": -102.83599,
   "acres": 2530.1,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 15,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 13,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -995,9 +1046,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "SPP",
    "Queued Gen in County": "n/a: ERCOT queue doesn't cover SPP",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-82 (US highway) \u00b7 2.8 mi",
+   "Route Diversity (est.)": "2 corridors within 10 mi: US-380 3.5 mi",
+   "Footprint": "4 parcels",
+   "Curtailment (est.)": "Low \u00b7 150 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 29.8 mi"
+  },
+  "fiber_km": 4.44
  },
  {
   "id": 19,
@@ -1007,11 +1061,11 @@
   "lat": 33.07814,
   "lng": -102.70614,
   "acres": 3374.1,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 15,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 11,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1050,9 +1104,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "SPP",
    "Queued Gen in County": "n/a: ERCOT queue doesn't cover SPP",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-82 (US highway) \u00b7 6.0 mi",
+   "Route Diversity (est.)": "2 corridors within 10 mi: US-380 9.1 mi",
+   "Footprint": "7 parcels",
+   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 26.7 mi"
+  },
+  "fiber_km": 9.66
  },
  {
   "id": 20,
@@ -1062,11 +1119,11 @@
   "lat": 33.07814,
   "lng": -102.70614,
   "acres": 3374.1,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 15,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 11,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1105,9 +1162,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "SPP",
    "Queued Gen in County": "n/a: ERCOT queue doesn't cover SPP",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-82 (US highway) \u00b7 6.0 mi",
+   "Route Diversity (est.)": "2 corridors within 10 mi: US-380 9.1 mi",
+   "Footprint": "7 parcels",
+   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 26.7 mi"
+  },
+  "fiber_km": 9.66
  },
  {
   "id": 21,
@@ -1117,11 +1177,11 @@
   "lat": 31.3207,
   "lng": -103.09596,
   "acres": 6365.9,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 16,
    "tx": 14,
-   "fiber": 10,
+   "fiber": 6,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1164,9 +1224,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "8,330 MW \u00b7 22 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 12.0 mi",
+   "Route Diversity (est.)": "0 corridors within 10 mi",
+   "Footprint": "11 parcels",
+   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,451 MW queued within 31 mi \u00b7 345kV+ at 3.2 mi"
+  },
+  "fiber_km": 19.27
  },
  {
   "id": 22,
@@ -1176,11 +1239,11 @@
   "lat": 31.25161,
   "lng": -103.10431,
   "acres": 3358.7,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 16,
    "tx": 14,
-   "fiber": 10,
+   "fiber": 6,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1217,9 +1280,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "21,364 MW \u00b7 56 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-285 (US highway) \u00b7 10.1 mi",
+   "Route Diversity (est.)": "0 corridors within 10 mi",
+   "Footprint": "5 parcels",
+   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,451 MW queued within 31 mi \u00b7 345kV+ at 1.7 mi"
+  },
+  "fiber_km": 16.26
  },
  {
   "id": 23,
@@ -1229,11 +1295,11 @@
   "lat": 32.06614,
   "lng": -102.54251,
   "acres": 9201.1,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 15,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 11,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1276,9 +1342,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "4,045 MW \u00b7 20 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 3.0 mi",
+   "Route Diversity (est.)": "1 corridor within 10 mi",
+   "Footprint": "11 parcels",
+   "Curtailment (est.)": "Medium \u00b7 2,164 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 4.4 mi"
+  },
+  "fiber_km": 4.76
  },
  {
   "id": 24,
@@ -1288,11 +1357,11 @@
   "lat": 31.73545,
   "lng": -103.1156,
   "acres": 3253.9,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 16,
    "tx": 14,
-   "fiber": 10,
+   "fiber": 6,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1331,9 +1400,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "613 MW \u00b7 2 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 11.5 mi",
+   "Route Diversity (est.)": "0 corridors within 10 mi",
+   "Footprint": "7 parcels",
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi"
+  },
+  "fiber_km": 18.44
  },
  {
   "id": 25,
@@ -1343,11 +1415,11 @@
   "lat": 32.10029,
   "lng": -102.52984,
   "acres": 2350.8,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 15,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 11,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1383,9 +1455,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "2,212 MW \u00b7 9 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 2.8 mi",
+   "Route Diversity (est.)": "1 corridor within 10 mi",
+   "Footprint": "4 parcels",
+   "Curtailment (est.)": "Medium \u00b7 2,164 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 6.6 mi"
+  },
+  "fiber_km": 4.5
  },
  {
   "id": 26,
@@ -1395,11 +1470,11 @@
   "lat": 31.76534,
   "lng": -103.13625,
   "acres": 3195.3,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 16,
    "tx": 14,
-   "fiber": 10,
+   "fiber": 3,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1440,9 +1515,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "613 MW \u00b7 2 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "Union Pacific Railroad (mainline rail) \u00b7 15.1 mi",
+   "Route Diversity (est.)": "0 corridors within 10 mi",
+   "Footprint": "10 parcels",
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 16.3 mi"
+  },
+  "fiber_km": 24.24
  },
  {
   "id": 27,
@@ -1452,11 +1530,11 @@
   "lat": 31.23387,
   "lng": -102.3856,
   "acres": 22087.0,
-  "curtailment": "TBD",
+  "curtailment": "High",
   "scores": {
    "solar": 15,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 15,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1499,9 +1577,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "2,740 MW \u00b7 12 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 0.0 mi",
+   "Route Diversity (est.)": "2 corridors within 10 mi: US-67 8.3 mi",
+   "Footprint": "11 parcels",
+   "Curtailment (est.)": "High \u00b7 3,579 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 11.1 mi"
+  },
+  "fiber_km": 0.0
  },
  {
   "id": 28,
@@ -1511,11 +1592,11 @@
   "lat": 31.71759,
   "lng": -103.14144,
   "acres": 2734.9,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 16,
    "tx": 14,
-   "fiber": 10,
+   "fiber": 6,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1552,9 +1633,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "613 MW \u00b7 2 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 11.8 mi",
+   "Route Diversity (est.)": "0 corridors within 10 mi",
+   "Footprint": "6 parcels",
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 14.2 mi"
+  },
+  "fiber_km": 19.05
  },
  {
   "id": 29,
@@ -1564,11 +1648,11 @@
   "lat": 31.71759,
   "lng": -103.14144,
   "acres": 5018.6,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 16,
    "tx": 14,
-   "fiber": 10,
+   "fiber": 6,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1610,9 +1694,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "613 MW \u00b7 2 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 11.8 mi",
+   "Route Diversity (est.)": "0 corridors within 10 mi",
+   "Footprint": "11 parcels",
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 14.2 mi"
+  },
+  "fiber_km": 19.05
  },
  {
   "id": 30,
@@ -1622,11 +1709,11 @@
   "lat": 31.71889,
   "lng": -103.14138,
   "acres": 5342.4,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 16,
    "tx": 14,
-   "fiber": 10,
+   "fiber": 6,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1669,9 +1756,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "613 MW \u00b7 2 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 11.8 mi",
+   "Route Diversity (est.)": "0 corridors within 10 mi",
+   "Footprint": "12 parcels",
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 14.2 mi"
+  },
+  "fiber_km": 19.05
  },
  {
   "id": 31,
@@ -1681,11 +1771,11 @@
   "lat": 31.73545,
   "lng": -103.1156,
   "acres": 15007.6,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 16,
    "tx": 14,
-   "fiber": 10,
+   "fiber": 6,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1728,9 +1818,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "613 MW \u00b7 2 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 11.5 mi",
+   "Route Diversity (est.)": "0 corridors within 10 mi",
+   "Footprint": "11 parcels",
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi"
+  },
+  "fiber_km": 18.44
  },
  {
   "id": 32,
@@ -1740,11 +1833,11 @@
   "lat": 32.02499,
   "lng": -102.52294,
   "acres": 1931.0,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 15,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 11,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1778,9 +1871,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "4,045 MW \u00b7 20 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 4.0 mi",
+   "Route Diversity (est.)": "1 corridor within 10 mi",
+   "Footprint": "3 parcels",
+   "Curtailment (est.)": "Medium \u00b7 2,064 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 1.4 mi"
+  },
+  "fiber_km": 6.43
  },
  {
   "id": 33,
@@ -1790,11 +1886,11 @@
   "lat": 32.02937,
   "lng": -102.59603,
   "acres": 15028.4,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 15,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 8,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1837,9 +1933,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "4,045 MW \u00b7 20 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 8.0 mi",
+   "Route Diversity (est.)": "1 corridor within 10 mi",
+   "Footprint": "12 parcels",
+   "Curtailment (est.)": "Medium \u00b7 2,164 MW wind/solar built + 1,232 MW queued within 31 mi \u00b7 345kV+ at 4.4 mi"
+  },
+  "fiber_km": 12.88
  },
  {
   "id": 34,
@@ -1849,11 +1948,11 @@
   "lat": 31.73545,
   "lng": -103.1156,
   "acres": 3414.7,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 16,
    "tx": 14,
-   "fiber": 10,
+   "fiber": 6,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1893,9 +1992,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "613 MW \u00b7 2 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 11.5 mi",
+   "Route Diversity (est.)": "0 corridors within 10 mi",
+   "Footprint": "7 parcels",
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi"
+  },
+  "fiber_km": 18.44
  },
  {
   "id": 35,
@@ -1905,11 +2007,11 @@
   "lat": 31.73545,
   "lng": -103.1156,
   "acres": 3736.2,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 16,
    "tx": 14,
-   "fiber": 10,
+   "fiber": 6,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -1951,9 +2053,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "613 MW \u00b7 2 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 11.5 mi",
+   "Route Diversity (est.)": "0 corridors within 10 mi",
+   "Footprint": "7 parcels",
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi"
+  },
+  "fiber_km": 18.44
  },
  {
   "id": 36,
@@ -1963,11 +2068,11 @@
   "lat": 31.73545,
   "lng": -103.1156,
   "acres": 3253.9,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 16,
    "tx": 14,
-   "fiber": 10,
+   "fiber": 6,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -2006,9 +2111,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "613 MW \u00b7 2 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 11.5 mi",
+   "Route Diversity (est.)": "0 corridors within 10 mi",
+   "Footprint": "7 parcels",
+   "Curtailment (est.)": "Low \u00b7 764 MW wind/solar built + 407 MW queued within 31 mi \u00b7 345kV+ at 13.9 mi"
+  },
+  "fiber_km": 18.44
  },
  {
   "id": 37,
@@ -2018,11 +2126,11 @@
   "lat": 30.61437,
   "lng": -102.57087,
   "acres": 2375.5,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 16,
    "tx": 14,
-   "fiber": 10,
+   "fiber": 13,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -2059,9 +2167,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "21,364 MW \u00b7 56 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-285 (US highway) \u00b7 0.9 mi",
+   "Route Diversity (est.)": "1 corridor within 10 mi",
+   "Footprint": "3 parcels",
+   "Curtailment (est.)": "Medium \u00b7 784 MW wind/solar built + 1,210 MW queued within 31 mi \u00b7 345kV+ at 30.1 mi"
+  },
+  "fiber_km": 1.39
  },
  {
   "id": 38,
@@ -2071,11 +2182,11 @@
   "lat": 30.33207,
   "lng": -104.00774,
   "acres": 1494.5,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 17,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 18,
    "flood": 15,
    "parcel": 7,
    "tax": 8
@@ -2109,9 +2220,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "0 MW",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "Union Pacific Railroad (mainline rail) \u00b7 0.4 mi",
+   "Route Diversity (est.)": "4 corridors within 10 mi: US-67 0.5 mi, US-90 0.8 mi",
+   "Footprint": "2 parcels",
+   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built within 31 mi \u00b7 345kV+ at 20.6 mi"
+  },
+  "fiber_km": 0.63
  },
  {
   "id": 39,
@@ -2121,11 +2235,11 @@
   "lat": 30.8312,
   "lng": -102.35365,
   "acres": 2850.8,
-  "curtailment": "TBD",
+  "curtailment": "High",
   "scores": {
    "solar": 15,
    "tx": 14,
-   "fiber": 10,
+   "fiber": 14,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -2160,9 +2274,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "21,364 MW \u00b7 56 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-10 (interstate) \u00b7 3.1 mi",
+   "Route Diversity (est.)": "1 corridor within 10 mi",
+   "Footprint": "4 parcels",
+   "Curtailment (est.)": "High \u00b7 3,302 MW wind/solar built + 1,500 MW queued within 31 mi \u00b7 345kV+ at 10.7 mi"
+  },
+  "fiber_km": 4.99
  },
  {
   "id": 40,
@@ -2172,11 +2289,11 @@
   "lat": 33.10179,
   "lng": -102.71613,
   "acres": 2803.5,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 14,
    "tx": 15,
-   "fiber": 10,
+   "fiber": 13,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -2214,9 +2331,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "SPP",
    "Queued Gen in County": "n/a: ERCOT queue doesn't cover SPP",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-82 (US highway) \u00b7 3.0 mi",
+   "Route Diversity (est.)": "2 corridors within 10 mi: US-380 7.7 mi",
+   "Footprint": "7 parcels",
+   "Curtailment (est.)": "Low \u00b7 0 MW wind/solar built + 402 MW queued within 31 mi \u00b7 345kV+ at 25.7 mi"
+  },
+  "fiber_km": 4.85
  },
  {
   "id": 41,
@@ -2226,11 +2346,11 @@
   "lat": 30.92743,
   "lng": -103.41718,
   "acres": 2477.2,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 16,
    "tx": 13,
-   "fiber": 10,
+   "fiber": 16,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -2268,9 +2388,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "21,364 MW \u00b7 56 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-10 (interstate) \u00b7 0.0 mi",
+   "Route Diversity (est.)": "1 corridor within 10 mi",
+   "Footprint": "6 parcels",
+   "Curtailment (est.)": "Medium \u00b7 649 MW wind/solar built + 7,256 MW queued within 31 mi \u00b7 345kV+ at 3.5 mi"
+  },
+  "fiber_km": 0.0
  },
  {
   "id": 42,
@@ -2280,11 +2403,11 @@
   "lat": 31.14777,
   "lng": -102.37299,
   "acres": 21292.4,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 15,
    "tx": 14,
-   "fiber": 10,
+   "fiber": 14,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -2327,9 +2450,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "2,740 MW \u00b7 12 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-385 (US highway) \u00b7 2.3 mi",
+   "Route Diversity (est.)": "2 corridors within 10 mi: US-67 4.1 mi",
+   "Footprint": "12 parcels",
+   "Curtailment (est.)": "Medium \u00b7 3,711 MW wind/solar built + 1,910 MW queued within 31 mi \u00b7 345kV+ at 8.9 mi"
+  },
+  "fiber_km": 3.69
  },
  {
   "id": 43,
@@ -2339,11 +2465,11 @@
   "lat": 31.76978,
   "lng": -103.45782,
   "acres": 13551.1,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 16,
    "tx": 13,
-   "fiber": 10,
+   "fiber": 6,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -2386,9 +2512,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "244 MW \u00b7 2 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-285 (US highway) \u00b7 10.7 mi",
+   "Route Diversity (est.)": "0 corridors within 10 mi",
+   "Footprint": "12 parcels",
+   "Curtailment (est.)": "Low \u00b7 100 MW wind/solar built within 31 mi \u00b7 345kV+ at 32.1 mi"
+  },
+  "fiber_km": 17.16
  },
  {
   "id": 44,
@@ -2398,11 +2527,11 @@
   "lat": 30.86678,
   "lng": -103.38211,
   "acres": 7356.0,
-  "curtailment": "TBD",
+  "curtailment": "Medium",
   "scores": {
    "solar": 16,
    "tx": 13,
-   "fiber": 10,
+   "fiber": 14,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -2445,9 +2574,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "21,364 MW \u00b7 56 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-10 (interstate) \u00b7 3.3 mi",
+   "Route Diversity (est.)": "1 corridor within 10 mi",
+   "Footprint": "11 parcels",
+   "Curtailment (est.)": "Medium \u00b7 699 MW wind/solar built + 7,256 MW queued within 31 mi \u00b7 345kV+ at 5.7 mi"
+  },
+  "fiber_km": 5.25
  },
  {
   "id": 45,
@@ -2457,11 +2589,11 @@
   "lat": 31.76139,
   "lng": -103.36715,
   "acres": 2893.0,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 16,
    "tx": 13,
-   "fiber": 10,
+   "fiber": 2,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -2497,9 +2629,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "244 MW \u00b7 2 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-285 (US highway) \u00b7 16.5 mi",
+   "Route Diversity (est.)": "0 corridors within 10 mi",
+   "Footprint": "5 parcels",
+   "Curtailment (est.)": "Low \u00b7 250 MW wind/solar built within 31 mi \u00b7 345kV+ at 27.0 mi"
+  },
+  "fiber_km": 26.5
  },
  {
   "id": 46,
@@ -2509,11 +2644,11 @@
   "lat": 31.79174,
   "lng": -103.62721,
   "acres": 4404.0,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 16,
    "tx": 13,
-   "fiber": 10,
+   "fiber": 8,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -2554,9 +2689,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "244 MW \u00b7 2 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-285 (US highway) \u00b7 7.7 mi",
+   "Route Diversity (est.)": "1 corridor within 10 mi",
+   "Footprint": "8 parcels",
+   "Curtailment (est.)": "Low \u00b7 125 MW wind/solar built within 31 mi \u00b7 345kV+ at 42.0 mi"
+  },
+  "fiber_km": 12.42
  },
  {
   "id": 47,
@@ -2566,11 +2704,11 @@
   "lat": 31.78646,
   "lng": -103.40545,
   "acres": 5161.0,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 16,
    "tx": 13,
-   "fiber": 10,
+   "fiber": 3,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -2609,9 +2747,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "244 MW \u00b7 2 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-285 (US highway) \u00b7 14.7 mi",
+   "Route Diversity (est.)": "0 corridors within 10 mi",
+   "Footprint": "8 parcels",
+   "Curtailment (est.)": "Low \u00b7 100 MW wind/solar built within 31 mi \u00b7 345kV+ at 29.8 mi"
+  },
+  "fiber_km": 23.72
  },
  {
   "id": 48,
@@ -2621,11 +2762,11 @@
   "lat": 31.81445,
   "lng": -103.8414,
   "acres": 7375.8,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 16,
    "tx": 13,
-   "fiber": 10,
+   "fiber": 13,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -2668,9 +2809,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "8,330 MW \u00b7 22 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-285 (US highway) \u00b7 0.5 mi",
+   "Route Diversity (est.)": "1 corridor within 10 mi",
+   "Footprint": "12 parcels",
+   "Curtailment (est.)": "Low \u00b7 135 MW wind/solar built + 990 MW queued within 31 mi \u00b7 345kV+ at 51.0 mi"
+  },
+  "fiber_km": 0.73
  },
  {
   "id": 49,
@@ -2680,11 +2824,11 @@
   "lat": 31.7629,
   "lng": -103.3424,
   "acres": 3020.1,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 16,
    "tx": 13,
-   "fiber": 10,
+   "fiber": 0,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -2720,9 +2864,12 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "244 MW \u00b7 2 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "I-20 (interstate) \u00b7 18.1 mi",
+   "Route Diversity (est.)": "0 corridors within 10 mi",
+   "Footprint": "5 parcels",
+   "Curtailment (est.)": "Low \u00b7 250 MW wind/solar built within 31 mi \u00b7 345kV+ at 25.8 mi"
+  },
+  "fiber_km": 29.12
  },
  {
   "id": 50,
@@ -2732,11 +2879,11 @@
   "lat": 31.79667,
   "lng": -103.35996,
   "acres": 4736.9,
-  "curtailment": "TBD",
+  "curtailment": "Low",
   "scores": {
    "solar": 16,
    "tx": 13,
-   "fiber": 10,
+   "fiber": 0,
    "flood": 15,
    "parcel": 10,
    "tax": 8
@@ -2776,8 +2923,11 @@
    "Tenure": "Private",
    "Grid Operator (est.)": "ERCOT",
    "Queued Gen in County": "244 MW \u00b7 2 projects",
-   "Fiber": "not scored yet",
-   "Flood Zone": "check FEMA layer"
-  }
+   "Fiber Corridor (est.)": "US-285 (US highway) \u00b7 18.2 mi",
+   "Route Diversity (est.)": "0 corridors within 10 mi",
+   "Footprint": "8 parcels",
+   "Curtailment (est.)": "Low \u00b7 250 MW wind/solar built within 31 mi \u00b7 345kV+ at 27.8 mi"
+  },
+  "fiber_km": 29.29
  }
 ]

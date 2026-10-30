@@ -285,6 +285,11 @@
         <span class="ds-label">FEMA NFHL Flood</span>
         <span class="ds-status" id="lbl-fema" style="color:#f7c542">Loading…</span>
       </div>
+      <div class="ds-item">
+        <div class="ds-dot loading" id="dot-fiber"></div>
+        <span class="ds-label">Fiber Corridors (OSM, est.)</span>
+        <span class="ds-status" id="lbl-fiber" style="color:#f7c542">Loading…</span>
+      </div>
     </div>
 
     <!-- MAP LAYERS -->
@@ -307,7 +312,7 @@
         <div class="toggle-switch on" id="tog-plants"></div>
       </div>
       <div class="layer-toggle" onclick="toggleLayer('fiber')">
-        <div class="layer-label"><div class="layer-dot" style="background:#58a6ff"></div>Long-Haul Fiber</div>
+        <div class="layer-label"><div class="layer-dot" style="background:#58a6ff"></div>Fiber Corridors (est.)</div>
         <div class="toggle-switch on" id="tog-fiber"></div>
       </div>
       <div class="layer-toggle" onclick="toggleLayer('flood')">
@@ -336,7 +341,7 @@
         <input type="range" min="0" max="30" value="20" oninput="reweight('tx',this.value)">
       </div>
       <div class="weight-row">
-        <div class="weight-header"><span>Fiber Proximity</span><span class="weight-val" id="wv-fiber">20</span></div>
+        <div class="weight-header"><span>Fiber Corridors (est.)</span><span class="weight-val" id="wv-fiber">20</span></div>
         <input type="range" min="0" max="30" value="20" oninput="reweight('fiber',this.value)">
       </div>
       <div class="weight-row">
@@ -367,7 +372,7 @@
         <span class="thr-val" id="ac-val">500</span>
       </div>
       <div style="margin-bottom:8px">
-        <div style="font-size:12px;color:#8b949e;margin-bottom:4px">Max Curtailment:</div>
+        <div style="font-size:12px;color:#8b949e;margin-bottom:4px">Max Curtailment (est.):</div>
         <select id="curt-filter" onchange="redraw()">
           <option value="all">Any Level</option>
           <option value="low" selected>Low Only</option>
@@ -403,8 +408,8 @@
 
     <div class="footnote">
       🟢 <strong style="color:#8b949e">Live:</strong> NREL solar · FEMA flood<br>
-      📦 <strong style="color:#8b949e">Texas files:</strong> HIFLD · EIA · ERCOT queue · TxGIO parcels<br>
-      🟡 <strong style="color:#8b949e">Next:</strong> Site discovery engine · BLM exclusion<br>
+      📦 <strong style="color:#8b949e">Texas files:</strong> HIFLD · EIA · ERCOT queue · TxGIO parcels · OSM fiber corridors<br>
+      🟡 <strong style="color:#8b949e">Next:</strong> Public land exclusion · GHL export · data center map<br>
       🟡 <strong style="color:#8b949e">Phase 5:</strong> GHL export · multi-state<br><br>
       ⚠️ Move API keys to server proxy<br>before any public deployment.
     </div>
@@ -444,7 +449,7 @@
       <div class="vk-item"><div class="vk-line" style="background:#ff9a3c"></div>345kV</div>
       <div class="vk-item"><div class="vk-line" style="background:#f7c542"></div>230kV</div>
       <div class="vk-item"><div class="vk-line" style="background:#c9d1d9;opacity:.6"></div>115kV</div>
-      <div class="vk-item" style="margin-top:5px"><div class="vk-line" style="background:repeating-linear-gradient(90deg,#58a6ff 0 5px,transparent 5px 9px)"></div>Fiber</div>
+      <div class="vk-item" style="margin-top:5px"><div class="vk-line" style="background:repeating-linear-gradient(90deg,#58a6ff 0 5px,transparent 5px 9px)"></div>Fiber corridor (est.)</div>
       <div class="vk-item"><div class="vk-line" style="height:2px;background:#a78bfa;opacity:.8"></div>Parcel Boundaries</div>
       <div class="vk-item" style="margin-top:5px"><div style="width:9px;height:9px;border-radius:50%;background:#f7c542;flex-shrink:0"></div>Substation 230kV+</div>
       <div class="vk-item"><div style="width:7px;height:7px;border-radius:50%;background:#58a6ff;flex-shrink:0"></div>Substation 115-230kV</div>
@@ -531,8 +536,8 @@ const SCORE_CAPS = {solar:25,tx:20,fiber:20,flood:15,parcel:10,tax:10};
 const SCORE_LABELS = {
   solar:'Solar Irradiance (NREL)',
   tx:'Transmission Access',
-  fiber:'Fiber Proximity',
-  flood:'Flood Safety',
+  fiber:'Fiber Corridor Access (est.)',
+  flood:'Flood Safety (FEMA)',
   parcel:'Parcel Aggregability',
   tax:'Tax Incentives'
 };
@@ -1000,6 +1005,42 @@ function drawPlants(geo){
   });
 }
 
+// ══════════════════════════════════════════════════════
+// FIBER CORRIDORS (tx_fiber.geojson from the enrichment notebook)
+// Carriers don't publish long-haul routes. Public research (InterTubes,
+// UW-Madison) shows they follow interstates, US highways and mainline
+// rail, so those corridors + any OSM-mapped telecom lines are drawn as
+// PROBABLE fiber routes. Always labeled "est." — confirm with carriers.
+// ══════════════════════════════════════════════════════
+const FIBER_STYLE={
+  telecom:   {color:'#a5d6ff',weight:2.4,opacity:.9},
+  interstate:{color:'#58a6ff',weight:2.2,opacity:.75,dashArray:'7,5'},
+  rail:      {color:'#79c0ff',weight:1.6,opacity:.6,dashArray:'2,4'},
+  us_hwy:    {color:'#58a6ff',weight:1.3,opacity:.45,dashArray:'4,5'}
+};
+const FIBER_NAME={telecom:'Mapped fiber/telecom line',interstate:'Interstate corridor',rail:'Mainline rail corridor',us_hwy:'US highway corridor'};
+let FIBER_FC=null;
+async function loadFiber(){
+  try{
+    const r=await fetchWithTimeout('./tx_fiber.geojson',{},20000);
+    if(r.ok){
+      const g=await r.json();
+      if(g.features?.length){
+        FIBER_FC=g;
+        L.geoJSON(g,{renderer:CANVAS,
+          style:f=>FIBER_STYLE[f.properties.cls]||FIBER_STYLE.us_hwy,
+          onEachFeature:(f,l)=>l.bindTooltip(`<strong>${f.properties.label}</strong><br>${FIBER_NAME[f.properties.cls]||'Corridor'} · probable long-haul fiber route (est.)`,{className:'tip',sticky:true})
+        }).addTo(LG.fiber);
+        setDotStatus('fiber','live',`${g.features.length} corridors`,'#3fb950');
+        return true;
+      }
+    }
+  }catch(e){ console.warn('fiber:',e.message); }
+  FIBER_ROUTES.forEach(pts=>L.polyline(pts,{color:'#58a6ff',weight:2.2,opacity:.7,dashArray:'7,5'}).addTo(LG.fiber).bindTooltip('Demo fiber route (run the enrichment notebook for real corridors)',{className:'tip'}));
+  setDotStatus('fiber','fallback','Demo routes','#ff9a3c');
+  return false;
+}
+
 // Nearest substation to a given site — powers the "Power Access"
 // readout in the detail panel. Distance only; NOT a capacity claim.
 function nearestSubstation(lat,lng){
@@ -1018,7 +1059,6 @@ function nearestSubstation(lat,lng){
 // DRAW STATIC LAYERS
 // ══════════════════════════════════════════════════════
 function drawStaticLayers(){
-  FIBER_ROUTES.forEach(pts=>L.polyline(pts,{color:'#58a6ff',weight:2.2,opacity:.7,dashArray:'7,5'}).addTo(LG.fiber).bindTooltip('Long-Haul Fiber Route',{className:'tip'}));
   // LG.flood intentionally empty here — populated by initFEMALayer() with live NFHL tiles
   [{lat:31.42,lng:-103.49,r:55000},{lat:31.97,lng:-101.85,r:48000},{lat:32.20,lng:-101.42,r:42000}]
     .forEach(z=>L.circle([z.lat,z.lng],{radius:z.r,color:'#ff9a3c',fillColor:'#ff9a3c',fillOpacity:.06,weight:.8}).addTo(LG.solar).bindTooltip('High GHI Zone (NREL)',{className:'tip'}));
@@ -1464,6 +1504,7 @@ async function init(){
   }catch(e){ /* demo sites stand */ }
 
   drawStaticLayers();
+  await loadFiber();
 
   // ── FEMA NFHL live tiles ──
   const femaOk = initFEMALayer();
@@ -1674,6 +1715,15 @@ function buildResults(raw){
   if(pls.length) groups.push({label:'Power plants',items:pls.map(({p,sc})=>({ic:p.retiring?'⭕':'🏭',t:hlText(p.name,toks),score:sc,
     s:`${Math.round(p.mw).toLocaleString()} MW ${p.fuel}${p.owner?' · '+hlText(p.owner,toks):''}${p.retiring?' · retiring '+p.retire:''}`,
     act:()=>goPlant(p)}))});
+
+  // Fiber corridors (I-20, US-385, Union Pacific…)
+  if(FIBER_FC){
+    const seen=new Set();
+    const fc=FIBER_FC.features.map(f=>({f,sc:mscore(f.properties.label,q,toks)})).filter(x=>x.sc&&!seen.has(x.f.properties.label)&&seen.add(x.f.properties.label))
+      .sort((a,b)=>b.sc-a.sc).slice(0,4);
+    if(fc.length) groups.push({label:'Fiber corridors (est.)',items:fc.map(({f,sc})=>({ic:'〰',t:hlText(f.properties.label,toks),score:sc,
+      s:`${FIBER_NAME[f.properties.cls]||'Corridor'} · probable long-haul fiber route`,act:()=>goFiber(f.properties.label)}))});
+  }
 
   // Landowners and parcel IDs (counties already loaded, or all 56 after a full owner index)
   if(q.length>=3){
@@ -1958,6 +2008,17 @@ function goPlant(p){
       p.ba?{k:'Balancing authority',v:esc(p.ba)}:null,{k:'Coordinates',v:`${p.lat.toFixed(5)}, ${p.lng.toFixed(5)}`}].filter(Boolean)}]
     .concat(nearbySections(p.lat,p.lng,{siteKm:40})),
     radiusButtons(p.lat,p.lng,esc(p.name)));
+  lastCard();
+}
+function goFiber(label){
+  SRCH_HL.clearLayers(); closeCard();
+  const feats=FIBER_FC.features.filter(f=>f.properties.label===label);
+  const lay=L.geoJSON({type:'FeatureCollection',features:feats},{style:{color:'#f778ba',weight:4,opacity:.85}}).addTo(SRCH_HL);
+  if(lay.getBounds().isValid()) map.fitBounds(lay.getBounds(),{padding:[30,30]});
+  const near=SITES.map(s=>({s,km:s.fiber_km})).filter(x=>x.km!=null&&String(x.s.meta?.['Fiber Corridor (est.)']||'').startsWith(label+' '))
+    .sort((a,b)=>a.km-b.km);
+  lastCard=()=>showCard(`〰 ${esc(label)}`,`${esc(FIBER_NAME[feats[0]?.properties.cls]||'Corridor')} · probable long-haul fiber route (est.)`,
+    [{h:'Candidate sites using this as nearest corridor',rows:near.length?near.slice(0,8).map(({s,km})=>({k:esc(s.name),v:`${totalScore(s)} · ${fmtMi(km)}`,go:()=>goSite(s)})):[{k:'None in current sites',v:''}]}],[]);
   lastCard();
 }
 async function goOwner(o){
