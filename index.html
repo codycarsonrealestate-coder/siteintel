@@ -433,7 +433,7 @@
       <div id="srch-card"></div>
     </div>
 
-    <div id="zoom-hint">🔍 Zoom in to see parcel outlines and owners</div>
+    <div id="zoom-hint">🔍 Zoom in to see parcel outlines · click a parcel at zoom 13+ for the owner</div>
 
     <div id="legend">
       <h4>Composite Score</h4>
@@ -595,23 +595,36 @@ const map = L.map('map',{center:[32.05,-101.20],zoom:7});
 // ══════════════════════════════════════════════════════
 // BASEMAP LAYERS + TOGGLE
 // ══════════════════════════════════════════════════════
+// CARTO's free dark tiles started returning "API KEY REQUIRED" watermarks (Oct 2026),
+// so the dark map now uses Esri's keyless Dark Gray Canvas. Labels sit in their own pane
+// above the data layers so town and road names stay readable on both basemaps.
+map.createPane('labels'); map.getPane('labels').style.zIndex=450; map.getPane('labels').style.pointerEvents='none';
+const ESRI='https://services.arcgisonline.com/ArcGIS/rest/services/';
 const BASEMAPS = {
-  dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
-    attribution:'© OpenStreetMap contributors © CARTO',maxZoom:20,subdomains:'abcd'
-  }),
-  satellite: L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
-    attribution:'© Esri, Maxar, Earthstar Geographics',maxZoom:19
-  })
+  dark: [
+    L.tileLayer(ESRI+'Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{
+      attribution:'© Esri, HERE, Garmin, OpenStreetMap contributors',maxNativeZoom:16,maxZoom:20}),
+    L.tileLayer(ESRI+'Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}',{
+      pane:'labels',maxNativeZoom:16,maxZoom:20})
+  ],
+  satellite: [
+    L.tileLayer(ESRI+'World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+      attribution:'© Esri, Maxar, Earthstar Geographics',maxNativeZoom:19,maxZoom:20}),
+    L.tileLayer(ESRI+'Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{
+      pane:'labels',maxNativeZoom:19,maxZoom:20,opacity:.85}),
+    L.tileLayer(ESRI+'Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}',{
+      pane:'labels',maxNativeZoom:19,maxZoom:20,opacity:.55})
+  ]
 };
 let currentBasemap = 'dark';
-BASEMAPS.dark.addTo(map);
+BASEMAPS.dark.forEach(l=>l.addTo(map));
 
 function toggleBasemap(){
   const next = currentBasemap==='dark' ? 'satellite' : 'dark';
-  map.removeLayer(BASEMAPS[currentBasemap]);
-  BASEMAPS[next].addTo(map);
-  // Move basemap below all data layers
-  BASEMAPS[next].bringToBack();
+  BASEMAPS[currentBasemap].forEach(l=>map.removeLayer(l));
+  BASEMAPS[next].forEach(l=>l.addTo(map));
+  // Move the imagery below all data layers (labels stay in their own pane on top)
+  BASEMAPS[next][0].bringToBack();
   currentBasemap = next;
   const btn = document.getElementById('basemap-btn');
   btn.textContent = next==='satellite' ? '🌑 Dark Map' : '🛰 Satellite';
@@ -1080,8 +1093,9 @@ let PARCEL_INDEX=[], PARCEL_BASE='./parcels/';
 const PARCEL_CACHE={}, PARCEL_DRAWN=new Set();
 const PARCEL_VIEW=L.layerGroup().addTo(LG.parcels);
 const PARCEL_SEL=L.layerGroup().addTo(LG.parcels);
-L.tileLayer.wms(PARCEL_WMS,{layers:'0',format:'image/png',transparent:true,minZoom:14,maxZoom:20,
-  opacity:.7,attribution:'TxGIO StratMap Parcels'}).addTo(LG.parcels);
+L.tileLayer.wms(PARCEL_WMS,{layers:'0',format:'image/png',transparent:true,minZoom:13,maxZoom:20,
+  tileSize:512,updateWhenIdle:true,updateWhenZooming:false,keepBuffer:1,
+  opacity:.75,attribution:'TxGIO StratMap Parcels'}).addTo(LG.parcels);
 
 async function loadParcelIndex(){
   // GitHub Pages is case-sensitive, so check both folder spellings
@@ -1130,6 +1144,99 @@ async function refreshParcelView(){
   }
 }
 map.on('moveend',refreshParcelView);
+
+// ══════════════════════════════════════════════════════
+// CLICK A PARCEL → OWNER CARD (zoom 13+)
+// Tries, in order:
+//   1. the 300+ acre tracts already loaded for this county (instant, has absentee + mailing)
+//   2. TxGIO's statewide parcel service: REST identify, then WMS GetFeatureInfo
+//      (TxGIO turned off public REST *queries* in Oct 2026; these are separate
+//      operations and may still answer, which covers small lots in all 254 counties)
+// ══════════════════════════════════════════════════════
+const PARCEL_MS='https://feature.geographic.texas.gov/arcgis/rest/services/Parcels/stratmap_land_parcels_48_most_recent/MapServer';
+const PARCEL_FIELDS=[['prop_id','Property ID'],['geo_id','Geo ID'],['gis_area','GIS area'],['legal_area','Legal area'],
+  ['situs_addr','Situs address'],['mail_addr','Mailing address'],['mail_line1','Mailing address'],['mail_city','Mail city'],
+  ['mail_stat','Mail state'],['mail_zip','Mail ZIP'],['name_care','Care of'],['legal_desc','Legal description'],
+  ['mkt_value','Market value'],['land_value','Land value'],['imp_value','Improvement value'],['stat_land_use','State land use'],
+  ['loc_land_use','Local land use'],['county','County']];
+const PARCEL_HL=L.layerGroup().addTo(map);
+function isMoney(k){return /value/.test(k)}
+function fmtParcelVal(k,v){
+  if(v==null||String(v).trim()===''||String(v).trim()==='0'&&isMoney(k)) return null;
+  if(isMoney(k)&&!isNaN(+v)) return '$'+Math.round(+v).toLocaleString();
+  if(/area/.test(k)&&!isNaN(+v)) return (+v).toLocaleString(undefined,{maximumFractionDigits:2});
+  return esc(String(v).trim());
+}
+function localTractAt(latlng){
+  for(const [k,g] of Object.entries(PARCEL_CACHE)){
+    if(!g) continue;
+    for(const f of g.features||[]) if(pip(latlng.lat,latlng.lng,f.geometry)) return f;
+  }
+  return null;
+}
+async function txgioIdentify(latlng){
+  const b=map.getBounds(), sz=map.getSize();
+  const u=`${PARCEL_MS}/identify?geometry=${latlng.lng},${latlng.lat}&geometryType=esriGeometryPoint&sr=4326`
+    +`&layers=all:0&tolerance=1&mapExtent=${b.getWest()},${b.getSouth()},${b.getEast()},${b.getNorth()}`
+    +`&imageDisplay=${sz.x},${sz.y},96&returnGeometry=true&f=json`;
+  const r=await fetchWithTimeout(u,{},12000); if(!r.ok) throw new Error('HTTP '+r.status);
+  const d=await r.json(); if(d.error) throw new Error(d.error.message||'identify refused');
+  const hit=(d.results||[])[0]; if(!hit) return null;
+  return {attrs:hit.attributes||{},rings:hit.geometry?.rings||null,src:'TxGIO identify'};
+}
+async function txgioFeatureInfo(latlng){
+  const b=map.getBounds(), sz=map.getSize(), pt=map.latLngToContainerPoint(latlng);
+  const sw=L.CRS.EPSG3857.project(b.getSouthWest()), ne=L.CRS.EPSG3857.project(b.getNorthEast());
+  const u=`${PARCEL_WMS}?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&LAYERS=0&QUERY_LAYERS=0&STYLES=`
+    +`&CRS=EPSG:3857&BBOX=${sw.x},${sw.y},${ne.x},${ne.y}&WIDTH=${sz.x}&HEIGHT=${sz.y}`
+    +`&I=${Math.round(pt.x)}&J=${Math.round(pt.y)}&INFO_FORMAT=text/xml&FEATURE_COUNT=1`;
+  const r=await fetchWithTimeout(u,{},12000); if(!r.ok) throw new Error('HTTP '+r.status);
+  const doc=new DOMParser().parseFromString(await r.text(),'text/xml');
+  const el=doc.querySelector('FIELDS'); if(!el) return null;
+  const attrs={}; for(const a of el.attributes) attrs[a.name.toLowerCase()]=a.value;
+  return {attrs,rings:null,src:'TxGIO map service'};
+}
+async function identifyParcel(e){
+  if(map.getZoom()<13||!LG_ON.parcels) return;
+  const latlng=e.latlng;
+  PARCEL_HL.clearLayers();
+  L.circleMarker(latlng,{radius:5,color:'#f778ba',weight:2,fillOpacity:.6}).addTo(PARCEL_HL);
+  // 1. big tracts already in memory
+  const f=localTractAt(latlng);
+  // 2. statewide service (all lots)
+  let svc=null, why='';
+  for(const fn of [txgioIdentify,txgioFeatureInfo]){
+    try{ svc=await fn(latlng); if(svc) break; }catch(err){ why=err.message; }
+  }
+  PARCEL_HL.clearLayers();
+  if(svc?.rings) L.polygon(svc.rings.map(r=>r.map(([x,y])=>[y,x])),{color:'#f778ba',weight:3,fillColor:'#f778ba',fillOpacity:.12}).addTo(PARCEL_HL);
+  else if(f) L.geoJSON(f,{style:{color:'#f778ba',weight:3,fillColor:'#f778ba',fillOpacity:.12}}).addTo(PARCEL_HL);
+  else L.circleMarker(latlng,{radius:5,color:'#f778ba',weight:2,fillOpacity:.6}).addTo(PARCEL_HL);
+  if(!svc&&!f){
+    showCard('No parcel details here',`${latlng.lat.toFixed(5)}, ${latlng.lng.toFixed(5)}`,
+      [{h:'Why',rows:[{k:'TxGIO answered',v:why?esc(why):'no parcel at this point'},
+        {k:'Owner detail for small lots',v:'needs a parcel data provider'}]}],[]);
+    return;
+  }
+  const a=svc?.attrs||{}, p=f?.properties||{};
+  const owner=a.owner_name||p.owner||'Unknown owner';
+  const seen=new Set(), rows=[];
+  if(p.acres) rows.push({k:'Acres',v:Math.round(p.acres).toLocaleString()+(p.block_ac&&p.block_ac>p.acres+1?` (same-owner block ${Math.round(p.block_ac).toLocaleString()})`:'')});
+  for(const [k,label] of PARCEL_FIELDS){
+    if(seen.has(label)) continue;
+    const v=fmtParcelVal(k,a[k]); if(v){ rows.push({k:label,v}); seen.add(label); }
+  }
+  if(p.mail&&!seen.has('Mailing address')) rows.push({k:'Mailing',v:esc(p.mail)});
+  if(f) rows.push({k:'Absentee owner',v:p.absentee?'Yes':'No'});
+  if(p.tenure) rows.push({k:'Tenure',v:esc(p.tenure)});
+  lastCard=()=>showCard(`👤 ${esc(owner)}`,`${[svc?.src,f?'SiteIntel tract file':null].filter(Boolean).join(' + ')} · ${latlng.lat.toFixed(5)}, ${latlng.lng.toFixed(5)}`,
+    [{h:'Parcel',rows}].concat(nearbySections(latlng.lat,latlng.lng,{siteKm:40}).slice(0,1)),
+    [{label:'Copy owner name',go:()=>navigator.clipboard?.writeText(owner)},
+     {label:'Open in Google Maps',go:()=>window.open(`https://www.google.com/maps/search/?api=1&query=${latlng.lat},${latlng.lng}`,'_blank')},
+     ...(owner!=='Unknown owner'?[{label:'Search this owner',go:()=>{srIn.value=owner;srIn.focus();SRCH.sel=-1;renderResults();}}]:[])]);
+  lastCard();
+}
+map.on('click',identifyParcel);
 function drawAllParcels(){ PARCEL_SEL.clearLayers(); refreshParcelView(); }
 
 function featureCenter(f){
