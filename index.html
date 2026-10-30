@@ -240,7 +240,12 @@
   <div class="badge">ERCOT · WEST TX · P3</div>
   <div class="live-badge" id="live-status">⟳ INITIALIZING…</div>
   <div class="spacer"></div>
-  <button id="basemap-btn" onclick="toggleBasemap()" style="background:#21262d;border:1px solid #30363d;color:#c9d1d9;padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;transition:background .15s">🛰 Satellite</button>
+  <select id="basemap-sel" onchange="setBasemap(this.value)" title="Basemap" style="flex:none;width:auto;max-width:240px;background:#21262d;border:1px solid #30363d;color:#c9d1d9;padding:5px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-family:inherit">
+    <option value="dark">🌑 Dark map</option>
+    <option value="clarity">🛰 Satellite: sharpest (Esri Clarity)</option>
+    <option value="esri">🛰 Satellite: most recent (Esri)</option>
+    <option value="usgs">🛰 Aerial: USDA NAIP (USGS)</option>
+  </select>
   <div class="stat-pill">Qualifying Sites: <strong id="s-qual">—</strong></div>
   <div class="stat-pill">Avg Score: <strong id="s-avg">—</strong></div>
   <div class="stat-pill">TxGIO Parcels: <strong id="s-regrid">—</strong></div>
@@ -296,7 +301,7 @@
     <div class="sb-sec">
       <h3>Map Layers</h3>
       <div class="layer-toggle" onclick="toggleLayer('parcels')">
-        <div class="layer-label"><div class="layer-dot" style="background:#a78bfa"></div>Parcel Boundaries (TxGIO, zoom 11+)</div>
+        <div class="layer-label"><div class="layer-dot" style="background:#ffd60a"></div>Parcels + Owner Names (TxGIO, zoom 13+)</div>
         <div class="toggle-switch on" id="tog-parcels"></div>
       </div>
       <div class="layer-toggle" onclick="toggleLayer('transmission')">
@@ -450,7 +455,7 @@
       <div class="vk-item"><div class="vk-line" style="background:#f7c542"></div>230kV</div>
       <div class="vk-item"><div class="vk-line" style="background:#c9d1d9;opacity:.6"></div>115kV</div>
       <div class="vk-item" style="margin-top:5px"><div class="vk-line" style="background:repeating-linear-gradient(90deg,#58a6ff 0 5px,transparent 5px 9px)"></div>Fiber corridor (est.)</div>
-      <div class="vk-item"><div class="vk-line" style="height:2px;background:#a78bfa;opacity:.8"></div>Parcel Boundaries</div>
+      <div class="vk-item"><div class="vk-line" style="height:2px;background:#ffd60a"></div>Parcel Boundaries</div>
       <div class="vk-item" style="margin-top:5px"><div style="width:9px;height:9px;border-radius:50%;background:#f7c542;flex-shrink:0"></div>Substation 230kV+</div>
       <div class="vk-item"><div style="width:7px;height:7px;border-radius:50%;background:#58a6ff;flex-shrink:0"></div>Substation 115-230kV</div>
       <div class="vk-item" style="margin-top:5px"><div style="width:9px;height:9px;border-radius:50%;background:#ff9a3c;flex-shrink:0"></div>Power plant (size = MW)</div>
@@ -607,32 +612,39 @@ const BASEMAPS = {
     L.tileLayer(ESRI+'Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}',{
       pane:'labels',maxNativeZoom:16,maxZoom:20})
   ],
-  satellite: [
-    L.tileLayer(ESRI+'World_Imagery/MapServer/tile/{z}/{y}/{x}',{
-      attribution:'© Esri, Maxar, Earthstar Geographics',maxNativeZoom:19,maxZoom:20}),
-    L.tileLayer(ESRI+'Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{
-      pane:'labels',maxNativeZoom:19,maxZoom:20,opacity:.85}),
-    L.tileLayer(ESRI+'Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}',{
-      pane:'labels',maxNativeZoom:19,maxZoom:20,opacity:.55})
-  ]
 };
+// Imagery choices. Coverage and sharpness vary by place, so it's worth flipping between them:
+//  clarity: Esri's sharpest archive (sometimes a year or two older)
+//  esri:    Esri World Imagery (newest, occasionally softer in rural West Texas)
+//  usgs:    USDA NAIP aerial photos via USGS (consistent 60 cm statewide, sharp to zoom 16)
+const SAT_LABELS=[
+  L.tileLayer(ESRI+'Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{pane:'labels',maxNativeZoom:19,maxZoom:20,opacity:.85}),
+  L.tileLayer(ESRI+'Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}',{pane:'labels',maxNativeZoom:19,maxZoom:20,opacity:.5})
+];
+BASEMAPS.clarity=[L.tileLayer('https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+  attribution:'© Esri, Maxar, Earthstar Geographics, USDA, USGS',maxNativeZoom:19,maxZoom:20}),...SAT_LABELS];
+BASEMAPS.esri=[L.tileLayer(ESRI+'World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+  attribution:'© Esri, Maxar, Earthstar Geographics',maxNativeZoom:19,maxZoom:20}),...SAT_LABELS];
+BASEMAPS.usgs=[L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}',{
+  attribution:'USGS The National Map · USDA NAIP',maxNativeZoom:16,maxZoom:20}),...SAT_LABELS];
 let currentBasemap = 'dark';
 BASEMAPS.dark.forEach(l=>l.addTo(map));
 
-function toggleBasemap(){
-  const next = currentBasemap==='dark' ? 'satellite' : 'dark';
+function setBasemap(next){
+  if(!BASEMAPS[next]||next===currentBasemap) return;
   BASEMAPS[currentBasemap].forEach(l=>map.removeLayer(l));
   BASEMAPS[next].forEach(l=>l.addTo(map));
-  // Move the imagery below all data layers (labels stay in their own pane on top)
+  // Imagery below all data layers (labels stay in their own pane on top)
   BASEMAPS[next][0].bringToBack();
   currentBasemap = next;
-  const btn = document.getElementById('basemap-btn');
-  btn.textContent = next==='satellite' ? '🌑 Dark Map' : '🛰 Satellite';
-  btn.style.background = next==='satellite' ? '#0d2a3a' : '#21262d';
-  btn.style.color = next==='satellite' ? '#58a6ff' : '#c9d1d9';
+  const sel=document.getElementById('basemap-sel');
+  sel.value=next;
+  sel.style.background = next==='dark' ? '#21262d' : '#0d2a3a';
+  sel.style.color = next==='dark' ? '#c9d1d9' : '#58a6ff';
 }
+function toggleBasemap(){ setBasemap(currentBasemap==='dark'?'clarity':'dark'); }
 const sty=document.createElement('style');
-sty.textContent=`.tip{background:#21262d!important;border:1px solid #30363d!important;color:#e6edf3!important;font-size:12px!important;box-shadow:0 4px 14px rgba(0,0,0,.6)!important;padding:7px 10px!important;border-radius:6px!important}.tip::before,.tip::after{display:none!important}`;
+sty.textContent=`.tip{background:#21262d!important;border:1px solid #30363d!important;color:#e6edf3!important;font-size:12px!important;box-shadow:0 4px 14px rgba(0,0,0,.6)!important;padding:7px 10px!important;border-radius:6px!important}.tip::before,.tip::after{display:none!important}.plabel span{position:absolute;transform:translate(-50%,-50%);display:block;max-width:150px;width:max-content;text-align:center;font:700 10.5px/1.2 system-ui,sans-serif;color:#fff;text-shadow:0 0 3px #000,0 0 3px #000,0 0 2px #000;pointer-events:none}.plabel span.oos{color:#ffd60a}`;
 document.head.appendChild(sty);
 
 const LG={
@@ -1093,9 +1105,9 @@ let PARCEL_INDEX=[], PARCEL_BASE='./parcels/';
 const PARCEL_CACHE={}, PARCEL_DRAWN=new Set();
 const PARCEL_VIEW=L.layerGroup().addTo(LG.parcels);
 const PARCEL_SEL=L.layerGroup().addTo(LG.parcels);
-L.tileLayer.wms(PARCEL_WMS,{layers:'0',format:'image/png',transparent:true,minZoom:13,maxZoom:20,
+const PARCEL_WMS_LAYER=L.tileLayer.wms(PARCEL_WMS,{layers:'0',format:'image/png',transparent:true,minZoom:13,maxZoom:20,
   tileSize:512,updateWhenIdle:true,updateWhenZooming:false,keepBuffer:1,
-  opacity:.75,attribution:'TxGIO StratMap Parcels'}).addTo(LG.parcels);
+  opacity:.9,attribution:'TxGIO StratMap Parcels'});   // fallback only (see refreshParcelImage)
 
 async function loadParcelIndex(){
   // GitHub Pages is case-sensitive, so check both folder spellings
@@ -1138,11 +1150,82 @@ async function refreshParcelView(){
     const g=await loadCountyParcels(e.county);
     if(!g||map.getZoom()<11){ PARCEL_DRAWN.delete(key); continue; }
     L.geoJSON(g,{renderer:CANVAS,
-      style:f=>({color:f.properties.absentee?'#f7c542':'#a78bfa',weight:.8,opacity:.55,fillOpacity:.02}),
-      onEachFeature:(f,l)=>l.bindTooltip(parcelTip(f.properties),{className:'tip',sticky:true})
+      style:tractStyle, interactive:false
     }).addTo(PARCEL_VIEW);
   }
+  refreshTractLabels();
 }
+// 300+ acre tracts: a faint outline at zoom 11–12 to show where the big blocks are;
+// from zoom 13 TxGIO's statewide lines take over, so these go invisible
+function tractStyle(){
+  return map.getZoom()>=13 ? {stroke:false,fill:false} : {stroke:true,fill:false,color:'#ffffff',weight:1,opacity:.35};
+}
+map.on('zoomend',()=>PARCEL_VIEW.eachLayer(g=>g.setStyle&&g.setStyle(tractStyle)));
+
+// ══════════════════════════════════════════════════════
+// PARCEL LINES + OWNER NAMES (zoom 13+), LandID-style
+// One image per view from TxGIO's statewide service, restyled on their server:
+// bright yellow lot lines and owner names printed inside every parcel, all 254 counties.
+// A single image (not tiles) means labels never get chopped at tile seams.
+// If TxGIO refuses this, it falls back to their plain line tiles + our own
+// labels on the 300+ acre tracts.
+// ══════════════════════════════════════════════════════
+const PARCEL_DYN=JSON.stringify([{id:0,source:{type:'mapLayer',mapLayerId:0},drawingInfo:{
+  renderer:{type:'simple',symbol:{type:'esriSFS',style:'esriSFSSolid',color:[0,0,0,0],
+    outline:{type:'esriSLS',style:'esriSLSSolid',color:[255,214,10,255],width:1.3}}},
+  showLabels:true,
+  labelingInfo:[{labelExpression:'[owner_name]',labelPlacement:'esriServerPolygonPlacementAlwaysHorizontal',
+    useCodedValues:false,minScale:80000,maxScale:0,
+    symbol:{type:'esriTS',color:[255,255,255,255],haloColor:[0,0,0,230],haloSize:1.5,
+      font:{family:'Arial',size:8.5,weight:'bold'}}}]}}]);
+let PARCEL_MODE='image', PARCEL_IMG=null, PARCEL_IMG_OK=false, PARCEL_REQ=0;
+function refreshParcelImage(){
+  if(PARCEL_MODE!=='image') return;
+  if(!LG_ON.parcels||map.getZoom()<13){
+    if(PARCEL_IMG){ LG.parcels.removeLayer(PARCEL_IMG); PARCEL_IMG=null; }
+    return;
+  }
+  const b=map.getBounds(), sz=map.getSize(), dpr=Math.min(2,window.devicePixelRatio||1);
+  const w=Math.min(4096,Math.round(sz.x*dpr)), h=Math.min(4096,Math.round(sz.y*dpr));
+  const sw=L.CRS.EPSG3857.project(b.getSouthWest()), ne=L.CRS.EPSG3857.project(b.getNorthEast());
+  const url=`${PARCEL_MS}/export?bbox=${sw.x},${sw.y},${ne.x},${ne.y}&bboxSR=3857&imageSR=3857`
+    +`&size=${w},${h}&dpi=${Math.round(96*dpr)}&format=png32&transparent=true`
+    +`&dynamicLayers=${encodeURIComponent(PARCEL_DYN)}&f=image`;
+  const id=++PARCEL_REQ, img=new Image();
+  img.onload=()=>{
+    if(id!==PARCEL_REQ||PARCEL_MODE!=='image') return;
+    PARCEL_IMG_OK=true;
+    const ov=L.imageOverlay(url,b,{interactive:false}).addTo(LG.parcels);
+    if(PARCEL_IMG) LG.parcels.removeLayer(PARCEL_IMG);
+    PARCEL_IMG=ov;
+  };
+  img.onerror=()=>{
+    if(PARCEL_IMG_OK||id!==PARCEL_REQ) return;   // one bad image after success = just a hiccup
+    console.warn('TxGIO styled parcel image refused; using plain line tiles + local owner labels');
+    PARCEL_MODE='tiles'; PARCEL_WMS_LAYER.addTo(LG.parcels); refreshTractLabels();
+  };
+  img.src=url;
+}
+map.on('moveend',refreshParcelImage);
+
+// Fallback owner labels on the 300+ acre tracts (only when TxGIO's labeled image isn't available)
+const TRACT_LABELS=L.layerGroup().addTo(LG.parcels);
+function refreshTractLabels(){
+  TRACT_LABELS.clearLayers();
+  if(PARCEL_MODE!=='tiles'||!LG_ON.parcels||map.getZoom()<13) return;
+  const b=map.getBounds(); let n=0;
+  PARCEL_VIEW.eachLayer(g=>g.eachLayer&&g.eachLayer(l=>{
+    if(n>=250||!l.feature) return;
+    const lb=l.getBounds(); if(!b.intersects(lb)) return;
+    const a=map.latLngToContainerPoint(lb.getSouthWest()), c=map.latLngToContainerPoint(lb.getNorthEast());
+    if(Math.abs(c.x-a.x)<70||Math.abs(a.y-c.y)<28) return;   // too small on screen to label
+    const p=l.feature.properties;
+    L.marker(lb.getCenter(),{interactive:false,keyboard:false,icon:L.divIcon({className:'plabel',iconSize:null,
+      html:`<span class="${p.absentee?'oos':''}">${esc(p.owner||'')}</span>`})}).addTo(TRACT_LABELS);
+    n++;
+  }));
+}
+map.on('moveend',refreshTractLabels);
 map.on('moveend',refreshParcelView);
 
 // ══════════════════════════════════════════════════════
@@ -1162,7 +1245,8 @@ const PARCEL_FIELDS=[['prop_id','Property ID'],['geo_id','Geo ID'],['gis_area','
 const PARCEL_HL=L.layerGroup().addTo(map);
 function isMoney(k){return /value/.test(k)}
 function fmtParcelVal(k,v){
-  if(v==null||String(v).trim()===''||String(v).trim()==='0'&&isMoney(k)) return null;
+  const t=String(v??'').trim();
+  if(!t||/^(null|<null>|none)$/i.test(t)||(t==='0'&&isMoney(k))) return null;
   if(isMoney(k)&&!isNaN(+v)) return '$'+Math.round(+v).toLocaleString();
   if(/area/.test(k)&&!isNaN(+v)) return (+v).toLocaleString(undefined,{maximumFractionDigits:2});
   return esc(String(v).trim());
@@ -1182,7 +1266,8 @@ async function txgioIdentify(latlng){
   const r=await fetchWithTimeout(u,{},12000); if(!r.ok) throw new Error('HTTP '+r.status);
   const d=await r.json(); if(d.error) throw new Error(d.error.message||'identify refused');
   const hit=(d.results||[])[0]; if(!hit) return null;
-  return {attrs:hit.attributes||{},rings:hit.geometry?.rings||null,src:'TxGIO identify'};
+  const attrs={}; for(const [k,v] of Object.entries(hit.attributes||{})) attrs[k.toLowerCase()]=v;
+  return {attrs,rings:hit.geometry?.rings||null,src:'TxGIO identify'};
 }
 async function txgioFeatureInfo(latlng){
   const b=map.getBounds(), sz=map.getSize(), pt=map.latLngToContainerPoint(latlng);
@@ -1227,7 +1312,7 @@ async function identifyParcel(e){
     const v=fmtParcelVal(k,a[k]); if(v){ rows.push({k:label,v}); seen.add(label); }
   }
   if(p.mail&&!seen.has('Mailing address')) rows.push({k:'Mailing',v:esc(p.mail)});
-  if(f) rows.push({k:'Absentee owner',v:p.absentee?'Yes':'No'});
+  if(f) rows.push({k:'Out-of-state owner',v:p.absentee?'Yes':'No'});
   if(p.tenure) rows.push({k:'Tenure',v:esc(p.tenure)});
   lastCard=()=>showCard(`👤 ${esc(owner)}`,`${[svc?.src,f?'SiteIntel tract file':null].filter(Boolean).join(' + ')} · ${latlng.lat.toFixed(5)}, ${latlng.lng.toFixed(5)}`,
     [{h:'Parcel',rows}].concat(nearbySections(latlng.lat,latlng.lng,{siteKm:40}).slice(0,1)),
@@ -1394,7 +1479,7 @@ function toggleLayer(name){
   if(name==='parcels'){
     const hint=document.getElementById('zoom-hint');
     hint.style.display=(LG_ON[name]&&map.getZoom()<11)?'block':'none';
-    if(LG_ON[name]) refreshParcelView();
+    if(LG_ON[name]){ refreshParcelView(); refreshParcelImage(); }
   }
 }
 function reweight(k,v){document.getElementById(`wv-${k}`).textContent=v;redraw()}
