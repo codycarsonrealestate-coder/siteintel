@@ -295,6 +295,11 @@
         <span class="ds-label">Fiber Corridors (OSM, est.)</span>
         <span class="ds-status" id="lbl-fiber" style="color:#f7c542">Loading…</span>
       </div>
+      <div class="ds-item">
+        <div class="ds-dot loading" id="dot-dc"></div>
+        <span class="ds-label">Data Center Campuses (curated)</span>
+        <span class="ds-status" id="lbl-dc" style="color:#f7c542">Loading…</span>
+      </div>
     </div>
 
     <!-- MAP LAYERS -->
@@ -315,6 +320,10 @@
       <div class="layer-toggle" onclick="toggleLayer('plants')">
         <div class="layer-label"><div class="layer-dot" style="background:#ff9a3c"></div>Power Plants (EIA)</div>
         <div class="toggle-switch on" id="tog-plants"></div>
+      </div>
+      <div class="layer-toggle" onclick="toggleLayer('datacenters')">
+        <div class="layer-label"><div class="layer-dot" style="background:#a371f7"></div>Data Centers (existing + proposed)</div>
+        <div class="toggle-switch on" id="tog-datacenters"></div>
       </div>
       <div class="layer-toggle" onclick="toggleLayer('fiber')">
         <div class="layer-label"><div class="layer-dot" style="background:#58a6ff"></div>Fiber Corridors (est.)</div>
@@ -472,6 +481,9 @@
       <div class="vk-item"><div style="width:7px;height:7px;border-radius:50%;background:#58a6ff;flex-shrink:0"></div>Substation 115-230kV</div>
       <div class="vk-item" style="margin-top:5px"><div style="width:9px;height:9px;border-radius:50%;background:#ff9a3c;flex-shrink:0"></div>Power plant (size = MW)</div>
       <div class="vk-item"><div style="width:9px;height:9px;border-radius:50%;border:2px solid #ff6b6b;flex-shrink:0;box-sizing:border-box"></div>Retiring by 2032</div>
+      <div class="vk-item" style="margin-top:5px"><div style="width:9px;height:9px;background:#a371f7;transform:rotate(45deg);flex-shrink:0"></div>Data center: operating (size = MW)</div>
+      <div class="vk-item"><div style="width:9px;height:9px;background:rgba(163,113,247,.45);border:1.5px solid #a371f7;transform:rotate(45deg);flex-shrink:0;box-sizing:border-box"></div>Under construction</div>
+      <div class="vk-item"><div style="width:9px;height:9px;border:1.5px dashed #d2a8ff;transform:rotate(45deg);flex-shrink:0;box-sizing:border-box"></div>Announced / planned</div>
       <div class="vk-item"><div class="vk-line" style="height:2px;background:#3fb950"></div>Selected site's owner block</div>
     </div>
 
@@ -668,9 +680,10 @@ const LG={
   flood:        L.layerGroup().addTo(map),
   solar:        L.layerGroup().addTo(map),
   protected:    L.layerGroup(),               // PAD-US protected land, live (off by default)
+  datacenters:  L.layerGroup().addTo(map),   // curated existing + proposed campuses
   sites:        L.layerGroup().addTo(map)
 };
-const LG_ON={parcels:true,transmission:true,substations:true,plants:true,fiber:true,flood:true,solar:true,protected:false,sites:true};
+const LG_ON={parcels:true,transmission:true,substations:true,plants:true,fiber:true,flood:true,solar:true,protected:false,datacenters:true,sites:true};
 
 // Zoom hint (for FEMA tiles)
 map.on('zoomend',()=>{
@@ -1121,6 +1134,49 @@ async function refreshProtected(){
   }catch(e){ if(e.name!=='AbortError') console.warn('PAD-US:',e.message); }
 }
 map.on('moveend',refreshProtected);
+
+// ══════════════════════════════════════════════════════
+// DATA CENTER CAMPUSES (tx_datacenters.geojson, curated from public sources)
+// Diamonds sized by announced MW: solid = operating, half-filled = under
+// construction, dashed = announced, gray = paused. MW is announced capacity,
+// not actual power use. Pins are town/county-level, not exact sites.
+// ══════════════════════════════════════════════════════
+let DCS=[];
+const fmtMW=mw=>mw==null?'MW n/a':mw>=1000?`${(mw/1000).toFixed(mw%1000?1:0)} GW`:`${Math.round(mw)} MW`;
+function dcIcon(p){
+  const sz=Math.round(Math.max(14,Math.min(44,12+Math.sqrt(p.mw||0)/2.4)));
+  const st=p.status||'';
+  const css=st==='Operational'?'background:#a371f7;border:1.5px solid #d2a8ff':
+            st==='Under construction'?'background:rgba(163,113,247,.45);border:2px solid #a371f7':
+            st==='Paused'?'background:rgba(110,118,129,.35);border:1.5px dashed #8b949e':
+                          'background:rgba(210,168,255,.10);border:2px dashed #d2a8ff';
+  return L.divIcon({className:'',iconSize:[sz,sz],iconAnchor:[sz/2,sz/2],
+    html:`<div style="width:${sz}px;height:${sz}px;box-sizing:border-box;transform:rotate(45deg) scale(.72);border-radius:3px;${css};box-shadow:0 0 8px rgba(163,113,247,.45);cursor:pointer"></div>`});
+}
+function dcTip(p){
+  return `<strong>${esc(p.name)}</strong><br>${esc(p.status)} · ${fmtMW(p.mw)}<br>${esc(p.developer)}${p.tenant&&p.tenant!=='Not disclosed'?' → '+esc(p.tenant):''}<br><span style="color:#8b949e">${esc(p.type)} · ${esc(p.town)}, ${esc(p.county)} Co.</span>`;
+}
+async function loadDataCenters(){
+  try{
+    const r=await fetchWithTimeout('./tx_datacenters.geojson',{},15000);
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const g=await r.json();
+    DCS=(g.features||[]).map(f=>({...f.properties,lat:f.geometry.coordinates[1],lng:f.geometry.coordinates[0]}));
+    // biggest first so small ones draw on top and stay clickable
+    [...DCS].sort((a,b)=>(b.mw||0)-(a.mw||0)).forEach(d=>{
+      L.marker([d.lat,d.lng],{icon:dcIcon(d),zIndexOffset:-500}).addTo(LG.datacenters)
+        .bindTooltip(dcTip(d),{className:'tip'}).on('click',()=>goDC(d));
+    });
+    const gw=DCS.reduce((a,d)=>a+(d.mw||0),0)/1000;
+    setDotStatus('dc','live',`${DCS.length} campuses · ${gw.toFixed(0)} GW`,'#3fb950');
+  }catch(e){
+    console.warn('data centers:',e.message);
+    setDotStatus('dc','fallback','Not loaded','#ff9a3c');
+  }
+}
+function nearbyDCs(lat,lng,km=80){
+  return DCS.map(d=>({d,km:hvKm(lat,lng,d.lat,d.lng)})).filter(x=>x.km<=km).sort((a,b)=>a.km-b.km);
+}
 
 // Nearest substation to a given site — powers the "Power Access"
 // readout in the detail panel. Distance only; NOT a capacity claim.
@@ -1588,6 +1644,10 @@ function openDetail(site){
     if(cap) site.meta['Typical Line Capacity']=cap;
   }
 
+  if(DCS.length){
+    const nd=nearbyDCs(site.lat,site.lng,1e9).slice(0,2);
+    if(nd.length) site.meta['Nearest Data Center Campus']=nd.map(({d,km})=>`${d.name} (${fmtMW(d.mw)}, ${d.status.toLowerCase()}) · ${fmtMi(km)}`).join('<br>');
+  }
   document.getElementById('d-name').textContent=site.name;
   document.getElementById('d-coords').textContent=`${site.lat.toFixed(4)}°N  ${Math.abs(site.lng).toFixed(4)}°W  ·  ${site.county}`;
   const c=scoreColor(score);
@@ -1783,6 +1843,7 @@ async function init(){
 
   drawStaticLayers();
   await loadFiber();
+  await loadDataCenters();
 
   // ── FEMA NFHL live tiles ──
   const femaOk = initFEMALayer();
@@ -1994,6 +2055,12 @@ function buildResults(raw){
     s:`${Math.round(p.mw).toLocaleString()} MW ${p.fuel}${p.owner?' · '+hlText(p.owner,toks):''}${p.retiring?' · retiring '+p.retire:''}`,
     act:()=>goPlant(p)}))});
 
+  // Data center campuses (name, developer, tenant, town, county)
+  const dcs=DCS.map(d=>({d,sc:Math.max(mscore(d.name,q,toks),mscore(d.developer,q,toks)*.9,mscore(d.tenant,q,toks)*.9,
+      mscore(d.town,q,toks)*.8,mscore(d.county+' county',q,toks)*.7)})).filter(x=>x.sc).sort((a,b)=>b.sc-a.sc||(b.d.mw||0)-(a.d.mw||0)).slice(0,6);
+  if(dcs.length) groups.push({label:'Data center campuses',items:dcs.map(({d,sc})=>({ic:'◆',t:hlText(d.name,toks),score:sc,
+    s:`${esc(d.status)} · ${fmtMW(d.mw)} · ${hlText(d.developer,toks)}${d.tenant&&d.tenant!=='Not disclosed'?' → '+hlText(d.tenant,toks):''} · ${esc(d.town)}`,act:()=>goDC(d)}))});
+
   // Fiber corridors (I-20, US-385, Union Pacific…)
   if(FIBER_FC){
     const seen=new Set();
@@ -2184,7 +2251,9 @@ function nearbySections(lat,lng,opts={}){
     .concat(sites.slice(0,4).map(({s,d})=>({k:esc(s.name),v:`${totalScore(s)} · ${fmtMi(d)}`,go:()=>goSite(s)})));
   const ret=PLANTS.filter(p=>p.retiring).map(p=>({p,d:hvKm(lat,lng,p.lat,p.lng)})).filter(x=>x.d<=80).sort((a,b)=>a.d-b.d).slice(0,3)
     .map(({p,d})=>({k:`${esc(p.name)} · ${Math.round(p.mw)} MW ${p.fuel}`,v:`retire ${p.retire} · ${fmtMi(d)}`,go:()=>goPlant(p)}));
+  const dcRows=nearbyDCs(lat,lng,80).slice(0,4).map(({d,km})=>({k:`◆ ${esc(d.name)}`,v:`${fmtMW(d.mw)} · ${esc(d.status)} · ${fmtMi(km)}`,go:()=>goDC(d)}));
   return [{h:'Grid access',rows:grid},{h:'Best Power Access Score within 25 mi',rows:bestPas},
+          {h:'Data center campuses within 50 mi',rows:dcRows},
           {h:'Candidate sites',rows:sites.length?siteRows:[{k:`None within ${fmtMi(R)}`,v:''}]},
           {h:'Retiring plants within 50 mi (brownfield leads)',rows:ret}];
 }
@@ -2286,6 +2355,20 @@ function goPlant(p){
       p.ba?{k:'Balancing authority',v:esc(p.ba)}:null,{k:'Coordinates',v:`${p.lat.toFixed(5)}, ${p.lng.toFixed(5)}`}].filter(Boolean)}]
     .concat(nearbySections(p.lat,p.lng,{siteKm:40})),
     radiusButtons(p.lat,p.lng,esc(p.name)));
+  lastCard();
+}
+function goDC(d){
+  SRCH_HL.clearLayers(); pin(d.lat,d.lng);
+  map.flyTo([d.lat,d.lng],Math.max(map.getZoom(),10),{duration:.8});
+  const sites=SITES.map(s=>({s,km:hvKm(d.lat,d.lng,s.lat,s.lng)})).filter(x=>x.km<=80).sort((a,b)=>a.km-b.km);
+  const others=nearbyDCs(d.lat,d.lng,80).filter(x=>x.d!==d).slice(0,4);
+  lastCard=()=>showCard(`◆ ${esc(d.name)}`,`${esc(d.status)} · ${fmtMW(d.mw)} · ${esc(d.town)}, ${esc(d.county)} Co.`,
+    [{h:'Campus',rows:[{k:'Developer',v:esc(d.developer)},{k:'Tenant / user',v:esc(d.tenant||'Not disclosed')},
+      {k:'Type',v:esc(d.type)},{k:'Capacity',v:esc(d.mw_note||fmtMW(d.mw))},{k:'Source date',v:esc(d.source_date||'—')},
+      {k:'Location',v:'Town/county level (approx.)'}]},
+     {h:'Other campuses within 50 mi',rows:others.map(({d:o,km})=>({k:`${esc(o.name)}`,v:`${fmtMW(o.mw)} · ${esc(o.status)} · ${fmtMi(km)}`,go:()=>goDC(o)}))},
+     {h:'SiteIntel candidate sites within 50 mi',rows:sites.length?sites.slice(0,6).map(({s,km})=>({k:esc(s.name),v:`${totalScore(s)} · ${fmtMi(km)}`,go:()=>goSite(s)})):[{k:'None',v:''}]}],
+    [{label:'Open source ↗',go:()=>window.open(d.source,'_blank','noopener')}]);
   lastCard();
 }
 function goFiber(label){

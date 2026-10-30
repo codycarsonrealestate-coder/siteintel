@@ -1,0 +1,1190 @@
+{
+ "type": "FeatureCollection",
+ "meta": {
+  "title": "Texas data center campuses (curated)",
+  "as_of": "2026-10-30",
+  "notes": "MW = capacity announced by the developer/operator or reported by public trackers; not actual power use. Pins mark the town or county named in the source, not the exact site.",
+  "compilations": [
+   "https://www.apollotechnical.com/data-centers-in-texas/",
+   "https://cleanview.co/data-centers/texas",
+   "https://datacenterindex.ai/markets/texas",
+   "https://www.electricchoice.com/datacenters/",
+   "https://dcmap.us/states/texas/"
+  ]
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -97.001,
+     30.655
+    ]
+   },
+   "properties": {
+    "name": "Riot Rockdale campus",
+    "developer": "Riot Platforms",
+    "tenant": "Bitcoin mining; converting to AI/HPC",
+    "type": "Bitcoin mining \u2192 AI/HPC",
+    "status": "Operational",
+    "mw": 700,
+    "mw_note": "700 MW operating (mining); 241 MW slated for AI/HPC conversion",
+    "town": "Rockdale",
+    "county": "Milam",
+    "source": "https://www.globenewswire.com/news-release/2026/08/10/3342174/0/en/riot-platforms-reports-second-quarter-2026-financial-results-and-strategic-highlights.html",
+    "source_date": "2026-08-10"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -96.469,
+     32.095
+    ]
+   },
+   "properties": {
+    "name": "Riot Corsicana campus",
+    "developer": "Riot Platforms",
+    "tenant": "Bitcoin mining",
+    "type": "Bitcoin mining \u2192 AI/HPC",
+    "status": "Operational",
+    "mw": 400,
+    "mw_note": "400 MW operating capacity",
+    "town": "Corsicana",
+    "county": "Navarro",
+    "source": "https://cleanview.co/data-centers/texas",
+    "source_date": "2026-09"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -98.686,
+     29.452
+    ]
+   },
+   "properties": {
+    "name": "Microsoft San Antonio campus",
+    "developer": "Microsoft",
+    "tenant": "Azure cloud / AI",
+    "type": "Hyperscale (owner-operated)",
+    "status": "Operational",
+    "mw": 409,
+    "mw_note": "~409 MW operating across the San Antonio campus",
+    "town": "San Antonio (Westover Hills)",
+    "county": "Bexar",
+    "source": "https://cleanview.co/data-centers/texas",
+    "source_date": "2026-09"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -96.985,
+     32.885
+    ]
+   },
+   "properties": {
+    "name": "QTS Irving",
+    "developer": "QTS",
+    "tenant": "Colocation / hyperscale leases",
+    "type": "Colocation",
+    "status": "Operational",
+    "mw": 373,
+    "mw_note": "373 MW operating",
+    "town": "Irving",
+    "county": "Dallas",
+    "source": "https://cleanview.co/data-centers/texas",
+    "source_date": "2026-09"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -97.617,
+     30.222
+    ]
+   },
+   "properties": {
+    "name": "Tesla Giga Texas (Cortex)",
+    "developer": "Tesla",
+    "tenant": "AI training (Tesla)",
+    "type": "Enterprise AI",
+    "status": "Operational",
+    "mw": 291,
+    "mw_note": "291 MW operating",
+    "town": "Austin",
+    "county": "Travis",
+    "source": "https://cleanview.co/data-centers/texas",
+    "source_date": "2026-09"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.235,
+     34.405
+    ]
+   },
+   "properties": {
+    "name": "IREN Childress campus",
+    "developer": "IREN",
+    "tenant": "AI cloud / bitcoin mining",
+    "type": "Bitcoin mining \u2192 AI/HPC",
+    "status": "Operational",
+    "mw": 750,
+    "mw_note": "750 MW operating",
+    "town": "Childress",
+    "county": "Childress",
+    "source": "https://datacenterindex.ai/markets/texas",
+    "source_date": "2026"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -97.105,
+     33.183
+    ]
+   },
+   "properties": {
+    "name": "Core Scientific Denton HPC campus",
+    "developer": "Core Scientific",
+    "tenant": "CoreWeave",
+    "type": "AI campus (former bitcoin mine)",
+    "status": "Operational",
+    "mw": 260,
+    "mw_note": "260 MW",
+    "town": "Denton",
+    "county": "Denton",
+    "source": "https://www.nasdaq.com/press-release/core-scientific-and-coreweave-announce-12-billion-expansion-denton-tx-site-2025-02-26",
+    "source_date": "2025-02-26"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -96.973,
+     32.452
+    ]
+   },
+   "properties": {
+    "name": "Google Midlothian",
+    "developer": "Google",
+    "tenant": "Google cloud / services",
+    "type": "Hyperscale (owner-operated)",
+    "status": "Operational",
+    "mw": 103,
+    "mw_note": "~103 MW",
+    "town": "Midlothian",
+    "county": "Ellis",
+    "source": "https://datacenterindex.ai/markets/texas",
+    "source_date": "2026"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -96.804,
+     32.518
+    ]
+   },
+   "properties": {
+    "name": "Google Red Oak",
+    "developer": "Google",
+    "tenant": "Google cloud / services",
+    "type": "Hyperscale (owner-operated)",
+    "status": "Operational",
+    "mw": null,
+    "mw_note": "MW not published",
+    "town": "Red Oak",
+    "county": "Ellis",
+    "source": "https://datacenters.google/locations/texas/",
+    "source_date": "2026"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -97.304,
+     32.982
+    ]
+   },
+   "properties": {
+    "name": "Meta Fort Worth",
+    "developer": "Meta",
+    "tenant": "Meta",
+    "type": "Hyperscale (owner-operated)",
+    "status": "Operational",
+    "mw": null,
+    "mw_note": "Operating since 2017; MW not published",
+    "town": "Fort Worth (Alliance)",
+    "county": "Tarrant",
+    "source": "https://datacenters.atmeta.com/building-texas/",
+    "source_date": "2026"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -97.38,
+     31.065
+    ]
+   },
+   "properties": {
+    "name": "Meta Temple",
+    "developer": "Meta",
+    "tenant": "Meta (AI redesign)",
+    "type": "Hyperscale (owner-operated)",
+    "status": "Operational",
+    "mw": null,
+    "mw_note": "Went live July 2026; MW not published",
+    "town": "Temple",
+    "county": "Bell",
+    "source": "https://www.datacenterdynamics.com/en/news/meta-starts-operations-at-data-center-in-temple-texas/",
+    "source_date": "2026-07"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.83,
+     33.7
+    ]
+   },
+   "properties": {
+    "name": "Galaxy Helios campus",
+    "developer": "Galaxy",
+    "tenant": "CoreWeave (AI/HPC)",
+    "type": "AI campus (former bitcoin mine)",
+    "status": "Under construction",
+    "mw": 1630,
+    "mw_note": "Phase I complete July 2026 (~526 MW operating); 1,630 MW planned",
+    "town": "Dickens / Afton",
+    "county": "Dickens",
+    "source": "https://www.galaxy.com/newsroom/galaxy-completes-phase-i-of-its-helios-data-center-campus",
+    "source_date": "2026-07-06"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -99.78,
+     32.505
+    ]
+   },
+   "properties": {
+    "name": "Stargate I / Lancium Clean Campus",
+    "developer": "Crusoe",
+    "tenant": "Oracle / OpenAI",
+    "type": "AI campus",
+    "status": "Under construction",
+    "mw": 1200,
+    "mw_note": "1.2 GW across 8 buildings; first buildings live Sept 2025",
+    "town": "Abilene",
+    "county": "Taylor",
+    "source": "https://www.crusoe.ai/resources/newsroom/crusoe-expands-ai-data-center-campus-in-abilene-to-1-2-gigawatts",
+    "source_date": "2025-03-18"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -99.745,
+     32.485
+    ]
+   },
+   "properties": {
+    "name": "Crusoe Abilene AI factory (Microsoft)",
+    "developer": "Crusoe",
+    "tenant": "Microsoft",
+    "type": "AI campus",
+    "status": "Under construction",
+    "mw": 900,
+    "mw_note": "900 MW, two buildings, adjacent to Stargate I",
+    "town": "Abilene",
+    "county": "Taylor",
+    "source": "https://www.crusoe.ai/resources/newsroom/crusoe-announces-new-900-mw-ai-factory-campus-in-abilene-texas-to-support-microsoft-ai-infrastructure",
+    "source_date": "2026-03-27"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -96.797,
+     31.848
+    ]
+   },
+   "properties": {
+    "name": "Nexus Hubbard campus",
+    "developer": "Nexus Data Centers",
+    "tenant": "Not disclosed",
+    "type": "AI campus",
+    "status": "Under construction",
+    "mw": 6400,
+    "mw_note": "6.4\u20137.7 GW reported across trackers",
+    "town": "Hubbard",
+    "county": "Hill",
+    "source": "https://cleanview.co/data-centers/texas",
+    "source_date": "2026-09"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -99.297,
+     32.724
+    ]
+   },
+   "properties": {
+    "name": "Vantage Frontier (Stargate)",
+    "developer": "Vantage Data Centers",
+    "tenant": "OpenAI (Stargate)",
+    "type": "AI campus",
+    "status": "Under construction",
+    "mw": 1400,
+    "mw_note": "1.4 GW, 10 data centers, $25B (some trackers list 1.8 GW)",
+    "town": "Albany",
+    "county": "Shackelford",
+    "source": "https://vantage-dc.com/news/vantage-data-centers-unveils-plans-for-frontier-a-25b-mega-campus-in-texas-to-meet-unprecedented-ai-demand/",
+    "source_date": "2025-08-19"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.405,
+     32.47
+    ]
+   },
+   "properties": {
+    "name": "IREN Sweetwater 1",
+    "developer": "IREN",
+    "tenant": "AI cloud",
+    "type": "AI campus",
+    "status": "Under construction",
+    "mw": 1400,
+    "mw_note": "1.4 GW; part of 2 GW Sweetwater hub in ERCOT Batch Zero",
+    "town": "Sweetwater",
+    "county": "Nolan",
+    "source": "https://www.globenewswire.com/news-release/2026/09/08/3357498/0/en/iren-s-2gw-sweetwater-hub-included-as-base-load-in-ercot-batch-zero.html",
+    "source_date": "2026-09-08"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -96.977,
+     30.853
+    ]
+   },
+   "properties": {
+    "name": "Milam County Stargate",
+    "developer": "SB Energy",
+    "tenant": "OpenAI (Stargate)",
+    "type": "AI campus",
+    "status": "Under construction",
+    "mw": 1200,
+    "mw_note": "1.2 GW",
+    "town": "Cameron",
+    "county": "Milam",
+    "source": "https://openai.com/index/stargate-sb-energy-partnership/",
+    "source_date": "2026-01-09"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -97.941,
+     29.883
+    ]
+   },
+   "properties": {
+    "name": "CloudBurst Central Texas campus",
+    "developer": "CloudBurst Data Centers",
+    "tenant": "Not disclosed",
+    "type": "AI campus",
+    "status": "Under construction",
+    "mw": 1200,
+    "mw_note": "Three 400 MW phases, $14.5B",
+    "town": "San Marcos",
+    "county": "Hays",
+    "source": "https://www.datacenterdynamics.com/en/news/706-acre-data-center-approved-for-development-outside-san-antonio-texas/",
+    "source_date": "2026-05-07"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -106.33,
+     31.86
+    ]
+   },
+   "properties": {
+    "name": "Meta El Paso",
+    "developer": "Meta (80% BlackRock funds)",
+    "tenant": "Meta",
+    "type": "Hyperscale (owner-leased)",
+    "status": "Under construction",
+    "mw": 1000,
+    "mw_note": "1 GW, $14B, opening 2028",
+    "town": "El Paso",
+    "county": "El Paso",
+    "source": "https://about.fb.com/news/2026/07/meta-announces-new-venture-with-blackrock-to-develop-data-center-in-el-paso/",
+    "source_date": "2026-07-28"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -97.48,
+     27.8
+    ]
+   },
+   "properties": {
+    "name": "Hut 8 Beacon Point",
+    "developer": "Hut 8",
+    "tenant": "Not disclosed",
+    "type": "AI campus",
+    "status": "Under construction",
+    "mw": 1000,
+    "mw_note": "Phases 1\u20132, $17B",
+    "town": "Corpus Christi",
+    "county": "Nueces",
+    "source": "https://www.hut8.com/data-centers/beacon-point",
+    "source_date": "2026-07-20"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.363,
+     35.111
+    ]
+   },
+   "properties": {
+    "name": "Crusoe Claude campus (Google)",
+    "developer": "Crusoe",
+    "tenant": "Google",
+    "type": "AI campus",
+    "status": "Under construction",
+    "mw": 900,
+    "mw_note": "900 MW; part of Google's $40B Texas plan (Armstrong County)",
+    "town": "Claude",
+    "county": "Armstrong",
+    "source": "https://www.crusoe.ai/resources/blog/crusoes-2025-impact-report",
+    "source_date": "2026-09-15"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.95,
+     35.6
+    ]
+   },
+   "properties": {
+    "name": "Google / Intersect Pampa campus",
+    "developer": "Google + Intersect",
+    "tenant": "Google",
+    "type": "Hyperscale + co-located power",
+    "status": "Under construction",
+    "mw": 840,
+    "mw_note": "~840 MW reported",
+    "town": "Pampa",
+    "county": "Gray / Roberts",
+    "source": "https://www.newschannel10.com/2026/06/05/google-intersect-constructing-new-data-center-gray-roberts-counties/",
+    "source_date": "2026-06-05"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -99.265,
+     34.154
+    ]
+   },
+   "properties": {
+    "name": "Google / AES Wilbarger County",
+    "developer": "Google + AES",
+    "tenant": "Google",
+    "type": "Hyperscale + co-located power",
+    "status": "Under construction",
+    "mw": null,
+    "mw_note": "MW not published; co-located with new clean generation",
+    "town": "Vernon",
+    "county": "Wilbarger",
+    "source": "https://www.datacenterdynamics.com/en/news/google-to-develop-clean-energy-colocated-data-center-in-wilbarger-county-texas/",
+    "source_date": "2026"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.843,
+     33.832
+    ]
+   },
+   "properties": {
+    "name": "Aligned Project Caprock",
+    "developer": "Aligned Data Centers",
+    "tenant": "Not disclosed",
+    "type": "AI campus",
+    "status": "Under construction",
+    "mw": 540,
+    "mw_note": "Six facilities",
+    "town": "Abernathy",
+    "county": "Hale",
+    "source": "https://aligneddc.com/press-release/aligned-breaks-ground-on-project-caprock/",
+    "source_date": "2026-04-09"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.82,
+     33.85
+    ]
+   },
+   "properties": {
+    "name": "TeraWulf / Fluidstack Abernathy",
+    "developer": "Fluidstack (TeraWulf JV)",
+    "tenant": "Fluidstack",
+    "type": "AI campus",
+    "status": "Under construction",
+    "mw": 168,
+    "mw_note": "168 MW JV",
+    "town": "Abernathy",
+    "county": "Hale",
+    "source": "https://investors.terawulf.com/news-events/press-releases/detail/121/terawulf-expands-strategic-partnership-with-fluidstack-through-new-168-mw-ai-compute-joint-venture",
+    "source_date": "2025-10-28"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -97.62,
+     31.95
+    ]
+   },
+   "properties": {
+    "name": "CyrusOne Thad Hill (Calpine)",
+    "developer": "CyrusOne",
+    "tenant": "Hyperscale tenant",
+    "type": "Powered land at power plant",
+    "status": "Under construction",
+    "mw": 400,
+    "mw_note": "Phases 1\u20132 power, at Calpine's Thad Hill Energy Center",
+    "town": "Meridian",
+    "county": "Bosque",
+    "source": "https://www.cyrusone.com/resources/press-releases/calpine-and-cyrusone-announce-phase-2-of-powered-land-agreement-to-support-hyperscale-data-center-at-thad-hill-energy-center-in-texas",
+    "source_date": "2025-11-03"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -96.13,
+     31.7
+    ]
+   },
+   "properties": {
+    "name": "CyrusOne Freestone Energy Center",
+    "developer": "CyrusOne",
+    "tenant": "Hyperscale tenant",
+    "type": "Powered land at power plant",
+    "status": "Under construction",
+    "mw": 380,
+    "mw_note": "Phase 1, beside Freestone Energy Center",
+    "town": "Fairfield",
+    "county": "Freestone",
+    "source": "https://www.datacenterdynamics.com/en/news/cyrusone-breaks-ground-on-380mw-data-center-in-texas/",
+    "source_date": "2026-06-08"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.86,
+     32.39
+    ]
+   },
+   "properties": {
+    "name": "Cipher Barber Lake",
+    "developer": "Cipher Digital",
+    "tenant": "Fluidstack (AI hosting)",
+    "type": "AI campus (former bitcoin site)",
+    "status": "Under construction",
+    "mw": 300,
+    "mw_note": "300 MW",
+    "town": "Colorado City",
+    "county": "Mitchell",
+    "source": "https://www.globenewswire.com/news-release/2025/11/20/3191801/0/en/Cipher-Mining-Signs-Additional-56-MW-10-Year-AI-Hosting-Agreement-with-Fluidstack.html",
+    "source_date": "2025-11-20"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -97.3,
+     31.125
+    ]
+   },
+   "properties": {
+    "name": "Rowan Temple campus",
+    "developer": "Rowan Digital Infrastructure",
+    "tenant": "Not disclosed",
+    "type": "Colocation / build-to-suit",
+    "status": "Under construction",
+    "mw": 300,
+    "mw_note": "300 MW, $700M",
+    "town": "Temple",
+    "county": "Bell",
+    "source": "https://www.datacenterdynamics.com/en/news/rowan-starts-work-on-300mw-data-center-in-temple-texas/",
+    "source_date": "2026-01-06"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -98.796,
+     29.233
+    ]
+   },
+   "properties": {
+    "name": "Rowan Project Cinco",
+    "developer": "Rowan Digital Infrastructure",
+    "tenant": "Not disclosed",
+    "type": "Colocation / build-to-suit",
+    "status": "Under construction",
+    "mw": 300,
+    "mw_note": "300 MW, $900M",
+    "town": "Lytle",
+    "county": "Medina",
+    "source": "https://www.datacenterdynamics.com/en/news/rowan-digital-breaks-ground-on-300mw-data-center-campus-outside-san-antonio-texas/",
+    "source_date": "2025-08-08"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.7,
+     30.95
+    ]
+   },
+   "properties": {
+    "name": "Amazon GW Ranch",
+    "developer": "Amazon",
+    "tenant": "AWS",
+    "type": "Hyperscale + on-site gas power (off-grid)",
+    "status": "Under construction",
+    "mw": null,
+    "mw_note": "8,000 acres; ~7,650 MW on-site gas generation reported; DC MW not published",
+    "town": "Pecos County",
+    "county": "Pecos",
+    "source": "https://www.enr.com/articles/63464-amazon-discloses-ownership-of-gw-ranch-giant-texas-data-center-gas-power-complex",
+    "source_date": "2026-08"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -97.02,
+     32.7
+    ]
+   },
+   "properties": {
+    "name": "PowerHouse Grand Prairie",
+    "developer": "PowerHouse Data Centers",
+    "tenant": "Not disclosed",
+    "type": "Colocation / hyperscale",
+    "status": "Under construction",
+    "mw": 1800,
+    "mw_note": "Up to 1.8 GW reported (estimate)",
+    "town": "Grand Prairie",
+    "county": "Dallas / Tarrant",
+    "source": "https://www.electricchoice.com/datacenters/",
+    "source_date": "2026-10"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -97.62,
+     29.86
+    ]
+   },
+   "properties": {
+    "name": "Tract Caldwell Valley Technology Park",
+    "developer": "Tract",
+    "tenant": "Not disclosed",
+    "type": "Powered land / campus",
+    "status": "Announced",
+    "mw": 4000,
+    "mw_note": "4 GW, ~3,000 acres",
+    "town": "Lockhart",
+    "county": "Caldwell",
+    "source": "https://www.tract.com/news/tract-closes-on-two-incremental-acquisitions-adding-1458-acres-to-caldwell-valley-technology-park-in-caldwell-county-texas-bringing-total-campus-to-nearly-3000-acres/",
+    "source_date": "2026-01-13"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -94.7,
+     31.32
+    ]
+   },
+   "properties": {
+    "name": "Amp Z Champion campus (former paper mill)",
+    "developer": "Amp Z",
+    "tenant": "Not disclosed",
+    "type": "AI campus (brownfield)",
+    "status": "Announced",
+    "mw": 2100,
+    "mw_note": "2.1 GW",
+    "town": "Lufkin",
+    "county": "Angelina",
+    "source": "https://www.datacenterdynamics.com/en/news/multi-gigawatt-data-center-campus-planned-in-east-texas/",
+    "source_date": "2026-02-05"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -103.49,
+     31.42
+    ]
+   },
+   "properties": {
+    "name": "Microsoft Pecos campus",
+    "developer": "Microsoft",
+    "tenant": "Microsoft AI",
+    "type": "Hyperscale (owner-operated)",
+    "status": "Announced",
+    "mw": 2000,
+    "mw_note": "2 GW, 6,000 construction jobs",
+    "town": "Pecos",
+    "county": "Reeves",
+    "source": "https://blogs.microsoft.com/blog/2026/06/22/powering-the-next-wave-of-ai-expanding-capacity-with-our-new-datacenter-in-pecos/",
+    "source_date": "2026-06-22"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.18,
+     34.44
+    ]
+   },
+   "properties": {
+    "name": "Crusoe / Lancium Childress campus",
+    "developer": "Crusoe",
+    "tenant": "Not disclosed",
+    "type": "AI campus",
+    "status": "Announced",
+    "mw": 1000,
+    "mw_note": "1 GW",
+    "town": "Childress",
+    "county": "Childress",
+    "source": "https://www.globenewswire.com/news-release/2026/07/15/3327869/0/en/crusoe-and-lancium-announce-1-0-gigawatt-ai-data-center-campus-in-childress-texas.html",
+    "source_date": "2026-07-15"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.44,
+     31.46
+    ]
+   },
+   "properties": {
+    "name": "Cipher Colchis",
+    "developer": "Cipher Digital",
+    "tenant": "Not disclosed",
+    "type": "AI campus",
+    "status": "Announced",
+    "mw": 1000,
+    "mw_note": "1 GW, target 2028",
+    "town": "San Angelo",
+    "county": "Tom Green",
+    "source": "https://investors.cipherdigital.com/news-releases/news-release-details/cipher-mining-provides-third-quarter-2025-business-update",
+    "source_date": "2025-11-03"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.37,
+     31.85
+    ]
+   },
+   "properties": {
+    "name": "Texas Critical Data Centers (TCDC)",
+    "developer": "New Era Energy & Digital + Stream",
+    "tenant": "Not disclosed",
+    "type": "AI campus",
+    "status": "Announced",
+    "mw": 1000,
+    "mw_note": "1 GW",
+    "town": "Odessa",
+    "county": "Ector",
+    "source": "https://www.businesswire.com/news/home/20260401723659/en/New-Era-Energy-Digital-Partners-with-Stream-Data-Centers-for-Flagship-TCDC-Campus",
+    "source_date": "2026-04-01"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -98.6,
+     29.3
+    ]
+   },
+   "properties": {
+    "name": "Cipher Apollo site option",
+    "developer": "Cipher Digital",
+    "tenant": "Not disclosed",
+    "type": "AI campus",
+    "status": "Announced",
+    "mw": 900,
+    "mw_note": "900 MW site option near San Antonio",
+    "town": "San Antonio area",
+    "county": "Bexar",
+    "source": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000038/q226_earningsxprxdraftxvf.htm",
+    "source_date": "2026-08-04"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.378,
+     32.745
+    ]
+   },
+   "properties": {
+    "name": "IREN Sweetwater 2",
+    "developer": "IREN",
+    "tenant": "AI cloud",
+    "type": "AI campus",
+    "status": "Announced",
+    "mw": 600,
+    "mw_note": "600 MW; part of 2 GW Sweetwater hub",
+    "town": "Roby",
+    "county": "Fisher",
+    "source": "https://www.globenewswire.com/news-release/2026/09/08/3357498/0/en/iren-s-2gw-sweetwater-hub-included-as-base-load-in-ercot-batch-zero.html",
+    "source_date": "2026-09-08"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.56,
+     35.32
+    ]
+   },
+   "properties": {
+    "name": "Fermi America Project Matador",
+    "developer": "Fermi America",
+    "tenant": "TensorWave (first lease, 222 MW)",
+    "type": "AI campus + on-site power",
+    "status": "Announced",
+    "mw": 11000,
+    "mw_note": "Company target up to 11 GW; first binding lease 222 MW (TensorWave)",
+    "town": "Panhandle (near Amarillo)",
+    "county": "Carson",
+    "source": "https://investor.fermiamerica.com/fermi-announces-binding-lease-agreement-with-tensorwave",
+    "source_date": "2026-08-10"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -99.45,
+     27.6
+    ]
+   },
+   "properties": {
+    "name": "Data City, Texas",
+    "developer": "Energy Abundance Development Corp.",
+    "tenant": "Not disclosed",
+    "type": "AI campus",
+    "status": "Announced",
+    "mw": 5000,
+    "mw_note": "5 GW planned; first 300 MW phase",
+    "town": "Laredo",
+    "county": "Webb",
+    "source": "https://dcmap.us/states/texas/",
+    "source_date": "2026-10"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -97.41,
+     31.44
+    ]
+   },
+   "properties": {
+    "name": "Galaxy Project Merlin (Helios II)",
+    "developer": "Galaxy",
+    "tenant": "Not disclosed",
+    "type": "AI campus",
+    "status": "Announced",
+    "mw": 3500,
+    "mw_note": "3.5 GW planned",
+    "town": "McGregor",
+    "county": "McLennan",
+    "source": "https://www.electricchoice.com/datacenters/",
+    "source_date": "2026-10"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -97.1,
+     31.62
+    ]
+   },
+   "properties": {
+    "name": "InfraKey Lacy Lakeview Data District",
+    "developer": "InfraKey Capital",
+    "tenant": "Not disclosed",
+    "type": "Powered land / campus",
+    "status": "Announced",
+    "mw": 925,
+    "mw_note": "925 MW reported",
+    "town": "Lacy Lakeview",
+    "county": "McLennan",
+    "source": "https://dcmap.us/states/texas/",
+    "source_date": "2026-10"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.53,
+     34.72
+    ]
+   },
+   "properties": {
+    "name": "QTS Hall County (Lancium campus)",
+    "developer": "QTS",
+    "tenant": "Not disclosed",
+    "type": "Colocation / hyperscale",
+    "status": "Announced",
+    "mw": null,
+    "mw_note": "11 data centers, $10B; MW not published",
+    "town": "Memphis",
+    "county": "Hall",
+    "source": "https://www.datacenterdynamics.com/en/news/qts-to-build-11-data-centers-on-lancium-campus-in-hall-county-texas/",
+    "source_date": "2026"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -99.733,
+     33.157
+    ]
+   },
+   "properties": {
+    "name": "Google Haskell County",
+    "developer": "Google",
+    "tenant": "Google",
+    "type": "Hyperscale (owner-operated)",
+    "status": "Announced",
+    "mw": null,
+    "mw_note": "Part of Google's $40B Texas plan; MW not published",
+    "town": "Haskell",
+    "county": "Haskell",
+    "source": "https://www.texastribune.org/2025/11/14/texas-google-data-centers-ai/",
+    "source_date": "2025-11-14"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -95.944,
+     29.264
+    ]
+   },
+   "properties": {
+    "name": "AWS Boling campus",
+    "developer": "Amazon",
+    "tenant": "AWS",
+    "type": "Hyperscale (owner-operated)",
+    "status": "Announced",
+    "mw": null,
+    "mw_note": "$12B filing; MW not published",
+    "town": "Boling",
+    "county": "Wharton",
+    "source": "https://www.datacenterdynamics.com/en/news/aws-files-for-12bn-data-center-campus-outside-houston-texas/",
+    "source_date": "2026"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.338,
+     33.985
+    ]
+   },
+   "properties": {
+    "name": "AWS Floydada campus",
+    "developer": "Amazon",
+    "tenant": "AWS",
+    "type": "Hyperscale (owner-operated)",
+    "status": "Announced",
+    "mw": null,
+    "mw_note": "State filing; MW not published",
+    "town": "Floydada",
+    "county": "Floyd",
+    "source": "https://www.datacenterdynamics.com/en/news/amazon-files-to-develop-two-new-data-center-campuses-in-texas/",
+    "source_date": "2026"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -98.879,
+     29.356
+    ]
+   },
+   "properties": {
+    "name": "Microsoft Castroville",
+    "developer": "Microsoft",
+    "tenant": "Microsoft",
+    "type": "Hyperscale (owner-operated)",
+    "status": "Announced",
+    "mw": null,
+    "mw_note": "$400M; MW not published",
+    "town": "Castroville",
+    "county": "Medina",
+    "source": "https://www.datacenterdynamics.com/en/news/microsoft-plans-400m-data-center-in-castroville-texas/",
+    "source_date": "2026"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.88,
+     30.89
+    ]
+   },
+   "properties": {
+    "name": "Poolside Project Horizon",
+    "developer": "Poolside",
+    "tenant": "Seeking partners after CoreWeave deal fell through",
+    "type": "AI campus",
+    "status": "Paused",
+    "mw": 2000,
+    "mw_note": "2 GW planned; paused",
+    "town": "Fort Stockton",
+    "county": "Pecos",
+    "source": "https://www.datacenterdynamics.com/en/news/poolside-seeks-partners-for-data-center-in-texas-after-coreweave-deal-falls-apart/",
+    "source_date": "2026-04-02"
+   }
+  }
+ ]
+}
